@@ -4,9 +4,11 @@ import { MdComment, MdForum, MdGroup } from 'react-icons/lib/md';
 import { yellow200 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { StyleSheet, css } from 'aphrodite';
+import { Link } from 'react-router';
 import Upvote from './Upvote';
 
-const styles = {
+const styles = StyleSheet.create({
   overlayContainer: {
     position: 'relative',
     left: '70%',
@@ -59,7 +61,7 @@ const styles = {
   annotationAndInfo: {
     paddingLeft: '5%',
   },
-};
+});
 
 class ArticleCard extends React.Component {
   constructor(props) {
@@ -77,35 +79,36 @@ class ArticleCard extends React.Component {
     this.timeSince = props.timeSince;
     this.currentVotes = props.currentVotes;
     this.image = props.image;
+    this.slug = props.slug;
   }
 
   render() {
     return (
       <MuiThemeProvider>
-        <Card style={styles.cardStyle}>
-          <div className="cardHeader" style={styles.cardHeaderStyle}>
-            <span style={styles.articleTitleTextStyle}>{this.title}</span>
-            <span style={styles.domainTextStyle}><br />{this.domain}</span>
-            <span style={styles.articleTextStyle}><br />&quot;{this.subtitle}&quot;</span>
+        <Card className={css(styles.cardStyle)}>
+          <div className={css(styles.cardHeaderStyle)}>
+            <span className={css(styles.articleTitleTextStyle)}>{this.title}</span>
+            <span className={css(styles.domainTextStyle)}><br />{this.domain}</span>
+            <span className={css(styles.articleTextStyle)}><br />&quot;{this.subtitle}&quot;</span>
             <br style={{ lineHeight: 2 }} />
             <div className="vote" style={{ float: 'left' }}>
               <Upvote beforeContent={this.currentVotes} />
             </div>
-            <div className="annotationAndInfo" style={styles.annotationAndInfo}>
+            <div className={css(styles.annotationAndInfo)}>
               <span style={{ fontWeight: 900, padding: 10 }}>{this.username}</span>
               <span style={{ fontStyle: 'italic', padding: 10 }}>{this.points} points</span>
               <span> {this.timeSince} ago</span>
-              <span style={styles.annotationTextStyle}><br />{this.annotationContent}</span>
+              <span className={css(styles.annotationTextStyle)}><br />{this.annotationContent}</span>
             </div>
           </div>
-          <aside style={styles.articleInfoBar}>
+          <aside className={css(styles.articleInfoBar)}>
             <span><MdGroup /> {`     ${this.numUsers}`} users</span>
             <span><MdComment /> {`     ${this.numAnnotations}`} annotations</span>
             <span><MdForum /> {`     ${this.numReplies}`} replies</span>
-            <img width={200} src={this.image} alt="card" />
+            <img width={300} src={this.image} alt="card" />
           </aside>
           <CardActions style={{ clear: 'both', position: 'relative', left: '41%', padding: '3%' }}>
-            <RaisedButton style={{ top: '10%' }} label="See more" />
+            <Link to={`/${this.domain}/${this.slug}`} className={css(styles.title)}><RaisedButton style={{ top: '10%' }} label="See more" /></Link>
           </CardActions>
         </Card>
       </MuiThemeProvider>
@@ -126,6 +129,8 @@ ArticleCard.propTypes = {
   timeSince: React.PropTypes.string.isRequired,
   image: React.PropTypes.string.isRequired,
   currentVotes: React.PropTypes.number.isRequired,
+  slug: React.PropTypes.string.isRequired,
+
 };
 
 export default ArticleCard;
