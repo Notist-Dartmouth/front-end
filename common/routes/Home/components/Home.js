@@ -10,19 +10,19 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     lineHeight: '1.2',
-    margin: '0 0 1.5rem',
+    // margin: '0 0 1.5rem',
     paddingTop: 90,
   },
   lead: {
     fontSize: 18,
     lineHeight: '1.5',
-    margin: '0 0 1.5rem',
+    // margin: '0 0 1.5rem',
     color: '#555',
   },
   body: {
     fontSize: '1rem',
     lineHeight: '1.5',
-    margin: '0 0 1.5rem',
+    // margin: '0 0 1.5rem',
     color: '#555',
   },
   list: {

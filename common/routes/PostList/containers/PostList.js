@@ -17,10 +17,6 @@ const mapStateToProps = state => ({
 
 /* I added padding so it doesn't go underneath nav */
 const styles = StyleSheet.create({
-  root: {
-    maxWidth: 500,
-    paddingTop: 90,
-  },
   title: {
     fontSize: 28,
     margin: '0 auto 1.5rem',
@@ -33,7 +29,7 @@ const PostListPage = ({ posts }) => (
     <Helmet title="Posts" />
     {posts.isLoading &&
       <div>
-        <h2 className={css(styles.title)}>Loading....</h2>
+        <h2>Loading....</h2>
       </div>}
     {!posts.isLoading &&
       posts.data.map((post, i) => <PostListItem key={post.id} post={post} />)}

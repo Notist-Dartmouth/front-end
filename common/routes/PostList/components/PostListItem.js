@@ -5,7 +5,8 @@ import ArticleCard from '../../../components/ArticleCard';
 const styles = StyleSheet.create({
   root: {
     // margin: '0 auto 1.5rem',
-    width: '400%',
+    width: '130%',
+    bottomPadding: '15rem',
   },
 });
 
