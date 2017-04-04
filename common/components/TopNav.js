@@ -59,21 +59,26 @@ export default class TopNav extends React.Component {
     super(props);
     this.state = {
       value: 2,
+      subscribed: false,
     };
     this.currentFeedName = props.currentFeedName || 'No feed name given';
-    this.subscribed = props.subscribed || false;
     this.numFeedMembers = props.numFeedMembers || 0;
     this.numNotifications = props.numNotifications || 0;
+    this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
   }
 
   handleChange = (event, index, value) => this.setState({ value });
 
+  handleSubscribeClick() {
+    this.setState({ subscribed: !this.state.subscribed });
+  }
+
   render() {
     let subButton = null;
-    if (this.subscribed) {
-      subButton = <RaisedButton label="unsubscribe" backgroundColor={red700} style={{ margin: 20, marginTop: -20 }} />;
+    if (this.state.subscribed) {
+      subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} style={{ margin: 20, marginTop: -20 }} />;
     } else {
-      subButton = <RaisedButton label="subscribe" backgroundColor={yellow400} labelColor={grey900} style={{ marginBottom: 20, marginTop: -20 }} />;
+      subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} style={{ marginBottom: 20, marginTop: -20 }} />;
     }
     return (
       <MuiThemeProvider muiTheme={muiTheme}>

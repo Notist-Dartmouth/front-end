@@ -2,8 +2,6 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { StyleSheet, css } from 'aphrodite';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-/* only for Card test */
-// import ReactVote from './ReactVote';
 import TopNav from './TopNav';
 import LeftNav from './LeftNav';
 
