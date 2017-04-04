@@ -7,14 +7,12 @@
     "test": "mocha --require babel-core/register",
     "dev": "nodemon server/app.js --exec babel-node",
     "coverage": "nyc npm test",
-    "start:new": "babel-node server/app.js",
     "prod": "npm run build; node dist/server.js",
     "start": "cross-env NODE_ENV=development node -r \"babel-register\" ./server",
-    "start:byrneprod": "cross-env NODE_ENV=production node ./build/server.js",
+    "start:prod": "cross-env NODE_ENV=production node ./build/server.js",
     "heroku-postbuild": "npm run build",
-    "build": "babel app -d dist",
-    "build:byrne": "webpack -p --config ./tools/webpack.client.prod.js && webpack -p --config ./tools/webpack.server.prod.js",
-    "clean:byrne": "rm -rf build"
+    "build": "webpack -p --config ./tools/webpack.client.prod.js && webpack -p --config ./tools/webpack.server.prod.js",
+    "clean": "rm -rf build"
   },
   "repository": {
     "type": "git",

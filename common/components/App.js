@@ -71,7 +71,7 @@ const App = ({ children }) => (
     */}
     <TopNav
       currentFeedName="Name of the group!"
-      subscribed
+      subscribed={false}
       numFeedMembers={4}
       numNotifications={9}
     />
