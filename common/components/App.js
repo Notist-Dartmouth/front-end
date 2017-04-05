@@ -60,17 +60,54 @@ const groupList = [
   },
 ];
 
+const personalList = [
+  {
+    id: 'xx',
+    groupName: 'Personal 1',
+    groupLink: 'posts',
+    icon: 'iconName',
+  },
+];
+
+const exploreList = [
+  {
+    id: 'xx',
+    groupName: 'Explore 1',
+    groupLink: 'posts',
+    icon: 'iconName',
+  },
+  {
+    id: 'xx',
+    groupName: 'Explore 2',
+    groupLink: 'post',
+    icon: 'iconName',
+  },
+];
+
+const followingList = [
+  {
+    id: 'xx',
+    groupName: 'Person 1',
+    groupLink: 'posts',
+    icon: 'iconName',
+  },
+  {
+    id: 'xx',
+    groupName: 'Person 2',
+    groupLink: 'posts',
+    icon: 'iconName',
+  },
+];
+
 const App = ({ children }) => (
   <div className={css(styles.root)}>
     <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />
     <LeftNav
       groupList={groupList}
+      personalList={personalList}
+      exploreList={exploreList}
+      followingList={followingList}
     />
-    {/*
-    personalList={personalList}
-    exploreList={exploreList}
-    followingList={followingList}
-    */}
     <div className={css(styles.shiftRight)}>
       <TopNav
         currentFeedName="My feed name"
