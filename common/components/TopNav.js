@@ -4,7 +4,8 @@ import Link from 'react-router/lib/Link';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { deepOrange600, red700, white, yellow400, grey900 } from 'material-ui/styles/colors';
+import { red700, white, yellow400, grey900 } from 'material-ui/styles/colors';
+// deepOrange600
 import PeopleIcon from 'material-ui/svg-icons/social/people';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar, ToolbarGroup, ToolbarSeparator } from 'material-ui/Toolbar';
@@ -16,7 +17,7 @@ const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
   palette: {
     accent1Color: red700,
-    accent2Color: deepOrange600,
+    accent2Color: '#F98C25',
     textColor: white,
   },
   userAgent: (typeof navigator !== 'undefined' && navigator.userAgent) || 'all',
@@ -43,7 +44,10 @@ const styles = StyleSheet.create({
     marginTop: -40,
   },
   feedDescription: {
-    fontSize: 14,
+    position: 'fixed',
+    left: 25,
+    fontSize: 16,
+    marginTop: 20,
   },
   numMembers: {
     fontSize: 14,
@@ -65,6 +69,7 @@ export default class TopNav extends React.Component {
     this.numFeedMembers = props.numFeedMembers || 0;
     this.numNotifications = props.numNotifications || 0;
     this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
+    this.feedDescription = props.feedDescription || 'No feed description given';
   }
 
   handleChange = (event, index, value) => this.setState({ value });
@@ -76,10 +81,21 @@ export default class TopNav extends React.Component {
   render() {
     let subButton = null;
     if (this.state.subscribed) {
-      subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} style={{ margin: 20, marginTop: -20 }} />;
+      subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} style={{ marginTop: -20 }} />;
     } else {
-      subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} style={{ marginBottom: 20, marginTop: -20 }} />;
+      subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} style={{ marginTop: -20 }} />;
     }
+    /*
+      when not yet response from button click, use
+      import RefreshIndicator from 'material-ui/lib/refresh-indicator';
+    <RefreshIndicator
+     size={40}
+     left={10}
+     top={0}
+     status="loading"
+     style={style.refresh}
+   />
+      */
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Toolbar style={{ height: 90, top: 0, left: 0, width: '100%', position: 'fixed', zIndex: 200, color: white, fontFamily: 'Roboto, sans-serif' }}>
@@ -88,8 +104,7 @@ export default class TopNav extends React.Component {
             {subButton}
             <PeopleIcon style={{ marginTop: -40 }} />
             <span className={css(styles.numMembers)}>{this.numFeedMembers} members</span>
-            {/* need to turn 8 into a prop */}
-            {/* <p className={css(styles.feedDescription)}>Description for the group</p> */}
+            <p className={css(styles.feedDescription)}>{this.feedDescription}</p>
           </ToolbarGroup>
           <ToolbarGroup>
             <NotificationsDialog

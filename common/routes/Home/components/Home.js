@@ -7,50 +7,15 @@ import data from '../data';
 
 /* I added padding so it doesn't go underneath nav --Byrne */
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 28,
-    lineHeight: '1.2',
-    // margin: '0 0 1.5rem',
-    paddingTop: 90,
-  },
-  lead: {
-    fontSize: 18,
-    lineHeight: '1.5',
-    // margin: '0 0 1.5rem',
-    color: '#555',
-  },
-  body: {
-    fontSize: '1rem',
-    lineHeight: '1.5',
-    // margin: '0 0 1.5rem',
-    color: '#555',
-  },
-  list: {
-    fontSize: '1rem',
-    listStyle: 'none',
-    padding: 0,
-  },
-  link: {
-    display: 'block',
-    fontSize: '1.25rem',
-    margin: '0 0 .5rem',
-    lineHeight: '1.5',
-    fontWeight: 'bold',
-    color: '#08c',
-    opacity: 1,
-    transition: '.2s opacity ease',
-    textDecoration: 'none',
-    ':hover': {
-      opacity: 0.5,
-      textDecoration: 'none',
-    },
+  root: {
+    position: 'relative',
   },
 });
 
 // This is a static page. It uses an array to hold data about the resources
 // and maintain DRY
 const Home = props => (
-  <div>
+  <div className={css(styles.root)}>
 
     <h2 className={css(styles.header)}>About</h2>
     <p className={css(styles.lead)}>

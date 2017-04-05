@@ -112,7 +112,7 @@ class Upvote extends React.Component {
         // });
 
     let upvoteContent = this.props.upvoteContent || <div className="upvote"><GoTriangleUp size={30} color={green500} /></div>;
-    let downvoteContent = this.props.downvoteContent || <div className="downvote"><GoTriangleDown size={30} color={red500} /></div>;
+    let downvoteContent = <div className="downvote"><GoTriangleDown size={30} color={red500} /></div>;
 
         // let beforeContent = this.props.beforeContent || null;
     let beforeContent = this.props.beforeContent || 6;
@@ -126,7 +126,7 @@ class Upvote extends React.Component {
               { upvoteContent }
             </div>
           )}
-          <span> { beforeContent }</span>
+          <div style={{ width: '100%', textAlign: 'center' }}><span>{ beforeContent }</span></div>
           { downvoteContent && (
           <div className="downvote" onClick={() => this.vote(-1)}>
             { downvoteContent }

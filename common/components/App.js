@@ -10,12 +10,16 @@ injectTapEventPlugin();
 const styles = StyleSheet.create({
   root: {
     position: 'relative',
-    top: 90,
-    left: '22%',
-    color: '#000',
+    top: 80,
     margin: '2rem auto',
-    padding: '0 1rem',
-    // width: '70%'
+    maxWidth: '100%',
+    overflowX: 'hidden',
+    // width: '70%',
+  },
+  shiftRight: {
+    position: 'relative',
+    left: 350,
+    width: '75%',
   },
   title: {
     color: '#000',
@@ -39,19 +43,19 @@ const groupList = [
   {
     id: 'abcd190d',
     groupName: 'Group 1',
-    groupLink: 'url',
+    groupLink: 'posts',
     icon: 'iconName',
   },
   {
     id: 'bacd190d',
     groupName: 'Group 2',
-    groupLink: 'url',
+    groupLink: 'posts',
     icon: 'iconName',
   },
   {
     id: 'dacd190d',
     groupName: 'Group 3',
-    groupLink: 'url',
+    groupLink: 'posts',
     icon: 'iconName',
   },
 ];
@@ -67,16 +71,19 @@ const App = ({ children }) => (
     exploreList={exploreList}
     followingList={followingList}
     */}
-    <TopNav
-      currentFeedName="Name of the group!"
-      subscribed={false}
-      numFeedMembers={4}
-      numNotifications={9}
-    />
-    {children}
-    <footer className={css(styles.footer)}>
-      Copyright © 2017 <a className={css(styles.footerLink)} href="http://notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
-    </footer>
+    <div className={css(styles.shiftRight)}>
+      <TopNav
+        currentFeedName="My feed name"
+        subscribed
+        numFeedMembers={6}
+        numNotifications={4}
+        feedDescription="My feed description"
+      />
+      {children}
+      <footer className={css(styles.footer)}>
+        Copyright © 2017 <a className={css(styles.footerLink)} href="http://notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
+      </footer>
+    </div>
   </div>
 );
 

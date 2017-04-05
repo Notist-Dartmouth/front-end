@@ -9,14 +9,9 @@ import { Link } from 'react-router';
 import Upvote from './Upvote';
 
 const styles = StyleSheet.create({
-  cardStyle: {
-    margin: 40,
-    // width: '70%',
-    marginTop: 20,
-    marginBottom: 20,
-    marginRight: 20,
-    marginLeft: 20,
-    align: 'center',
+  overlayContainer: {
+    position: 'relative',
+    left: '70%',
   },
   annotationTextStyle: {
     position: 'relative',
@@ -45,6 +40,16 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textDecoration: 'underline',
   },
+  cardStyle: {
+    // position: 'relative',
+    // top: 80,
+    // left: '22%',
+    width: '56%',
+    marginTop: 20,
+    marginBottom: 20,
+    marginRight: 20,
+    marginLeft: 20,
+  },
   articleInfoBar: {
     float: 'right',
     lineHeight: 2,
@@ -58,8 +63,9 @@ const styles = StyleSheet.create({
   },
 });
 
-class ArticleCard extends React.Component {
+class ArticleCardPrefactor extends React.Component {
   constructor(props) {
+    // spread operator?
     super(props);
     this.title = props.title;
     this.domain = props.domain;
@@ -99,7 +105,7 @@ class ArticleCard extends React.Component {
             <span><MdGroup /> {`     ${this.numUsers}`} users</span>
             <span><MdComment /> {`     ${this.numAnnotations}`} annotations</span>
             <span><MdForum /> {`     ${this.numReplies}`} replies</span>
-            <img width={'100%'} src={this.image} alt="card" />
+            <img width={300} src={this.image} alt="card" />
           </aside>
           <CardActions style={{ clear: 'both', position: 'relative', left: '41%', padding: '3%' }}>
             <Link to={`/${this.domain}/${this.slug}`} className={css(styles.title)}><RaisedButton style={{ top: '10%' }} label="See more" /></Link>
@@ -110,7 +116,7 @@ class ArticleCard extends React.Component {
   }
 }
 
-ArticleCard.propTypes = {
+ArticleCardPrefactor.propTypes = {
   title: React.PropTypes.string.isRequired,
   domain: React.PropTypes.string.isRequired,
   subtitle: React.PropTypes.string.isRequired,
@@ -127,4 +133,4 @@ ArticleCard.propTypes = {
 
 };
 
-export default ArticleCard;
+export default ArticleCardPrefactor;
