@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   feedDescription: {
     position: 'fixed',
     left: 25,
-    fontSize: 16,
+    fontSize: 20,
     marginTop: 20,
   },
   numMembers: {

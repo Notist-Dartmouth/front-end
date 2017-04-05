@@ -16,6 +16,7 @@ import { Link } from 'react-router';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 // import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import HourglassIcon from 'material-ui/svg-icons/action/hourglass-empty';
+import CreateGroupDialog from './CreateGroupDialog';
 
 
 const muiTheme = getMuiTheme({
@@ -71,7 +72,9 @@ export default class LeftNav extends React.Component {
             <MenuItem>Hidden 1</MenuItem>
             <MenuItem>Hidden 2</MenuItem>
             <List>
-              <Subheader className={css(styles.firstSubheader)}>Groups</Subheader>
+              <Subheader className={css(styles.firstSubheader)}>Groups &ensp;
+                <CreateGroupDialog />
+              </Subheader>
               {this.groupList.map(d => (
                 <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
                   <ListItem
