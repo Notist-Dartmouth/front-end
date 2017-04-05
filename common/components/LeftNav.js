@@ -47,10 +47,7 @@ const styles = StyleSheet.create({
     color: white,
     fontSize: 30,
   },
-  subheader: {
-    paddingTop: 20,
-    color: white,
-    fontSize: 30,
+  user: {
   },
 });
 
@@ -71,8 +68,13 @@ export default class LeftNav extends React.Component {
           <Drawer docked width={340} containerStyle={{ backgroundColor: '#44808C', paddingLeft: 20 }} className={css(styles.drawer)}>
             <MenuItem>Hidden 1</MenuItem>
             <MenuItem>Hidden 2</MenuItem>
+            <Avatar
+              src="https://i.imgur.com/9zgiD0u.jpg"
+              size={30}
+            />
+            <span>ethan 994</span>
             <List>
-              <Subheader className={css(styles.firstSubheader)}>Groups &ensp;
+              <Subheader className={css(styles.subheader)}>Groups &ensp;
                 <CreateGroupDialog />
               </Subheader>
               {this.groupList.map(d => (
