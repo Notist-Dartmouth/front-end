@@ -107,6 +107,9 @@ const App = ({ children }) => (
       personalList={personalList}
       exploreList={exploreList}
       followingList={followingList}
+      profilePicture="https://i.imgur.com/9zgiD0u.jpg"
+      userName="ethan"
+      userPoints={994}
     />
     <div className={css(styles.shiftRight)}>
       <TopNav
