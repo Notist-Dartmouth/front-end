@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
     color: white,
     fontFamily: 'Roboto, sans-serif',
   },
-  firstSubheader: {
+  subheader: {
+    paddingTop: 20,
     color: white,
     fontSize: 30,
   },
@@ -59,6 +60,9 @@ export default class LeftNav extends React.Component {
     this.personalList = props.personalList;
     this.exploreList = props.exploreList;
     this.followingList = props.followingList;
+    this.profilePicture = props.profilePicture;
+    this.userName = props.userName;
+    this.userPoints = props.userPoints;
   }
 
   render() {
@@ -68,15 +72,16 @@ export default class LeftNav extends React.Component {
           <Drawer docked width={340} containerStyle={{ backgroundColor: '#44808C', paddingLeft: 20 }} className={css(styles.drawer)}>
             <MenuItem>Hidden 1</MenuItem>
             <MenuItem>Hidden 2</MenuItem>
-            <Avatar
-              src="https://i.imgur.com/9zgiD0u.jpg"
-              size={30}
-            />
-            <span>ethan 994</span>
+            <Link to={'/profile'} style={{ textDecoration: 'none', position: 'relative', top: 10, paddingLeft: 20, color: white }}>
+              <Avatar
+                src={this.profilePicture}
+                size={50}
+              />
+              <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{this.userName}</span>
+              <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{this.userPoints}</span>
+            </Link>
             <List>
-              <Subheader className={css(styles.subheader)}>Groups &ensp;
-                <CreateGroupDialog />
-              </Subheader>
+              <Subheader className={css(styles.subheader)}>Groups &ensp; <CreateGroupDialog /> </Subheader>
               {this.groupList.map(d => (
                 <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
                   <ListItem
