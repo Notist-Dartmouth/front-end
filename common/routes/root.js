@@ -1,4 +1,5 @@
 import App from '../components/App';
+import Login from '../components/Login';
 import Home from './Home';
 
 // polyfill webpack require.ensure
@@ -17,6 +18,11 @@ export default function createRoutes(store) {
         ]);
       });
     },
+
+    loginRoute: {
+      path: '/login',
+      component: Login,
+    }
 
     indexRoute: {
       component: Home,
