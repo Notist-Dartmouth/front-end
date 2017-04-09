@@ -3,7 +3,7 @@ const config = {
   webConcurrency: process.env.WEB_CONCURRENCY || 1,
   port: process.env.PORT || 5000,
   timeout: 29000,
-  apiHost: process.env.NODE_ENV === 'production' ?  'notist.herokuapp.com' : 'localhost:3000',
-}
+  apiHost: process.env.NODE_ENV === 'production' ? 'notist.herokuapp.com' : 'localhost:3000',
+};
 
-module.exports = config
+module.exports = config;

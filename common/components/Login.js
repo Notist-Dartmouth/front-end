@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import config from '../../server/config';
 
 const styles = StyleSheet.create({
   root: {
@@ -30,13 +31,13 @@ const Login = props => (
     <div className={css(styles.loginForm)}>
       <h1 className={css(styles.header)}>Notist</h1>
       <br />
-      <a
+      <a href={`http://${config.apiHost}/login/facebook`}
         className={`btn btn-block btn-social btn-lg btn-facebook ${css(styles.button)}`}
       >
         <i className="fa fa-facebook" /> Sign in with Facebook
       </a>
       <br />
-      <a
+      <a href={`http://${config.apiHost}/auth/google`}
         className={`btn btn-block btn-social btn-lg btn-google ${css(styles.button)}`}
       >
         <i className="fa fa-google" /> Sign in with Google
