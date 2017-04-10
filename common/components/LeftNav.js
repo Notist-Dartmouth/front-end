@@ -69,6 +69,7 @@ export default class LeftNav extends React.Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
+          {/* make position: 'relative' */}
           <Drawer docked width={340} containerStyle={{ backgroundColor: '#44808C', paddingLeft: 20 }} className={css(styles.drawer)}>
             <MenuItem>Hidden 1</MenuItem>
             <MenuItem>Hidden 2</MenuItem>
