@@ -16,7 +16,7 @@ import { Link } from 'react-router';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 // import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import HourglassIcon from 'material-ui/svg-icons/action/hourglass-empty';
-import CreateGroupDialog from './CreateGroupDialog';
+import GroupDialog from '../containers/GroupDialog';
 
 
 const muiTheme = getMuiTheme({
@@ -82,7 +82,7 @@ export default class LeftNav extends React.Component {
               <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{this.userPoints}</span>
             </Link>
             <List>
-              <Subheader className={css(styles.subheader)}>Groups &ensp; <CreateGroupDialog /> </Subheader>
+              <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
               {this.groupList.map(d => (
                 <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
                   <ListItem

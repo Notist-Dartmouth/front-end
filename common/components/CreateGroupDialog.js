@@ -1,7 +1,7 @@
 /* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
 /* eslint-disable no-unused-vars */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 /**
  * Dialog content can be scrollable.
  */
-export default class CreateGroupDialog extends React.Component {
+class CreateGroupDialog extends React.Component {
   state = {
     open: false,
   };
@@ -50,6 +50,7 @@ export default class CreateGroupDialog extends React.Component {
       <FlatButton
         label="Submit"
         primary
+        onClick={this.props.onSubmit}
         keyboardFocused
         onTouchTap={this.handleClose}
       />,
@@ -72,10 +73,13 @@ export default class CreateGroupDialog extends React.Component {
           <TextField
             className={css(styles.groupInput)}
             hintText="Group Name"
+            onChange={this.props.onChange}
+            errorText={this.props.validName ? '' : 'Group name is required'}
           />
           <TextField
             className={css(styles.groupInput)}
             hintText="Description"
+            onChange={this.props.onChange}
             multiline
           />
         </Dialog>
@@ -83,3 +87,11 @@ export default class CreateGroupDialog extends React.Component {
     );
   }
 }
+
+CreateGroupDialog.propTypes = {
+  validName: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default CreateGroupDialog;
