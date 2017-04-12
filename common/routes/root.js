@@ -11,6 +11,7 @@ export default function createRoutes(store) {
     getChildRoutes(location, cb) {
       require.ensure([], (require) => {
         cb(null, [
+          require('./Discussion').default(store),
           require('./PostList').default(store), // no need to modify store, no reducer
           require('./Post').default(store), // add async reducer
           require('./NotFound').default,
