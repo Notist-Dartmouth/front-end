@@ -4,6 +4,7 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 import { RadioButton } from 'material-ui/RadioButton';
 import { StyleSheet, css } from 'aphrodite';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
@@ -15,6 +16,11 @@ const styles = StyleSheet.create({
   radioButton: {
     textColor: fullBlack,
     marginTop: 16,
+  },
+  groupInput: {
+    display: 'block',
+    width: '75%',
+    margin: '0 auto',
   },
 });
 
@@ -63,7 +69,15 @@ export default class CreateGroupDialog extends React.Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent
         >
-          <p style={{ color: fullBlack }}>Some text</p>
+          <TextField
+            className={css(styles.groupInput)}
+            hintText="Group Name"
+          />
+          <TextField
+            className={css(styles.groupInput)}
+            hintText="Description"
+            multiline
+          />
         </Dialog>
       </span>
     );
