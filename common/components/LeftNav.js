@@ -58,9 +58,9 @@ export default class LeftNav extends React.Component {
     super(props);
     console.log(props.groups);
     this.groups = props.groups;
-    // this.personalList = props.personalList;
-    // this.exploreList = props.exploreList;
-    // this.followingList = props.followingList;
+    this.personalList = props.personalList;
+    this.exploreList = props.exploreList;
+    this.followingList = props.followingList;
     this.profilePicture = props.profilePicture;
     this.userName = props.userName;
     this.userPoints = props.userPoints;
@@ -84,13 +84,12 @@ export default class LeftNav extends React.Component {
             </Link>
             <List>
               <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
-              {this.groupList.map(d => (
-                <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-                  <ListItem
-                    leftAvatar={<Avatar icon={<HourglassIcon />} />}
-                    primaryText={d.groupName}
-                  />
-                </Link>
+              {this.groups.map(d => (
+                <ListItem
+                  key={d._id}
+                  leftAvatar={<Avatar icon={<HourglassIcon />} />}
+                  primaryText={d.name}
+                />
               ))}
             </List>
             {/* <Divider */}

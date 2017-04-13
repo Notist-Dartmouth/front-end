@@ -39,66 +39,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// const groups = [
-//   {
-//     _id: 'abcd190d',
-//     name: 'Group 1',
-//     des: 'posts',
-//     icon: 'iconName',
-//   },
-//   {
-//     id: 'bacd190d',
-//     groupName: 'Group 2',
-//     groupLink: 'posts',
-//     icon: 'iconName',
-//   },
-//   {
-//     id: 'dacd190d',
-//     groupName: 'Group 3',
-//     groupLink: 'posts',
-//     icon: 'iconName',
-//   },
-// ];
-//
-// const personalList = [
-//   {
-//     id: 'xx',
-//     groupName: 'Personal 1',
-//     groupLink: 'posts',
-//     icon: 'iconName',
-//   },
-// ];
-//
-// const exploreList = [
-//   {
-//     id: 'xx',
-//     groupName: 'Explore 1',
-//     groupLink: 'posts',
-//     icon: 'iconName',
-//   },
-//   {
-//     id: 'xx',
-//     groupName: 'Explore 2',
-//     groupLink: 'post',
-//     icon: 'iconName',
-//   },
-// ];
-//
-// const followingList = [
-//   {
-//     id: 'xx',
-//     groupName: 'Person 1',
-//     groupLink: 'posts',
-//     icon: 'iconName',
-//   },
-//   {
-//     id: 'xx',
-//     groupName: 'Person 2',
-//     groupLink: 'posts',
-//     icon: 'iconName',
-//   },
-// ];
-
 const App = ({ children }) => (
   <div className={css(styles.root)}>
     <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />

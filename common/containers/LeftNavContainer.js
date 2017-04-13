@@ -3,6 +3,67 @@ import { connect } from 'react-redux';
 import { fetchUser } from '../actions/groups';
 import LeftNav from '../components/LeftNav';
 
+// const groups = [
+//   {
+//     _id: 'abcd190d',
+//     name: 'Group 1',
+//     des: 'posts',
+//     icon: 'iconName',
+//   },
+//   {
+//     id: 'bacd190d',
+//     groupName: 'Group 2',
+//     groupLink: 'posts',
+//     icon: 'iconName',
+//   },
+//   {
+//     id: 'dacd190d',
+//     groupName: 'Group 3',
+//     groupLink: 'posts',
+//     icon: 'iconName',
+//   },
+// ];
+//
+
+const personalList = [
+  {
+    id: 'xx',
+    groupName: 'Personal 1',
+    groupLink: 'posts',
+    icon: 'iconName',
+  },
+];
+
+const exploreList = [
+  {
+    id: 'xx',
+    groupName: 'Explore 1',
+    groupLink: 'posts',
+    icon: 'iconName',
+  },
+  {
+    id: 'xx',
+    groupName: 'Explore 2',
+    groupLink: 'post',
+    icon: 'iconName',
+  },
+];
+
+const followingList = [
+  {
+    id: 'xx',
+    groupName: 'Person 1',
+    groupLink: 'posts',
+    icon: 'iconName',
+  },
+  {
+    id: 'xx',
+    groupName: 'Person 2',
+    groupLink: 'posts',
+    icon: 'iconName',
+  },
+];
+
 class LeftNavContainer extends Component {
 
   constructor(props) {
@@ -17,6 +78,9 @@ class LeftNavContainer extends Component {
     return (
       <LeftNav
         groups={this.props.groups}
+        personalList={personalList}
+        exploreList={exploreList}
+        followingList={followingList}
         profilePicture="https://i.imgur.com/9zgiD0u.jpg"
         userName="ethan"
         userPoints={994}
