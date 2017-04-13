@@ -70,18 +70,21 @@ class CreateGroupDialog extends React.Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent
         >
-          <TextField
-            className={css(styles.groupInput)}
-            hintText="Group Name"
-            onChange={this.props.onChange}
-            errorText={this.props.validName ? '' : 'Group name is required'}
-          />
-          <TextField
-            className={css(styles.groupInput)}
-            hintText="Description"
-            onChange={this.props.onChange}
-            multiline
-          />
+          <div>
+            <TextField
+              id="name"
+              className={css(styles.groupInput)}
+              hintText="Group Name"
+              onChange={this.props.onChange}
+              errorText={this.props.validName ? '' : 'Group name is required'}
+            />
+            <TextField
+              id="description"
+              className={css(styles.groupInput)}
+              hintText="Description"
+              onChange={this.props.onChange}
+            />
+          </div>
         </Dialog>
       </span>
     );

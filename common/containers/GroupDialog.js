@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import CreateGroupDialog from '../components/CreateGroupDialog';
+import saveGroup from '../actions/groups';
 
 class GroupDialog extends React.Component {
 
@@ -28,7 +30,14 @@ class GroupDialog extends React.Component {
   handleSubmit() {
     if (this.state.name.length === 0) {
       this.setState({ validName: false });
+      return;
     }
+    const newGroup = {
+      name: this.state.name,
+      description: this.state.description,
+    };
+    console.log(newGroup);
+    this.props.dispatch(saveGroup(newGroup));
   }
 
   render() {
@@ -42,4 +51,8 @@ class GroupDialog extends React.Component {
   }
 }
 
-export default GroupDialog;
+GroupDialog.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect()(GroupDialog);
