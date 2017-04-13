@@ -56,10 +56,11 @@ export default class LeftNav extends React.Component {
 
   constructor(props) {
     super(props);
-    this.groupList = props.groupList;
-    this.personalList = props.personalList;
-    this.exploreList = props.exploreList;
-    this.followingList = props.followingList;
+    console.log(props.groups);
+    this.groups = props.groups;
+    // this.personalList = props.personalList;
+    // this.exploreList = props.exploreList;
+    // this.followingList = props.followingList;
     this.profilePicture = props.profilePicture;
     this.userName = props.userName;
     this.userPoints = props.userPoints;

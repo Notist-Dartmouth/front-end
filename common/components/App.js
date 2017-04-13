@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { StyleSheet, css } from 'aphrodite';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import TopNav from './TopNav';
-import LeftNav from './LeftNav';
+import LeftNavContainer from '../containers/LeftNavContainer';
 
 injectTapEventPlugin();
 
@@ -39,78 +39,70 @@ const styles = StyleSheet.create({
   },
 });
 
-const groupList = [
-  {
-    id: 'abcd190d',
-    groupName: 'Group 1',
-    groupLink: 'posts',
-    icon: 'iconName',
-  },
-  {
-    id: 'bacd190d',
-    groupName: 'Group 2',
-    groupLink: 'posts',
-    icon: 'iconName',
-  },
-  {
-    id: 'dacd190d',
-    groupName: 'Group 3',
-    groupLink: 'posts',
-    icon: 'iconName',
-  },
-];
-
-const personalList = [
-  {
-    id: 'xx',
-    groupName: 'Personal 1',
-    groupLink: 'posts',
-    icon: 'iconName',
-  },
-];
-
-const exploreList = [
-  {
-    id: 'xx',
-    groupName: 'Explore 1',
-    groupLink: 'posts',
-    icon: 'iconName',
-  },
-  {
-    id: 'xx',
-    groupName: 'Explore 2',
-    groupLink: 'post',
-    icon: 'iconName',
-  },
-];
-
-const followingList = [
-  {
-    id: 'xx',
-    groupName: 'Person 1',
-    groupLink: 'posts',
-    icon: 'iconName',
-  },
-  {
-    id: 'xx',
-    groupName: 'Person 2',
-    groupLink: 'posts',
-    icon: 'iconName',
-  },
-];
+// const groups = [
+//   {
+//     _id: 'abcd190d',
+//     name: 'Group 1',
+//     des: 'posts',
+//     icon: 'iconName',
+//   },
+//   {
+//     id: 'bacd190d',
+//     groupName: 'Group 2',
+//     groupLink: 'posts',
+//     icon: 'iconName',
+//   },
+//   {
+//     id: 'dacd190d',
+//     groupName: 'Group 3',
+//     groupLink: 'posts',
+//     icon: 'iconName',
+//   },
+// ];
+//
+// const personalList = [
+//   {
+//     id: 'xx',
+//     groupName: 'Personal 1',
+//     groupLink: 'posts',
+//     icon: 'iconName',
+//   },
+// ];
+//
+// const exploreList = [
+//   {
+//     id: 'xx',
+//     groupName: 'Explore 1',
+//     groupLink: 'posts',
+//     icon: 'iconName',
+//   },
+//   {
+//     id: 'xx',
+//     groupName: 'Explore 2',
+//     groupLink: 'post',
+//     icon: 'iconName',
+//   },
+// ];
+//
+// const followingList = [
+//   {
+//     id: 'xx',
+//     groupName: 'Person 1',
+//     groupLink: 'posts',
+//     icon: 'iconName',
+//   },
+//   {
+//     id: 'xx',
+//     groupName: 'Person 2',
+//     groupLink: 'posts',
+//     icon: 'iconName',
+//   },
+// ];
 
 const App = ({ children }) => (
   <div className={css(styles.root)}>
     <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />
-    <LeftNav
-      groupList={groupList}
-      personalList={personalList}
-      exploreList={exploreList}
-      followingList={followingList}
-      profilePicture="https://i.imgur.com/9zgiD0u.jpg"
-      userName="ethan"
-      userPoints={994}
-    />
+    <LeftNavContainer />
     <div className={css(styles.shiftRight)}>
       <TopNav
         currentFeedName="My feed name"
