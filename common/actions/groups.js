@@ -14,7 +14,7 @@ function handleSaveGroupSuccess(group) {
   };
 }
 
-export default function saveGroup(group) {
+export function saveGroup(group) {
   return (dispatch, getState) =>
     fetch(`http://${config.apiHost}/api/group`, {
       method: 'POST',

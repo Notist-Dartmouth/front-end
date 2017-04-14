@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CreateGroupDialog from '../components/CreateGroupDialog';
-import saveGroup from '../actions/groups';
+import { saveGroup } from '../actions/groups';
 
 class GroupDialog extends React.Component {
 
