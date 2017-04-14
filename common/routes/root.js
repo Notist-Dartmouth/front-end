@@ -1,28 +1,9 @@
-import App from '../components/App';
-import Home from './Home';
+import React from 'react';
+import { Router, browserHistory } from 'react-router';
+import routes from './routes';
 
-// polyfill webpack require.ensure
-if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require);
+const myRouter = (
+  <Router routes={routes} history={browserHistory} />
+);
 
-export default function createRoutes(store) {
-  const root = {
-    path: '/',
-    component: App,
-    getChildRoutes(location, cb) {
-      require.ensure([], (require) => {
-        cb(null, [
-          require('./Discussion').default(store),
-          require('./PostList').default(store), // no need to modify store, no reducer
-          require('./Post').default(store), // add async reducer
-          require('./NotFound').default,
-        ]);
-      });
-    },
-
-    indexRoute: {
-      component: Home,
-    },
-  };
-
-  return root;
-}
+export default myRouter;

@@ -1,30 +1,30 @@
-import * as types from '../../constants';
+import order from './produceCommentGraph';
 
-const initialState = {
-  data: [],
-  lastFetched: null,
-  isLoading: false,
-  error: null,
-};
-
-export default function comments(state = initialState, action) {
+function discussionViewReducer(state = {
+  parentIdx: 0,
+  replyText: '',
+  isVisible: true,
+  ordering: order,
+}, action) {
+  console.log('I called the reducer! Yay!');
   switch (action.type) {
-    case types.LOAD_COMMENTS_REQUEST:
-      return { ...state,
-        isLoading: true,
-        error: null };
-    case types.LOAD_COMMENTS_SUCCESS:
-      return { ...state,
-        data: action.payload,
-        lastFetched: action.meta.lastFetched,
-        isLoading: false };
-    case types.LOAD_COMMENTS_FAILURE:
-      return { ...state,
-        error: action.payload };
+    case 'TOGGLE_REPLY':
+      return Object.assign({}, state, {
+        parentIdx: action.parentIdx,
+        replyText: action.replyText,
+        isVisible: action.isVisible,
+        ordering: action.ordering,
+      });
+    case 'POST_REPLY':
+      return Object.assign({}, state, {
+        parentIdx: action.parentIdx,
+        replyText: action.replyText,
+        isVisible: action.isVisible,
+        ordering: action.ordering,
+      });
     default:
       return state;
   }
 }
 
-// Example of a co-located selector
-export const selectComments = state => state.comments;
+export default discussionViewReducer;

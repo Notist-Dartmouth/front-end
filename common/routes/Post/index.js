@@ -1,20 +1,16 @@
+import { createStore } from 'redux';
 import { injectAsyncReducer } from '../../store';
+import postReducer from './reducer';
+import PostPage from './containers/PostPage';
 
-if (typeof require.ensure !== 'function') require.ensure = (d, c) => c(require);
+const postStore = createStore(postReducer);
 
-export default function createRoutes(store) {
+export default function createRoutes() {
   return {
     path: 'post/:slug',
     getComponents(location, cb) {
-      require.ensure([
-        './containers/PostPage',
-        './reducer',
-      ], (require) => {
-        const PostPage = require('./containers/PostPage').default;
-        const postReducer = require('./reducer').default;
-        injectAsyncReducer(store, 'currentPost', postReducer);
-        cb(null, PostPage);
-      });
+      injectAsyncReducer(postStore, 'currentPost', postReducer);
+      cb(null, PostPage);
     },
   };
 }

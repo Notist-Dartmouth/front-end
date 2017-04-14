@@ -30,7 +30,7 @@ import webpackConfig from '../tools/webpack.client.dev';
 import { compileDev, startDev } from '../tools/dx';
 import { configureStore } from '../common/store';
 import reducer from '../common/createReducer';
-import createRoutes from '../common/routes/root';
+import myRouter from '../common/routes/root';
 
 export const createServer = (config) => {
   const __PROD__ = config.nodeEnv === 'production';
@@ -73,11 +73,11 @@ export const createServer = (config) => {
         host: req.headers.host,
       },
     });
-    const routes = createRoutes(store);
+
     const history = createMemoryHistory(req.originalUrl);
     const { dispatch } = store;
 
-    match({ routes, history }, (err, redirectLocation, renderProps) => {
+    match({ myRouter, history }, (err, redirectLocation, renderProps) => {
       if (err) {
         console.error(err);
         return res.status(500).send('Internal server error');
