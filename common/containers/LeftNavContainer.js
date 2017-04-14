@@ -68,6 +68,7 @@ class LeftNavContainer extends Component {
 
   constructor(props) {
     super(props);
+    this.groups = props.groups;
   }
 
   componentDidMount() {
@@ -77,7 +78,7 @@ class LeftNavContainer extends Component {
   render() {
     return (
       <LeftNav
-        groups={this.props.groups}
+        groups={this.groups}
         personalList={personalList}
         exploreList={exploreList}
         followingList={followingList}
@@ -105,7 +106,6 @@ LeftNavContainer.defaultProps = {
 };
 
 function mapStateToProps(state) {
-  console.log(state);
   const { groups } = state.user;
   return { groups };
 }

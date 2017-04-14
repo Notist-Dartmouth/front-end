@@ -1,4 +1,4 @@
-import 'whatwg-fetch';
+import fetch from 'isomorphic-fetch';
 import * as types from '../constants/ActionTypes';
 import config from '../../server/config';
 
