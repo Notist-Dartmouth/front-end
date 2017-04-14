@@ -1,6 +1,6 @@
 import order from './produceCommentGraph';
 
-function discussionViewReducer(state = {
+export default function discussionViewReducer(state = {
   parentIdx: 0,
   replyText: '',
   isVisible: true,
@@ -26,5 +26,3 @@ function discussionViewReducer(state = {
       return state;
   }
 }
-
-export default discussionViewReducer;

@@ -74,10 +74,11 @@ export const createServer = (config) => {
       },
     });
 
+    const routes = myRouter.props.routes;
     const history = createMemoryHistory(req.originalUrl);
     const { dispatch } = store;
 
-    match({ myRouter, history }, (err, redirectLocation, renderProps) => {
+    match({ routes, history }, (err, redirectLocation, renderProps) => {
       if (err) {
         console.error(err);
         return res.status(500).send('Internal server error');

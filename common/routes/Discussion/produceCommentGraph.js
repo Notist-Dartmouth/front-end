@@ -1,4 +1,5 @@
 //  TO DO: Make this query API to get comments and sort according to timestamp
+/* eslint no-param-reassign: ["error", { "props": false }]*/
 
 function Node(data) {
   this.data = data;
@@ -12,7 +13,7 @@ function Tree(data) {
   this._root = node;
 }
 
-Tree.prototype.traverseDF = function (callback) {
+Tree.prototype.traverseDF = function cb(callback) {
   const order = [];
   // this is a recurse and immediately-invoking function
   (function recurse(currentNode, depth = 0) {
@@ -23,7 +24,7 @@ Tree.prototype.traverseDF = function (callback) {
       recurse(currentNode.children[i], currentNode.depth + 1);
     }
     callback(currentNode);
-  })(this._root);
+  }(this._root));
 
   return order;
 };
@@ -50,7 +51,7 @@ tree._root.children[0].children[1].parent = tree._root.children[0];
 tree._root.children[2].children.push(new Node('I like saying lorem ipsum too!'));
 tree._root.children[2].children[0].parent = tree._root.children[2];
 
-const order = tree.traverseDF(function (node) {
+const order = tree.traverseDF((node) => {
 
 });
 
