@@ -24,7 +24,6 @@ export default class CommentBox extends Component {
 
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
 
-
   onToggleReply() {
     let visible = false;
     if (this.props.id !== discussionStore.getState().parentIdx) {
@@ -43,6 +42,7 @@ export default class CommentBox extends Component {
   }
 
   onPostReply() {
+    console.log('POSTING REPLY!');
     const textInsideTextArea = document.getElementById('textarea'.concat(this.props.id.toString())).value;
     const arrayIndex = this.getLastBeforeEnd();   //  this.getLastBeforeEnd(); //  This is where commentBox should be inserted in the array
 

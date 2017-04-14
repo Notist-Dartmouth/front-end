@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
+import { Provider } from 'redux';
 import App from '../components/App';
 import Home from './Home';
-import d from './Discussion';
+import d, { discussionStore } from './Discussion';
 import a from './PostList';
 import b from './Post';
 import c from './NotFound';
@@ -16,7 +17,7 @@ const routeCompC = c();
 console.log(`Hello!${JSON.stringify(routeCompD)}`);
 
 const routes = (
-  <Route path="/" component={discussion}>
+  <Route path="/" component={App}>
     <IndexRoute component={Home} />
     <Route path="/hi" component={discussion} />
     <Route path={routeCompA.path} component={routeCompA.component} />
