@@ -13,7 +13,9 @@ export default class Comments extends Component {
     return (
       <div>
         {this.nodes.map((node, i) => {
+          /* eslint-disable */
           return (<CommentBox node={node} key={i} id={i} />);
+          /* eslint-enable */
         })}
       </div>
     );

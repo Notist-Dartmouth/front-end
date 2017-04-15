@@ -1,28 +1,27 @@
+
+
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { Provider } from 'redux';
+// import { Provider } from 'redux';
 import App from '../components/App';
 import Home from './Home';
-import d, { discussionStore } from './Discussion';
-import a from './PostList';
-import b from './Post';
-import c from './NotFound';
+// import { discussionStore } from './Discussion';
+// import a from './PostList';
+// import b from './Post';
+import PostPage from './Post/containers/PostPage';
+import NotFound from './NotFound';
 import discussion from './Discussion/content';
 
-const routeCompD = d();
-const routeCompA = a();
-const routeCompB = b();
-const routeCompC = c();
-
-console.log(`Hello!${JSON.stringify(routeCompD)}`);
+// const routeCompD = d();
+// const routeCompA = a();
+// const routeCompB = b();
 
 const routes = (
-  <Route path="/" component={App}>
+  <Route path="/" component={App} onChange={console.log('Hi')} >
     <IndexRoute component={Home} />
-    <Route path="/hi" component={discussion} />
-    <Route path={routeCompA.path} component={routeCompA.component} />
-    <Route path={routeCompB.path} component={routeCompB.component} />
-    <Route path="*" component={routeCompC.component} />
+    <Route path="/discussion" component={discussion} />
+    <Route path="/post" component={PostPage} />
+    <Route path="*" component={NotFound} />
   </Route>
 );
 
