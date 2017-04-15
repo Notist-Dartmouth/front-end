@@ -20,7 +20,7 @@ const routes = (
   <Route path="/" component={App} onChange={console.log('Hi')} >
     <IndexRoute component={Home} />
     <Route path="/discussion" component={discussion} />
-    <Route path="/post" component={PostPage} />
+    <Route path="/posts" component={PostPage} />
     <Route path="*" component={NotFound} />
   </Route>
 );
