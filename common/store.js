@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 import axios from 'axios';
 import createReducer from './createReducer';
 
@@ -11,6 +12,7 @@ export function configureStore(initialState) {
   const store = createStore(createReducer(), initialState, compose(
     applyMiddleware(
       thunk.withExtraArgument({ axios }),
+      logger,
     ),
 
     process.env.NODE_ENV === 'development' &&
