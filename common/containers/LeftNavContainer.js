@@ -71,7 +71,7 @@ class LeftNavContainer extends Component {
     this.groups = props.groups;
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(fetchUser());
   }
 
@@ -105,7 +105,7 @@ LeftNavContainer.defaultProps = {
   groups: [],
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const { groups } = state.user;
   return { groups };
 }
