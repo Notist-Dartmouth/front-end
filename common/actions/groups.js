@@ -14,6 +14,7 @@ export function saveGroup(group) {
     .then((savedGroup) => {
       if (savedGroup.SUCCESS) {
         dispatch(handleSaveGroupSuccess(savedGroup.SUCCESS));
+        window.location.reload();
       } // TODO handle error
     });
 }
