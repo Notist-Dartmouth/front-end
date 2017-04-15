@@ -8,6 +8,8 @@ import browserHistory from 'react-router/lib/browserHistory';
 import { Provider } from 'react-redux';
 import { StyleSheet } from 'aphrodite';
 import { configureStore } from '../common/store';
+import * as api from '../common/api';
+import { updateUser } from '../common/actions/groups';
 
 /* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
 /* eslint-disable no-shadow */
@@ -35,12 +37,15 @@ const render = () => {
     // Render app with Redux and router context to container element.
     // We need to have a random in development because of `match`'s dependency on
     // `routes.` Normally, we would want just one file from which we require `routes` from.
-    ReactDOM.render(
-      <Provider store={store}>
-        <Router routes={routes} history={browserHistory} key={Math.random()} />
-      </Provider>,
-      container,
-    );
+    api.fetchUser().then((user) => {
+      store.dispatch(updateUser(user.groups, user.username));
+      ReactDOM.render(
+        <Provider store={store}>
+          <Router routes={routes} history={browserHistory} key={Math.random()} />
+        </Provider>,
+        container,
+      );
+    });
   });
 
   return browserHistory.listen((location) => {

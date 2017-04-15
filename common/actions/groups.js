@@ -1,11 +1,5 @@
-import fetch from 'isomorphic-fetch';
 import * as types from '../constants/ActionTypes';
-import config from '../../server/config';
-
-const headers = {
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
-};
+import * as api from '../api';
 
 function handleSaveGroupSuccess(group) {
   return {
@@ -16,14 +10,7 @@ function handleSaveGroupSuccess(group) {
 
 export function saveGroup(group) {
   return (dispatch, getState) =>
-    fetch(`http://${config.apiHost}/api/group`, {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
-      headers,
-      body: JSON.stringify(group),
-    })
-    .then(res => res.json())
+    api.saveGroup(group)
     .then((savedGroup) => {
       if (savedGroup.SUCCESS) {
         dispatch(handleSaveGroupSuccess(savedGroup.SUCCESS));
@@ -43,34 +30,5 @@ export function updateAuthStatus(isAuthenticated) {
   return {
     type: types.UPDATE_AUTH_STATUS,
     isAuthenticated,
-  };
-}
-
-export function fetchUser() {
-  return (dispatch, getState) => {
-    const { isFetchingUser } = getState().user;
-    if (isFetchingUser) {
-      return Promise.resolve();
-    } else {
-      return fetch(`http://${config.apiHost}/api/user`, {
-        method: 'GET',
-        credentials: 'include',
-        headers,
-      })
-      .then((res) => {
-        if (res.status === 401) {
-          dispatch(updateAuthStatus(false));
-          return {};
-        } else {
-          return res.json();
-        }
-      })
-      .then((user) => {
-        if (user.groups && user.username) {
-          dispatch(updateUser(user.groups, user.username));
-          dispatch(updateAuthStatus(true));
-        }
-      });
-    }
   };
 }

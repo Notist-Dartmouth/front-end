@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchUser } from '../actions/groups';
 import LeftNav from '../components/LeftNav';
 
 // const groups = [
@@ -71,10 +70,6 @@ class LeftNavContainer extends Component {
     this.groups = props.groups;
   }
 
-  componentWillMount() {
-    this.props.dispatch(fetchUser());
-  }
-
   render() {
     return (
       <LeftNav
@@ -91,7 +86,6 @@ class LeftNavContainer extends Component {
 }
 
 LeftNavContainer.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   groups: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,
