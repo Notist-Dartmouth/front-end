@@ -74,7 +74,6 @@ export const createServer = (config) => {
       },
     });
 
-    console.log(`Hi! ${JSON.stringify(routes)}`);
     const history = createMemoryHistory(req.originalUrl);
     const { dispatch } = store;
     const routes = myRouter.props.routes;

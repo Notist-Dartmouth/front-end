@@ -8,20 +8,21 @@ import browserHistory from 'react-router/lib/browserHistory';
 import { Provider } from 'react-redux';
 import { StyleSheet } from 'aphrodite';
 import { configureStore } from '../common/store';
-import mRouter from '../common/routes/routes';
+import createRouter from '../common/routes/routes';
 
 /* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
 /* eslint-disable no-shadow */
 
 // We need to have a root route for HMR to work.
-const routes = mRouter.props.routes;
+
 
 const initialState = window.INITIAL_STATE || {};
 // Set up Redux (note: this API requires redux@>=3.1.0):
 const store = configureStore(initialState);
 const { dispatch } = store;
-
 const container = document.getElementById('root');
+
+const routes = createRouter(store).props.routes;
 
 StyleSheet.rehydrate(window.renderedClassNames);
 
@@ -78,7 +79,7 @@ const render = () => {
 const unsubscribeHistory = render();
 
 if (module.hot) {
-  module.hot.accept('../common/routes/root', () => {
+  module.hot.accept('../common/routes/routes', () => {
     unsubscribeHistory();
     setTimeout(render);
   });
