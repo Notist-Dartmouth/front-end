@@ -2,7 +2,6 @@ import 'babel-polyfill';
 import { trigger } from 'redial';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from 'react-router/lib/Router';
 import match from 'react-router/lib/match';
 import browserHistory from 'react-router/lib/browserHistory';
 import { Provider } from 'react-redux';
@@ -38,7 +37,7 @@ const render = () => {
     // `routes.` Normally, we would want just one file from which we require `routes` from.
     ReactDOM.render(
       <Provider store={store}>
-        <Router routes={routes} history={browserHistory} key={Math.random()} />
+        { createRouter(store) }
       </Provider>,
       container,
     );
