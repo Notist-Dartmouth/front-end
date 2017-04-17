@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
+import { connect } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
@@ -8,7 +9,7 @@ import order, { Node } from '../produceCommentGraph';
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
 
-export default class CommentBox extends Component {
+class CommentBox extends Component {
   constructor(props) {
     super(props);
     this.id = props.id;
@@ -25,13 +26,13 @@ export default class CommentBox extends Component {
 
   onToggleReply() {
     let visible = false;
-    if (this.props.id !== store.getState().parentIdx) {
+    if (this.props.id !== this.props.parentIdx) {
       visible = true;
     } else {
-      visible = !store.getState().isVisible;
+      visible = !this.props.isVisible;
     }
 
-    store.dispatch({
+    this.props.dispatch({
       type: 'TOGGLE_REPLY',
       parentIdx: this.props.id, // This is the index in the orderings array
       replyText: '',
@@ -54,7 +55,7 @@ export default class CommentBox extends Component {
     order.splice(arrayIndex, 0, addedNode);
 
     console.log('Post! '.concat(textInsideTextArea));
-    store.dispatch({
+    this.props.dispatch({
       type: 'POST_REPLY',
       parentIdx: this.id,
       replyText: textInsideTextArea,
@@ -82,7 +83,7 @@ export default class CommentBox extends Component {
 
     let textarea = <span id={'Hi'} />;
 
-    if (store.getState().isVisible && store.getState().parentIdx === order.indexOf(this.props.node)) {
+    if (this.props.isVisible && this.props.parentIdx === order.indexOf(this.props.node)) {
       textarea = (
         <div>
           <textarea id={'textarea'.concat(this.id.toString())}
@@ -119,3 +120,19 @@ export default class CommentBox extends Component {
     );
   }
 }
+
+CommentBox.propTypes = {
+  parentIdx: PropTypes.number.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
+function mapStateToProps(state) {
+  const { parentIdx, isVisible } = state;
+  return {
+    parentIdx,
+    isVisible,
+  };
+}
+
+export default connect(mapStateToProps)(CommentBox);

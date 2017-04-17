@@ -76,7 +76,7 @@ export const createServer = (config) => {
 
     const history = createMemoryHistory(req.originalUrl);
     const { dispatch } = store;
-    const routes = myRouter.props.routes;
+    const routes = myRouter(store);
 
     match({ routes, history }, (err, redirectLocation, renderProps) => {
       if (err) {
