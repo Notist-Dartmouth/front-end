@@ -3,7 +3,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import { muiTheme } from '../styles/styles';
-import { discussionStore } from '../index';
 import order, { Node } from '../produceCommentGraph';
 
 const COMMENTINDENTAMOUNT = 50;
@@ -26,13 +25,13 @@ export default class CommentBox extends Component {
 
   onToggleReply() {
     let visible = false;
-    if (this.props.id !== discussionStore.getState().parentIdx) {
+    if (this.props.id !== store.getState().parentIdx) {
       visible = true;
     } else {
-      visible = !discussionStore.getState().isVisible;
+      visible = !store.getState().isVisible;
     }
 
-    discussionStore.dispatch({
+    store.dispatch({
       type: 'TOGGLE_REPLY',
       parentIdx: this.props.id, // This is the index in the orderings array
       replyText: '',
@@ -55,7 +54,7 @@ export default class CommentBox extends Component {
     order.splice(arrayIndex, 0, addedNode);
 
     console.log('Post! '.concat(textInsideTextArea));
-    discussionStore.dispatch({
+    store.dispatch({
       type: 'POST_REPLY',
       parentIdx: this.id,
       replyText: textInsideTextArea,
@@ -83,7 +82,7 @@ export default class CommentBox extends Component {
 
     let textarea = <span id={'Hi'} />;
 
-    if (discussionStore.getState().isVisible && discussionStore.getState().parentIdx === order.indexOf(this.props.node)) {
+    if (store.getState().isVisible && store.getState().parentIdx === order.indexOf(this.props.node)) {
       textarea = (
         <div>
           <textarea id={'textarea'.concat(this.id.toString())}

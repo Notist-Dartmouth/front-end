@@ -1,15 +1,12 @@
-import { createStore } from 'redux';
 import { injectAsyncReducer } from '../../store';
 import postReducer from './reducer';
 import PostPage from './containers/PostPage';
 
-const postStore = createStore(postReducer);
-
-export default function createRoutes() {
+export default function createRoutes(store) {
   return {
     path: 'post/:slug',
     getComponents(location, cb) {
-      injectAsyncReducer(postStore, 'currentPost', postReducer);
+      injectAsyncReducer(store, 'currentPost', postReducer);
       cb(null, PostPage);
     },
   };

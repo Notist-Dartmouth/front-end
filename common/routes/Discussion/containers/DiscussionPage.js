@@ -12,7 +12,7 @@ class DiscussionContainer extends Component {
 }
 
 function mapStateToProps(state) {
-  return { comments: state.xxx };
+  return { comments: state.ordering }; // Obtain ordering from api in produceComment graph --> add to state
 }
 
 // Connect will pass the store.getState to mapStateToProps

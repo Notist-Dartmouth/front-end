@@ -1,28 +1,44 @@
-
-
 import React from 'react';
-import { Route, IndexRoute } from 'react-router';
-// import { Provider } from 'redux';
+import { Route, IndexRoute, Router, browserHistory } from 'react-router';
 import App from '../components/App';
 import Home from './Home';
-// import { discussionStore } from './Discussion';
-// import a from './PostList';
-// import b from './Post';
 import PostPage from './Post/containers/PostPage';
 import NotFound from './NotFound';
 import discussion from './Discussion/content';
 
-// const routeCompD = d();
-// const routeCompA = a();
-// const routeCompB = b();
+function lazyLoadComponents(lazyModules) {
+  return (location, cb) => {
+    const moduleKeys = Object.keys(lazyModules);
+    const promises = moduleKeys.map(key =>
+      new Promise(resolve => lazyModules[key](resolve)),
+    );
 
-const routes = (
-  <Route path="/" component={App} onChange={console.log('Hi')} >
-    <IndexRoute component={Home} />
-    <Route path="/discussion" component={discussion} />
-    <Route path="/posts" component={PostPage} />
-    <Route path="*" component={NotFound} />
-  </Route>
-);
+    Promise.all(promises).then((modules) => {
+      cb(null, modules.reduce((obj, module, i) => {
+        obj[moduleKeys[i]] = module;
+        return obj;
+      }, {}));
+    });
+  };
+}
 
-export default routes;
+function lazyLoadComponent(lazyModule) {
+  return (location, cb) => {
+    lazyModule(module => cb(null, module));
+  };
+}
+
+//  Should return all the routes
+export const myRouter =
+  (
+    <Router history={browserHistory} >
+      <Route path="/" component={App} onChange={console.log('Hi')} >
+        <IndexRoute component={Home} />
+        <Route path="/discussion" getComponent={lazyLoadComponent(discussion)} />
+        <Route path="posts" getComponent={lazyLoadComponent(PostPage)} />
+        <Route path="*" component={NotFound} />
+      </Route>
+    </Router>
+  );
+
+export default myRouter;

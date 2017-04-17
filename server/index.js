@@ -30,7 +30,7 @@ import webpackConfig from '../tools/webpack.client.dev';
 import { compileDev, startDev } from '../tools/dx';
 import { configureStore } from '../common/store';
 import reducer from '../common/createReducer';
-import myRouter from '../common/routes/root';
+import myRouter from '../common/routes/routes';
 
 export const createServer = (config) => {
   const __PROD__ = config.nodeEnv === 'production';
@@ -74,10 +74,10 @@ export const createServer = (config) => {
       },
     });
 
-    const routes = myRouter.props.routes;
     console.log(`Hi! ${JSON.stringify(routes)}`);
     const history = createMemoryHistory(req.originalUrl);
     const { dispatch } = store;
+    const routes = myRouter.props.routes;
 
     match({ routes, history }, (err, redirectLocation, renderProps) => {
       if (err) {
