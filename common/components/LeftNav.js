@@ -54,18 +54,8 @@ const styles = StyleSheet.create({
 
 export default class LeftNav extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.groups = props.groups;
-    this.personalList = props.personalList;
-    this.exploreList = props.exploreList;
-    this.followingList = props.followingList;
-    this.profilePicture = props.profilePicture;
-    this.userName = props.userName;
-    this.userPoints = props.userPoints;
-  }
-
   render() {
+    const { profilePicture, groups, userName, userPoints, personalList, exploreList, followingList } = this.props;
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div>
@@ -75,15 +65,15 @@ export default class LeftNav extends React.Component {
             <MenuItem>Hidden 2</MenuItem>
             <Link to={'/profile'} style={{ textDecoration: 'none', position: 'relative', top: 10, paddingLeft: 20, color: white }}>
               <Avatar
-                src={this.profilePicture}
+                src={profilePicture}
                 size={50}
               />
-              <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{this.userName}</span>
-              <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{this.userPoints}</span>
+              <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{userName}</span>
+              <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{userPoints}</span>
             </Link>
             <List>
               <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
-              {this.groups.map(d => (
+              {groups.map(d => (
                 <ListItem
                   key={d._id}
                   leftAvatar={<Avatar icon={<HourglassIcon />} />}
@@ -95,7 +85,7 @@ export default class LeftNav extends React.Component {
             <List>
               {/* removed inset */}
               <Subheader className={css(styles.subheader)}>Personal</Subheader>
-              {this.personalList.map(d => (
+              {personalList.map(d => (
                 <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
                   <ListItem
                     leftAvatar={<Avatar icon={<HourglassIcon />} backgroundColor={blue500} />}
@@ -106,7 +96,7 @@ export default class LeftNav extends React.Component {
             </List>
             <List>
               <Subheader className={css(styles.subheader)}>Explore</Subheader>
-              {this.exploreList.map(d => (
+              {exploreList.map(d => (
                 <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
                   <ListItem
                     leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
@@ -117,7 +107,7 @@ export default class LeftNav extends React.Component {
             </List>
             <List>
               <Subheader className={css(styles.subheader)}>People</Subheader>
-              {this.followingList.map(d => (
+              {followingList.map(d => (
                 <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
                   <ListItem
                     leftAvatar={<Avatar icon={<ActionInfo />} backgroundColor={cyan500} />}
