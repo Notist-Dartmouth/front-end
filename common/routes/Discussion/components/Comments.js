@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import CommentBox from './CommentBox';
-import { discussionStore } from '../index';
 
-export default class Comments extends Component {
+
+class Comments extends Component {
   constructor(props) {
     super(props);
-    this.nodes = discussionStore.getState().ordering;
+    this.nodes = this.props.ordering;
   }
 
   render() {
-    this.nodes = discussionStore.getState().ordering;
+    this.nodes = this.props.ordering;
     return (
       <div>
         {this.nodes.map((node, i) => {
@@ -21,3 +22,12 @@ export default class Comments extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  const { ordering } = state;
+  return {
+    ordering,
+  };
+}
+
+export default connect(mapStateToProps)(Comments);

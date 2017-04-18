@@ -1,23 +1,17 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import axios from 'axios';
-import { createLogger } from 'redux-logger';
 import createReducer from './createReducer';
 
 /* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
 /* eslint-disable global-require */
 /* eslint-disable no-param-reassign */
 
-const logger = createLogger({
-  // ...options
-});
-
 
 export function configureStore(initialState) {
   const store = createStore(createReducer(), initialState, compose(
     applyMiddleware(
       thunk.withExtraArgument({ axios }),
-      logger,
     ),
 
     process.env.NODE_ENV === 'development' &&
@@ -40,5 +34,7 @@ export function configureStore(initialState) {
 
 export function injectAsyncReducer(store, name, asyncReducer) {
   store.asyncReducers[name] = asyncReducer;
+  console.log('Hi before!');
   store.replaceReducer(createReducer(store.asyncReducers));
+  console.log('Hi after!');
 }

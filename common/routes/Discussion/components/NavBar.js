@@ -3,6 +3,8 @@ import { styles } from '../styles/styles';
 
 const ARTICLETITLE = 'Fans of Hard Hitting News';
 
+/* eslint-disable */
+
 export default class NavBar extends Component {
   render() {
     return (
@@ -12,3 +14,5 @@ export default class NavBar extends Component {
     );
   }
 }
+
+/* eslint-enable */
