@@ -25,6 +25,7 @@ class CommentBox extends Component {
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
 
   onToggleReply() {
+    console.log('Trying to toggle the reply box!');
     let visible = false;
     if (this.props.id !== this.props.parentIdx) {
       visible = true;

@@ -7,6 +7,7 @@ export default function discussionViewReducer(state = {
   ordering: order,
 }, action) {
   console.log('I called the reducer! Yay!');
+  console.log('ORDERING is: '.concat(state.ordering)); // Have the ordering here
   switch (action.type) {
     case 'TOGGLE_REPLY':
       return Object.assign({}, state, {

@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import CommentBox from './CommentBox';
+import order from '../produceCommentGraph';
 
 
 class Comments extends Component {
   constructor(props) {
     super(props);
-    this.nodes = this.props.ordering;
+    this.nodes = order;
   }
 
   render() {
-    this.nodes = this.props.ordering;
+    this.nodes = order;
+    console.log('ORDERING: '.concat(this.props.ordering));
     return (
       <div>
         {this.nodes.map((node, i) => {
@@ -22,6 +24,14 @@ class Comments extends Component {
     );
   }
 }
+
+/* eslint-disable */
+
+Comments.propTypes = {
+  ordering: PropTypes.array.isRequired,
+};
+
+/* eslint-enable */
 
 function mapStateToProps(state) {
   const { ordering } = state;
