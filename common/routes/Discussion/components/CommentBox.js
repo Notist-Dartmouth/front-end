@@ -4,7 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import { muiTheme } from '../styles/styles';
-import order, { Node } from '../produceCommentGraph';
+import { Node } from '../produceCommentGraph';
 
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
@@ -38,7 +38,7 @@ class CommentBox extends Component {
       parentIdx: this.props.id, // This is the index in the orderings array
       replyText: '',
       isVisible: visible,
-      ordering: order,
+      ordering: this.props.ordering,
     });
   }
 
@@ -53,7 +53,7 @@ class CommentBox extends Component {
     addedNode.parent = this.props.node;
 
     console.log('Index: '.concat(arrayIndex));
-    order.splice(arrayIndex, 0, addedNode);
+    this.props.ordering.splice(arrayIndex, 0, addedNode);
 
     console.log('Post! '.concat(textInsideTextArea));
     this.props.dispatch({
@@ -61,22 +61,22 @@ class CommentBox extends Component {
       parentIdx: this.id,
       replyText: textInsideTextArea,
       isVisible: false,
-      ordering: order,
+      ordering: this.props.ordering,
     });
   }
 
   getLastBeforeEnd() {
     const idx = this.id;
-    for (let i = idx + 1; i < order.length; i += 1) {
+    for (let i = idx + 1; i < this.props.ordering.length; i += 1) {
       console.log('i: '.concat(i));
-      console.log('ordering\'s depth: '.concat(order[i].depth));
+      console.log('ordering\'s depth: '.concat(this.props.ordering[i].depth));
       console.log('Node depth: '.concat(this.props.node.depth));
-      if (order[i].depth <= this.props.node.depth) {
+      if (this.props.ordering[i].depth <= this.props.node.depth) {
         console.log('Found matching depth!');
         return i;
       }
     }
-    return order.length;
+    return this.props.ordering.length;
   }
 
   render() {
@@ -84,7 +84,7 @@ class CommentBox extends Component {
 
     let textarea = <span id={'Hi'} />;
 
-    if (this.props.isVisible && this.props.parentIdx === order.indexOf(this.props.node)) {
+    if (this.props.isVisible && this.props.parentIdx === this.props.ordering.indexOf(this.props.node)) {
       textarea = (
         <div>
           <textarea id={'textarea'.concat(this.id.toString())}
@@ -122,17 +122,23 @@ class CommentBox extends Component {
   }
 }
 
+/* eslint-disable */
+
 CommentBox.propTypes = {
   parentIdx: PropTypes.number.isRequired,
   isVisible: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
+  ordering: PropTypes.array.isRequired,
 };
 
+/* eslint-enable */
+
 function mapStateToProps(state) {
-  const { parentIdx, isVisible } = state;
+  const { parentIdx, isVisible, ordering } = state.Discussion;
   return {
     parentIdx,
     isVisible,
+    ordering,
   };
 }
 
