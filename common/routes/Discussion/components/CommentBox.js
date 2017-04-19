@@ -52,8 +52,11 @@ class CommentBox extends Component {
     addedNode.depth = this.props.node.depth + 1;
     addedNode.parent = this.props.node;
 
-    console.log('Index: '.concat(arrayIndex));
-    this.props.ordering.splice(arrayIndex, 0, addedNode);
+    const ordering = [
+      ...this.props.ordering.slice(0, arrayIndex),
+      addedNode,
+      ...this.props.ordering.slice(arrayIndex, this.props.ordering.length),
+    ];
 
     console.log('Post! '.concat(textInsideTextArea));
     this.props.dispatch({
@@ -61,7 +64,7 @@ class CommentBox extends Component {
       parentIdx: this.id,
       replyText: textInsideTextArea,
       isVisible: false,
-      ordering: this.props.ordering,
+      ordering,
     });
   }
 
