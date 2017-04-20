@@ -1,9 +1,10 @@
 /* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
 /* eslint-disable no-unused-vars */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 import { RadioButton } from 'material-ui/RadioButton';
 import { StyleSheet, css } from 'aphrodite';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
@@ -16,12 +17,17 @@ const styles = StyleSheet.create({
     textColor: fullBlack,
     marginTop: 16,
   },
+  groupInput: {
+    display: 'block',
+    width: '75%',
+    margin: '0 auto',
+  },
 });
 
 /**
  * Dialog content can be scrollable.
  */
-export default class CreateGroupDialog extends React.Component {
+class CreateGroupDialog extends React.Component {
   state = {
     open: false,
   };
@@ -44,6 +50,7 @@ export default class CreateGroupDialog extends React.Component {
       <FlatButton
         label="Submit"
         primary
+        onClick={this.props.onSubmit}
         keyboardFocused
         onTouchTap={this.handleClose}
       />,
@@ -63,9 +70,31 @@ export default class CreateGroupDialog extends React.Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent
         >
-          <p style={{ color: fullBlack }}>Some text</p>
+          <div>
+            <TextField
+              id="name"
+              className={css(styles.groupInput)}
+              hintText="Group Name"
+              onChange={this.props.onChange}
+              errorText={this.props.validName ? '' : 'Group name is required'}
+            />
+            <TextField
+              id="description"
+              className={css(styles.groupInput)}
+              hintText="Description"
+              onChange={this.props.onChange}
+            />
+          </div>
         </Dialog>
       </span>
     );
   }
 }
+
+CreateGroupDialog.propTypes = {
+  validName: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default CreateGroupDialog;
