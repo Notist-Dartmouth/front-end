@@ -1,8 +1,13 @@
 /* eslint-disable linebreak-style */
 
-import NotFound from '../../components/NotFound';
+import React from 'react';
+import Helmet from 'react-helmet';
 
-export default {
-  path: '*',
-  component: NotFound,
-};
+const NotFound = () => (
+  <div>
+    <Helmet title="Not Found" />
+    <h1>Page Not Found!</h1>
+  </div>
+);
+
+export default NotFound;
