@@ -24,15 +24,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const PostListPage = ({ posts }) => (
+const PostListPage = props => (
   <div className={css(styles.root)}>
     <Helmet title="Posts" />
-    {posts.isLoading &&
+    {props.posts.isLoading &&
       <div>
         <h2>Loading....</h2>
       </div>}
-    {!posts.isLoading &&
-      posts.data.map((post, i) => <PostListItem key={post.id} post={post} />)}
+    {!props.posts.isLoading &&
+      props.posts.data.map((post, i) => <PostListItem key={post.id} post={post} />)}
   </div>
 );
 
