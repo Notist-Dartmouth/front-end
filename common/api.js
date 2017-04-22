@@ -6,20 +6,35 @@ const headers = {
   Accept: 'application/json',
 };
 
+const handleUnauthorizedRequest = () => {
+  console.log('unauthorized');
+  return {};
+};
+
+const handleResponse = (res) => {
+  if (res.status === 401) {
+    return handleUnauthorizedRequest();
+  } else {
+    return res.json();
+  }
+};
+
 export const fetchUser = () => {
   return fetch(`http://${config.apiHost}/api/user`, {
     method: 'GET',
     credentials: 'include',
     headers,
   })
-  .then((res) => {
-    if (res.status === 401) {
-      console.log('unauthorized');
-      return {};
-    } else {
-      return res.json();
-    }
-  });
+  .then(res => handleResponse(res));
+};
+
+export const fetchGroupArticles = (groupId) => {
+  return fetch(`http://${config.apiHost}/api/group/${groupId}/articles`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  })
+  .then(res => handleResponse(res));
 };
 
 export const saveGroup = (group) => {
@@ -30,11 +45,5 @@ export const saveGroup = (group) => {
     headers,
     body: JSON.stringify(group),
   })
-  .then((res) => {
-    if (res.status === 401) {
-      return {};
-    } else {
-      return res.json();
-    }
-  });
+  .then(res => handleResponse(res));
 };
