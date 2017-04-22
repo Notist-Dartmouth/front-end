@@ -8,6 +8,7 @@ import createReducer from './createReducer';
 /* eslint-disable global-require */
 /* eslint-disable no-param-reassign */
 
+
 export function configureStore(initialState) {
   const store = createStore(createReducer(), initialState, compose(
     applyMiddleware(
@@ -35,5 +36,7 @@ export function configureStore(initialState) {
 
 export function injectAsyncReducer(store, name, asyncReducer) {
   store.asyncReducers[name] = asyncReducer;
+  console.log('Hi before!');
   store.replaceReducer(createReducer(store.asyncReducers));
+  console.log('Hi after!');
 }

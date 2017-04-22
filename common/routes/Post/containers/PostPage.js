@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
-import { loadPost } from '../actions';
+import loadPost from '../actions';
 import NotFound from '../../../components/NotFound';
 import { selectCurrentPost } from '../reducer';
 
