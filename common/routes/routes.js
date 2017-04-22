@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, IndexRoute, Router, browserHistory } from 'react-router';
 import App from '../components/App';
+import Login from '../components/Login';
 import Home from './Home';
 import NotFound from './NotFound';
 import { injectAsyncReducer } from '../store';
@@ -46,7 +47,8 @@ import { injectAsyncReducer } from '../store';
 export default function createRouter(store) {
   return (
     <Router history={browserHistory} >
-      <Route path="/" component={App} onChange={console.log('Hi')} >
+      <Route path="/login" component={Login} />
+      <Route path="/" component={App} >
         <IndexRoute component={Home} />
         <Route path="discussion" getComponent={(props, cb) => {
           require.ensure(['./Discussion/content', './Discussion/reducer'], (require) => {

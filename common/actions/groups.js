@@ -1,11 +1,5 @@
-import 'whatwg-fetch';
 import * as types from '../constants/ActionTypes';
-import config from '../../server/config';
-
-const headers = {
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
-};
+import * as api from '../api';
 
 function handleSaveGroupSuccess(group) {
   return {
@@ -14,19 +8,28 @@ function handleSaveGroupSuccess(group) {
   };
 }
 
-export default function saveGroup(group) {
+export function saveGroup(group) {
   return (dispatch, getState) =>
-    fetch(`http://${config.apiHost}/api/group`, {
-      method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
-      headers,
-      body: JSON.stringify(group),
-    })
-    .then(res => res.json())
+    api.saveGroup(group)
     .then((savedGroup) => {
       if (savedGroup.SUCCESS) {
         dispatch(handleSaveGroupSuccess(savedGroup.SUCCESS));
+        window.location.reload();
       } // TODO handle error
     });
+}
+
+export function updateUser(groups, username) {
+  return {
+    type: types.UPDATE_USER,
+    groups,
+    username,
+  };
+}
+
+export function updateAuthStatus(isAuthenticated) {
+  return {
+    type: types.UPDATE_AUTH_STATUS,
+    isAuthenticated,
+  };
 }

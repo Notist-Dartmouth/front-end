@@ -51,6 +51,7 @@
     "helmet": "^2.0.0",
     "history": "^4.0.0",
     "hpp": "^0.2.0",
+    "isomorphic-fetch": "^2.2.1",
     "json-loader": "^0.5.4",
     "material-ui": "^0.17.1",
     "mocha": "^3.2.0",
