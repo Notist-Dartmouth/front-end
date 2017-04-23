@@ -3,7 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import loadArticles from '../actions';
-import AnnotationItem from '../components/AnnotationItem';
+import ArticleCard from '../../../components/ArticleCard';
 
 const mapStateToProps = state => ({
   annotations: state.articles.annotations,
@@ -36,9 +36,20 @@ class AnnotationList extends Component {
           </div>}
         {!this.props.isLoading &&
           this.props.annotations.map((a, i) =>
-            <AnnotationItem
+            <ArticleCard
               key={a._id}
-              post={a}
+              title="Title"
+              domain="domain"
+              subtitle="subtitle"
+              annotationContent={a.articleText}
+              image="http://i.onionstatic.com/onion/5597/9/16x9/1600.jpg"
+              username="merwin"
+              points={16}
+              timeSince="2 hours"
+              numUsers={2}
+              numAnnotations={6}
+              numReplies={4}
+              currentVotes={43}
             />)}
       </div>
     );

@@ -20,12 +20,11 @@ const handleResponse = (res) => {
 };
 
 export const fetchArticleAnnotations = (articleURI) => {
-  const annotationsEndpoint = new URL(`http://${config.apiHost}/api/articles/annotations`);
-  annotationsEndpoint.search = new URLSearchParams(`?uri=${articleURI}`);
-  return fetch(annotationsEndpoint, {
+  return fetch(`http://${config.apiHost}/api/articles/annotations`, {
     method: 'GET',
     credentials: 'include',
     headers,
+    query: { uri: articleURI },
   })
   .then(res => handleResponse(res));
 };
