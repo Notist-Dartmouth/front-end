@@ -21,7 +21,7 @@ function loadAnnotationsSuccess(annotations) {
   };
 }
 
-function loadAnnotations(articleURI) {
+export function loadAnnotations(articleURI) {
   return (dispatch, getState) => {
     dispatch(loadAnnotationsRequest);
     return api.fetchArticleAnnotations(articleURI).then((annotations) => {
@@ -36,7 +36,6 @@ function loadAnnotations(articleURI) {
 
 function loadArticlesSuccess(articles) {
   return (dispatch, getState) => {
-    articles.forEach(a => dispatch(loadAnnotations(a.uri)));
     return dispatch({
       type: types.LOAD_ARTICLES_SUCCESS,
       articles,

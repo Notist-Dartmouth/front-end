@@ -39,8 +39,7 @@ class ArticleList extends Component {
           this.props.data.map(a =>
             <ArticleItem
               key={a._id}
-              articleId={a._id}
-              annotations={this.props.annotations}
+              annotations={this.props.annotations.filter(annotation => annotation._id === a._id)}
               uri={a.uri}
             />)
         }

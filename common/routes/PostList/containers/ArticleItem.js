@@ -1,13 +1,12 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import ArticleCard from '../../../components/ArticleCard';
+import { loadAnnotations } from '../actions';
 
 class ArticleItem extends Component {
-  constructor(props) {
-    super(props);
-    this.articleAnnotations = props.annotations.filter(a => a.article === props.articleId);
-    this.articleText = this.articleAnnotations.length > 0 ? this.articleAnnotations[0].articleText : 'subtitle';
-    this.text = this.articleAnnotations.length > 0 ? this.articleAnnotations[0].text : 'annotation';
+
+  componentDidMount() {
+    this.props.dispatch(loadAnnotations(this.props.uri));
   }
 
   render() {
@@ -15,14 +14,14 @@ class ArticleItem extends Component {
       <ArticleCard
         title="Title"
         domain={this.props.uri}
-        subtitle={this.articleText}
-        annotationContent={this.text}
+        subtitle={this.props.annotations.length > 0 ? this.props.annotations[0].articleText : 'article text'}
+        annotationContent={this.props.annotations.length > 0 ? this.props.annotations[0].text : 'text'}
         image="http://i.onionstatic.com/onion/5597/9/16x9/1600.jpg"
         username="merwin"
         points={16}
         timeSince="2 hours"
         numUsers={2}
-        numAnnotations={this.articleAnnotations.length}
+        numAnnotations={this.props.annotations.length}
         numReplies={4}
         currentVotes={43}
         slug="slug"
@@ -32,7 +31,7 @@ class ArticleItem extends Component {
 }
 
 ArticleItem.propTypes = {
-  articleId: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
   uri: PropTypes.string.isRequired,
   annotations: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
@@ -41,11 +40,4 @@ ArticleItem.propTypes = {
   })).isRequired,
 };
 
-function mapStateToProps(state) {
-  const { annotations } = state.articles;
-  return {
-    annotations,
-  };
-}
-
-export default connect(mapStateToProps)(ArticleItem);
+export default connect()(ArticleItem);
