@@ -5,43 +5,6 @@ import Login from '../components/Login';
 import Home from './Home';
 import NotFound from './NotFound';
 import { injectAsyncReducer } from '../store';
-// import discussion from './Discussion/content';
-// import discussionReducer from './Discussion/reducer';
-// import PostPage from './Post/containers/PostPage';
-// import postReducer from './Post/reducer';
-// import postListPage from './PostList/containers/PostList';
-// import postListReducer from './PostList/reducer';
-
-// function lazyLoadComponents(lazyModules) {
-//   return (location, cb) => {
-//     const moduleKeys = Object.keys(lazyModules);
-//     const promises = moduleKeys.map(key =>
-//       new Promise(resolve => lazyModules[key](resolve)),
-//     );
-//
-//     Promise.all(promises).then((modules) => {
-//       cb(null, modules.reduce((obj, module, i) => {
-//         obj[moduleKeys[i]] = module;
-//         return obj;
-//       }, {}));
-//     });
-//   };
-// }
-
-// function lazyLoadComponentPost(store, lazyModule) {
-//   return (location, cb) => {
-//     lazyModule(module => cb(null, PostPage));
-//     // injectAsyncReducer(store, 'PostList', postListReducer);
-//     // injectAsyncReducer(store, 'Post', postReducer);
-//   };
-// }
-
-// function lazyLoadComponentDiscussion(store, lazyModule) {
-//   return (location, cb) => {
-//     lazyModule(module => cb(null, discussion));
-//     // injectAsyncReducer(store, 'currentPost', discussionReducer);
-//   };
-// }
 
 //  Should return all the routes
 export default function createRouter(store) {
@@ -60,7 +23,7 @@ export default function createRouter(store) {
         }}
         />
         <Route path="feed" getComponent={(props, cb) => {
-          require.ensure(['./PostList/containers/AnnotationList', './PostList/reducer'], (require) => {
+          require.ensure(['./PostList/containers/ArticleList', './PostList/reducer'], (require) => {
             const postListPage = require('./PostList/containers/ArticleList').default;
             const annotationListReducer = require('./PostList/reducer').default;
             injectAsyncReducer(store, 'articles', annotationListReducer);

@@ -3,9 +3,10 @@ import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import loadArticles from '../actions';
-import ArticleCard from '../../../components/ArticleCard';
+import ArticleItem from './ArticleItem';
 
 const mapStateToProps = state => ({
+  data: state.articles.data,
   annotations: state.articles.annotations,
   isLoading: state.articles.isLoading,
 });
@@ -35,22 +36,14 @@ class ArticleList extends Component {
             <h2>Loading....</h2>
           </div>}
         {!this.props.isLoading &&
-          this.props.annotations.map((a, i) =>
-            <ArticleCard
+          this.props.data.map(a =>
+            <ArticleItem
               key={a._id}
-              title="Title"
-              domain="domain"
-              subtitle="subtitle"
-              annotationContent={a.articleText}
-              image="http://i.onionstatic.com/onion/5597/9/16x9/1600.jpg"
-              username="merwin"
-              points={16}
-              timeSince="2 hours"
-              numUsers={2}
-              numAnnotations={6}
-              numReplies={4}
-              currentVotes={43}
-            />)}
+              articleId={a._id}
+              annotations={this.props.annotations}
+              uri={a.uri}
+            />)
+        }
       </div>
     );
   }
@@ -58,6 +51,7 @@ class ArticleList extends Component {
 
 ArticleList.PropTypes = {
   isLoading: PropTypes.bool.isRequired,
+  data: PropTypes.array.isRequired,
   annotations: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };

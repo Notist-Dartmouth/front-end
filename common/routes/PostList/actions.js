@@ -37,11 +37,11 @@ function loadAnnotations(articleURI) {
 function loadArticlesSuccess(articles) {
   return (dispatch, getState) => {
     articles.forEach(a => dispatch(loadAnnotations(a.uri)));
-    return {
+    return dispatch({
       type: types.LOAD_ARTICLES_SUCCESS,
       articles,
       lastFetched: Date.now(),
-    };
+    });
   };
 }
 
