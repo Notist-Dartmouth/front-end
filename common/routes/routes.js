@@ -61,7 +61,7 @@ export default function createRouter(store) {
         />
         <Route path="feed" getComponent={(props, cb) => {
           require.ensure(['./PostList/containers/AnnotationList', './PostList/reducer'], (require) => {
-            const postListPage = require('./PostList/containers/AnnotationList').default;
+            const postListPage = require('./PostList/containers/ArticleList').default;
             const annotationListReducer = require('./PostList/reducer').default;
             injectAsyncReducer(store, 'articles', annotationListReducer);
             cb(null, postListPage);

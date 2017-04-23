@@ -36,7 +36,7 @@ function loadAnnotations(articleURI) {
 
 function loadArticlesSuccess(articles) {
   return (dispatch, getState) => {
-    articles.map(a => dispatch(loadAnnotations(a.uri)));
+    articles.forEach(a => dispatch(loadAnnotations(a.uri)));
     return {
       type: types.LOAD_ARTICLES_SUCCESS,
       articles,

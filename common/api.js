@@ -1,5 +1,4 @@
-import fetch from 'isomorphic-fetch';
-import { URL } from 'isomorphic-url';
+import 'isomorphic-fetch';
 import URLSearchParams from 'url-search-params';
 import config from '../server/config';
 
@@ -23,7 +22,8 @@ const handleResponse = (res) => {
 };
 
 export const fetchArticleAnnotations = (articleURI) => {
-  const annotationsEndpoint = new URL(`http://${config.apiHost}/api/articles/annotations`);
+  const endpointString = `http://${config.apiHost}/api/article/annotations`;
+  const annotationsEndpoint = new URL(endpointString);
   annotationsEndpoint.search = new URLSearchParams(`?uri=${articleURI}`);
   return fetch(annotationsEndpoint, {
     method: 'GET',
