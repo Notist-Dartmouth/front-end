@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
 class AnnotationList extends Component {
 
   componentDidMount() {
-    this.props.dispatch(loadArticles());
+    const { groupId } = this.props.location.state;
+    this.props.dispatch(loadArticles(groupId));
   }
 
   render() {

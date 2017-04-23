@@ -22,11 +22,11 @@ function loadArticlesRequest() {
   };
 }
 
-export default function loadArticles() {
+export default function loadArticles(groupId) {
   return (dispatch, getState) => {
     dispatch(loadArticlesRequest());
     if (!getState().isLoading) {
-      return api.fetchArticles().then((articles) => {
+      return api.fetchGroupArticles(groupId).then((articles) => {
         if (articles.ERROR) {
           return dispatch(loadArticlesFailure(articles.ERROR));
         } else {
