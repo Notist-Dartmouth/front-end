@@ -3,10 +3,10 @@ import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import loadArticles from '../actions';
-import PostListItem from '../components/PostListItem';
+import AnnotationItem from '../components/AnnotationItem';
 
 const mapStateToProps = state => ({
-  articles: state.articles.data,
+  annotations: state.articles.annotations,
   isLoading: state.articles.isLoading,
 });
 
@@ -29,20 +29,25 @@ class AnnotationList extends Component {
   render() {
     return (
       <div className={css(styles.root)}>
-        <Helmet title="Posts" />
+        <Helmet title="Annotations" />
         {this.props.isLoading &&
           <div>
             <h2>Loading....</h2>
           </div>}
         {!this.props.isLoading &&
-          this.props.articles.map((a, i) => <PostListItem key={a._id} post={a} />)}
+          this.props.annotations.map((a, i) =>
+            <AnnotationItem
+              key={a._id}
+              post={a}
+            />)}
       </div>
     );
   }
 }
 
 AnnotationList.PropTypes = {
-  posts: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  annotations: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

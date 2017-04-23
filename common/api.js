@@ -19,6 +19,17 @@ const handleResponse = (res) => {
   }
 };
 
+export const fetchArticleAnnotations = (articleURI) => {
+  const annotationsEndpoint = new URL(`http://${config.apiHost}/api/articles/annotations`);
+  annotationsEndpoint.search = new URLSearchParams(`?uri=${articleURI}`);
+  return fetch(annotationsEndpoint, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  })
+  .then(res => handleResponse(res));
+};
+
 export const fetchUser = () => {
   return fetch(`http://${config.apiHost}/api/user`, {
     method: 'GET',

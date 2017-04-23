@@ -59,7 +59,7 @@ export default function createRouter(store) {
           });
         }}
         />
-        <Route path="posts" getComponent={(props, cb) => {
+        <Route path="feed" getComponent={(props, cb) => {
           require.ensure(['./PostList/containers/AnnotationList', './PostList/reducer'], (require) => {
             const postListPage = require('./PostList/containers/AnnotationList').default;
             const annotationListReducer = require('./PostList/reducer').default;
