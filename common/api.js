@@ -8,7 +8,7 @@ const headers = {
 
 const handleUnauthorizedRequest = () => {
   console.log('unauthorized');
-  return {};
+  return { ERROR: 'Unauthorized: you must be logged in' };
 };
 
 const handleResponse = (res) => {

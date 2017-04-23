@@ -2,12 +2,12 @@ import React, { PropTypes, Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import { loadPosts } from '../actions';
+import loadArticles from '../actions';
 import PostListItem from '../components/PostListItem';
 
 const mapStateToProps = state => ({
-  posts: state.posts.data,
-  isLoading: state.posts.isLoading,
+  articles: state.articles.data,
+  isLoading: state.articles.isLoading,
 });
 
 /* I added padding so it doesn't go underneath nav */
@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
   },
 });
 
-class PostListPage extends Component {
+class AnnotationList extends Component {
 
   componentDidMount() {
-    this.props.dispatch(loadPosts());
+    this.props.dispatch(loadArticles());
   }
 
   render() {
@@ -34,15 +34,15 @@ class PostListPage extends Component {
             <h2>Loading....</h2>
           </div>}
         {!this.props.isLoading &&
-          this.props.posts.map((post, i) => <PostListItem key={post.id} post={post} />)}
+          this.props.articles.map((a, i) => <PostListItem key={a._id} post={a} />)}
       </div>
     );
   }
 }
 
-PostListPage.PropTypes = {
+AnnotationList.PropTypes = {
   posts: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(PostListPage);
+export default connect(mapStateToProps)(AnnotationList);
