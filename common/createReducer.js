@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import user from './reducers/user';
 
 const initialState = {
   host: '',
@@ -11,6 +12,7 @@ const sourceRequest = (state = initialState, action) => state;
 // added async
 export default function createReducer(asyncReducers) {
   return combineReducers({
+    user,
     sourceRequest,
     ...asyncReducers,
   });

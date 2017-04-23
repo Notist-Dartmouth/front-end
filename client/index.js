@@ -7,6 +7,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { StyleSheet } from 'aphrodite';
 import { configureStore } from '../common/store';
+import * as api from '../common/api';
+import { updateUser } from '../common/actions/groups';
 import createRouter from '../common/routes/routes';
 
 /* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
@@ -26,21 +28,18 @@ const container = document.getElementById('root');
 StyleSheet.rehydrate(window.renderedClassNames);
 
 const render = () => {
-  // const { pathname, search, hash } = window.location;
-  // const location = `${pathname}${search}${hash}`;
-
-  // Pull child routes using match. Adjust Router for vanilla webpack HMR,
-  // in development using a new key every time there is an edit.
-  // Render app with Redux and router context to container element.
-  // We need to have a random in development because of `match`'s dependency on
-  // `routes.` Normally, we would want just one file from which we require `routes` from.
-  ReactDOM.render(
-    <Provider store={store}>
-      { createRouter(store) }
-    </Provider>,
-    container,
-  );
+  api.fetchUser().then((user) => {
+    store.dispatch(updateUser(user.groups, user.username));
+    ReactDOM.render(
+      <Provider store={store}>
+        { createRouter(store) }
+      </Provider>,
+      container,
+    );
+  });
 };
+
+render();
 
 //   return browserHistory.listen((location) => {
 //     // Match routes based on location object:
@@ -82,5 +81,3 @@ const render = () => {
 //     setTimeout(render);
 //   });
 // }
-
-render();
