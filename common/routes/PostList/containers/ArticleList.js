@@ -23,7 +23,19 @@ const styles = StyleSheet.create({
 class ArticleList extends Component {
 
   componentDidMount() {
+    this.fetchArticles = this.fetchArticles.bind(this);
     const { groupId } = this.props.location.state;
+    this.fetchArticles(groupId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      const { groupId } = nextProps.location.state;
+      this.fetchArticles(groupId);
+    }
+  }
+
+  fetchArticles(groupId) {
     this.props.dispatch(loadArticles(groupId));
   }
 

@@ -76,7 +76,7 @@ export default class LeftNav extends React.Component {
               {groups.map(g => (
                 <Link
                   to={{
-                    pathname: '/feed',
+                    pathname: `/feed/${g._id}`,
                     state: { groupId: g._id },
                   }}
                 >

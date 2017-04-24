@@ -24,7 +24,7 @@ export default function createRouter(store) {
           });
         }}
         />
-        <Route path="feed" getComponent={(props, cb) => {
+        <Route path="feed/:group" getComponent={(props, cb) => {
           injectAsyncReducer(store, 'articles', articleReducer);
           cb(null, ArticleList);
         }}
