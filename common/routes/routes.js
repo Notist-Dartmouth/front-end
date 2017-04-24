@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute, Router, browserHistory } from 'react-router';
 import App from '../components/App';
+import ArticleList from './PostList/containers/ArticleList';
+import articleReducer from './PostList/reducer';
 import Login from '../components/Login';
 import Home from './Home';
 import NotFound from './NotFound';
@@ -23,12 +25,8 @@ export default function createRouter(store) {
         }}
         />
         <Route path="feed" getComponent={(props, cb) => {
-          require.ensure(['./PostList/containers/ArticleList', './PostList/reducer'], (require) => {
-            const postListPage = require('./PostList/containers/ArticleList').default;
-            const annotationListReducer = require('./PostList/reducer').default;
-            injectAsyncReducer(store, 'articles', annotationListReducer);
-            cb(null, postListPage);
-          });
+          injectAsyncReducer(store, 'articles', articleReducer);
+          cb(null, ArticleList);
         }}
         />
         <Route path="*" component={NotFound} />
