@@ -35,8 +35,8 @@ export function configureStore(initialState) {
 }
 
 export function injectAsyncReducer(store, name, asyncReducer) {
-  store.asyncReducers[name] = asyncReducer;
-  console.log('Hi before!');
-  store.replaceReducer(createReducer(store.asyncReducers));
-  console.log('Hi after!');
+  if (store.asyncReducer[name] === null) {
+    store.asyncReducers[name] = asyncReducer;
+    store.replaceReducer(createReducer(store.asyncReducers));
+  }
 }
