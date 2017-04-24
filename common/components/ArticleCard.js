@@ -63,10 +63,7 @@ class ArticleCard extends React.Component {
     super(props);
     this.title = props.title;
     this.domain = props.domain;
-    this.subtitle = props.subtitle;
-    this.annotationContent = props.annotationContent;
     this.numUsers = props.numUsers;
-    this.numAnnotations = props.numAnnotations;
     this.numReplies = props.numReplies;
     this.username = props.username;
     this.points = props.points;
@@ -83,7 +80,7 @@ class ArticleCard extends React.Component {
           <div className={css(styles.cardHeaderStyle)}>
             <span className={css(styles.articleTitleTextStyle)}>{this.title}</span>
             <span className={css(styles.domainTextStyle)}><br />{this.domain}</span>
-            <span className={css(styles.articleTextStyle)}><br />&quot;{this.subtitle}&quot;</span>
+            <span className={css(styles.articleTextStyle)}><br />&quot;{this.props.subtitle}&quot;</span>
             <br style={{ lineHeight: 2 }} />
             <div className="vote" style={{ float: 'left' }}>
               <Upvote beforeContent={this.currentVotes} />
@@ -92,12 +89,12 @@ class ArticleCard extends React.Component {
               <span style={{ fontWeight: 900, padding: 10 }}>{this.username}</span>
               <span style={{ fontStyle: 'italic', padding: 10 }}>{this.points} points</span>
               <span> {this.timeSince} ago</span>
-              <span className={css(styles.annotationTextStyle)}><br />{this.annotationContent}</span>
+              <span className={css(styles.annotationTextStyle)}><br />{this.props.annotationContent}</span>
             </div>
           </div>
           <aside className={css(styles.articleInfoBar)}>
             <span><MdGroup /> {`     ${this.numUsers}`} users</span>
-            <span><MdComment /> {`     ${this.numAnnotations}`} annotations</span>
+            <span><MdComment /> {`     ${this.props.numAnnotations}`} annotations</span>
             <span><MdForum /> {`     ${this.numReplies}`} replies</span>
             <img width={'100%'} src={this.image} alt="card" />
           </aside>
