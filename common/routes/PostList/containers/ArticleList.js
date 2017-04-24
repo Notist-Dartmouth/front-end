@@ -3,7 +3,7 @@ import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import loadArticles from '../actions';
-import ArticleCard from '../../../components/ArticleCard';
+import ArticleItem from '../components/ArticleItem';
 
 const mapStateToProps = state => ({
   data: state.articles.data,
@@ -37,21 +37,10 @@ class ArticleList extends Component {
           </div>}
         {!this.props.isLoading &&
           this.props.data.map(a =>
-            <ArticleCard
+            <ArticleItem
               key={a._id}
-              title="Title"
-              domain={a.uri}
-              subtitle={this.props.annotations.length > 0 ? this.props.annotations[0].articleText : 'article text'}
-              annotationContent={this.props.annotations.length > 0 ? this.props.annotations[0].text : 'text'}
-              image="http://i.onionstatic.com/onion/5597/9/16x9/1600.jpg"
-              username="merwin"
-              points={16}
-              timeSince="2 hours"
-              numUsers={2}
-              numAnnotations={this.props.annotations.length}
-              numReplies={4}
-              currentVotes={43}
-              slug="slug"
+              articleURI={a.uri}
+              annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
             />)
         }
       </div>
