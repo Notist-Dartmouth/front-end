@@ -1,11 +1,11 @@
 import React from 'react';
 import ProfileCard from './components/profileCard';
-import Annotation from '../Discussion/components/MyCard';
+import RecentAnnotations from './components/recentAnnotations';
 
 const Profile = props => (
   <div>
     <ProfileCard />
-    <Annotation />
+    <RecentAnnotations />
   </div>
 );
 

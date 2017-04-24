@@ -6,6 +6,10 @@ import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import { styles, muiTheme } from '../../Discussion/styles/styles';
 
+// Need to get the profilePicture from the API here
+// Call as props.profilePicture -- get from state
+
+
 const userCard = props =>
  (
    <MuiThemeProvider muiTheme={muiTheme}>
