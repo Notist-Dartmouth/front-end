@@ -21,7 +21,7 @@ function loadAnnotationsSuccess(annotations) {
   };
 }
 
-export function loadAnnotations(articleURI) {
+function loadAnnotations(articleURI) {
   return (dispatch, getState) => {
     dispatch(loadAnnotationsRequest);
     return api.fetchArticleAnnotations(articleURI).then((annotations) => {
@@ -36,6 +36,7 @@ export function loadAnnotations(articleURI) {
 
 function loadArticlesSuccess(articles) {
   return (dispatch, getState) => {
+    articles.forEach(article => dispatch(loadAnnotations(article.uri)));
     return dispatch({
       type: types.LOAD_ARTICLES_SUCCESS,
       articles,
@@ -57,7 +58,7 @@ function loadArticlesRequest() {
   };
 }
 
-export function loadArticles(groupId) {
+export default function loadArticles(groupId) {
   return (dispatch, getState) => {
     dispatch(loadArticlesRequest());
     if (!getState().isLoading) {
