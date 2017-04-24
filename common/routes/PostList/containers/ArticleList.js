@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import loadArticles from '../actions';
+import { loadArticles } from '../actions';
 import ArticleItem from './ArticleItem';
 
 const mapStateToProps = state => ({

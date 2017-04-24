@@ -57,7 +57,7 @@ function loadArticlesRequest() {
   };
 }
 
-export default function loadArticles(groupId) {
+export function loadArticles(groupId) {
   return (dispatch, getState) => {
     dispatch(loadArticlesRequest());
     if (!getState().isLoading) {

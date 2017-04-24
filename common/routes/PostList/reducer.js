@@ -31,7 +31,7 @@ export default function articles(state = initialState, action) {
       return Object.assign({}, state, {
         annotations: [
           ...state.annotations,
-          ...action.annotations,
+          ...action.annotations.filter(a => !state.annotations.includes(a)),
         ],
         isLoading: false,
       });
