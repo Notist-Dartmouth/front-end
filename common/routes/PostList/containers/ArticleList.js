@@ -51,6 +51,8 @@ class ArticleList extends Component {
           this.props.data.map(a =>
             <ArticleItem
               key={a._id}
+              title={a.info.title}
+              imageURL={a.info.lead_image_url || ''}
               articleURI={a.uri}
               annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
             />)
