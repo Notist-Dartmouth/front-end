@@ -79,7 +79,7 @@ export default class TopNav extends React.Component {
 
   render() {
     let subButton = null;
-    if (this.state.subscribed) {
+    if (!this.state.subscribed) {
       subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} style={{ marginTop: -20 }} />;
     } else {
       subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} style={{ marginTop: -20 }} />;
@@ -115,6 +115,9 @@ export default class TopNav extends React.Component {
             <IndexLink to="/" className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
               Home
             </IndexLink>
+            <a href="http://about.notist.io" style={{ color: grey900 }}>
+              About
+            </a>
           </ToolbarGroup>
         </Toolbar>
       </MuiThemeProvider>
