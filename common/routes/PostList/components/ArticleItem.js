@@ -8,13 +8,13 @@ const ArticleItem = props => (
     subtitle={props.annotations.length > 0 ? props.annotations[0].articleText : 'article text'}
     annotationContent={props.annotations.length > 0 ? props.annotations[0].text : 'text'}
     image={props.imageURL}
-    username="merwin"
-    points={16}
-    timeSince="2 hours"
+    username="ethan"
+    points={1}
+    timeSince="1 minute"
     numUsers={2}
     numAnnotations={props.annotations.length}
-    numReplies={4}
-    currentVotes={43}
+    numReplies={1}
+    currentVotes={0}
     slug={props.articleID}
   />
 );
