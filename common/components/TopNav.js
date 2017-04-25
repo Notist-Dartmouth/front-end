@@ -80,7 +80,8 @@ export default class TopNav extends React.Component {
 
   render() {
     let subButton = null;
-    if (this.state.subscribed) {
+    // remove ! in the following line after 4/25 demo
+    if (!this.state.subscribed) {
       subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} style={{ marginTop: -20 }} />;
     } else {
       subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} style={{ marginTop: -20 }} />;
