@@ -70,9 +70,13 @@ class ArticleCard extends React.Component {
     this.currentVotes = props.currentVotes;
     this.image = props.image;
     this.slug = props.slug;
+    this.pointsText = 'points';
   }
 
   render() {
+    if (this.points < 2) {
+      this.pointsText = 'point';
+    }
     return (
       <MuiThemeProvider>
         <Card className={css(styles.cardStyle)}>
@@ -83,7 +87,7 @@ class ArticleCard extends React.Component {
             <br style={{ lineHeight: 2 }} />
             <div>
               <span style={{ fontWeight: 900, padding: 10 }}>{this.username}</span>
-              <span style={{ fontStyle: 'italic', padding: 10 }}>{this.points} points</span>
+              <span style={{ fontStyle: 'italic', padding: 10 }}>{this.points} {this.pointsText}</span>
               <span>{this.timeSince} ago</span>
               <span className={css(styles.annotationTextStyle)}><br />{this.props.annotationContent}</span>
             </div>
