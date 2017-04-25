@@ -79,6 +79,7 @@ export default class TopNav extends React.Component {
 
   render() {
     let subButton = null;
+    // LOOK: this logic is backwards! remove the flag on line 83 for normal behavior! only like this for presentation on 4/25
     if (!this.state.subscribed) {
       subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} style={{ marginTop: -20 }} />;
     } else {
