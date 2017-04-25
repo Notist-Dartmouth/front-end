@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 import React from 'react';
 import { Card, CardActions } from 'material-ui/Card';
 import { MdComment, MdForum, MdGroup } from 'react-icons/lib/md';
@@ -53,9 +55,6 @@ const styles = StyleSheet.create({
     paddingTop: '3%',
     paddingRight: '3%',
   },
-  annotationAndInfo: {
-    paddingLeft: '5%',
-  },
 });
 
 class ArticleCard extends React.Component {
@@ -82,24 +81,21 @@ class ArticleCard extends React.Component {
             <span className={css(styles.domainTextStyle)}><br />{this.domain}</span>
             <span className={css(styles.articleTextStyle)}><br />&quot;{this.props.subtitle}&quot;</span>
             <br style={{ lineHeight: 2 }} />
-            <div className="vote" style={{ float: 'left' }}>
-              <Upvote beforeContent={this.currentVotes} />
-            </div>
-            <div className={css(styles.annotationAndInfo)}>
+            <div>
               <span style={{ fontWeight: 900, padding: 10 }}>{this.username}</span>
               <span style={{ fontStyle: 'italic', padding: 10 }}>{this.points} points</span>
-              <span> {this.timeSince} ago</span>
+              <span>{this.timeSince} ago</span>
               <span className={css(styles.annotationTextStyle)}><br />{this.props.annotationContent}</span>
             </div>
           </div>
           <aside className={css(styles.articleInfoBar)}>
             <span><MdGroup /> {`     ${this.numUsers}`} users</span>
             <span><MdComment /> {`     ${this.props.numAnnotations}`} annotations</span>
-            <span><MdForum /> {`     ${this.numReplies}`} replies</span>
             <img width={'100%'} src={this.image} alt="card" />
           </aside>
-          <CardActions style={{ clear: 'both', position: 'relative', left: '41%', padding: '3%' }}>
-            <Link to={`/${this.domain}/${this.slug}`} className={css(styles.title)}><RaisedButton style={{ top: '10%' }} label="See more" /></Link>
+          <CardActions style={{ clear: 'both', position: 'relative', left: '35%', padding: '3%' }}>
+            <Link to={`/${this.slug}`}><RaisedButton style={{ top: '10%' }} label="SEE DISCUSSION" /></Link>
+            <Link to={this.domain} ><RaisedButton style={{ top: '10%', leftMargin: '20px' }} label="VIEW ORIGINAL ARTICLE" /></Link>
           </CardActions>
         </Card>
       </MuiThemeProvider>
