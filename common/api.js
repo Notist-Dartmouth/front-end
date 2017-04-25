@@ -1,9 +1,36 @@
-import fetch from 'isomorphic-fetch';
+import 'isomorphic-fetch';
+import URLSearchParams from 'url-search-params';
 import config from '../server/config';
+
 
 const headers = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
+};
+
+const handleUnauthorizedRequest = () => {
+  console.log('unauthorized');
+  return { ERROR: 'Unauthorized: you must be logged in' };
+};
+
+const handleResponse = (res) => {
+  if (res.status === 401) {
+    return handleUnauthorizedRequest();
+  } else {
+    return res.json();
+  }
+};
+
+export const fetchArticleAnnotations = (articleURI) => {
+  const endpointString = `http://${config.apiHost}/api/article/annotations`;
+  const annotationsEndpoint = new URL(endpointString);
+  annotationsEndpoint.search = new URLSearchParams(`?uri=${articleURI}`);
+  return fetch(annotationsEndpoint, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  })
+  .then(res => handleResponse(res));
 };
 
 export const fetchUser = () => {
@@ -12,14 +39,16 @@ export const fetchUser = () => {
     credentials: 'include',
     headers,
   })
-  .then((res) => {
-    if (res.status === 401) {
-      console.log('unauthorized');
-      return {};
-    } else {
-      return res.json();
-    }
-  });
+  .then(res => handleResponse(res));
+};
+
+export const fetchGroupArticles = (groupId) => {
+  return fetch(`http://${config.apiHost}/api/group/${groupId}/articles`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  })
+  .then(res => handleResponse(res));
 };
 
 export const saveGroup = (group) => {
@@ -30,11 +59,5 @@ export const saveGroup = (group) => {
     headers,
     body: JSON.stringify(group),
   })
-  .then((res) => {
-    if (res.status === 401) {
-      return {};
-    } else {
-      return res.json();
-    }
-  });
+  .then(res => handleResponse(res));
 };

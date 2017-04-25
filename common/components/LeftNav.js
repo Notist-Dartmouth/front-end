@@ -73,12 +73,19 @@ export default class LeftNav extends React.Component {
             </Link>
             <List>
               <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
-              {groups.map(d => (
-                <ListItem
-                  key={d._id}
-                  leftAvatar={<Avatar icon={<HourglassIcon />} />}
-                  primaryText={d.name}
-                />
+              {groups.map(g => (
+                <Link
+                  to={{
+                    pathname: `/feed/${g._id}`,
+                    state: { groupId: g._id },
+                  }}
+                >
+                  <ListItem
+                    key={g._id}
+                    leftAvatar={<Avatar icon={<HourglassIcon />} />}
+                    primaryText={g.name}
+                  />
+                </Link>
               ))}
             </List>
             {/* <Divider */}
