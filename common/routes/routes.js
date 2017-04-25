@@ -1,47 +1,12 @@
 import React from 'react';
 import { Route, IndexRoute, Router, browserHistory } from 'react-router';
 import App from '../components/App';
+import ArticleList from './PostList/containers/ArticleList';
+import articleReducer from './PostList/reducer';
 import Login from '../components/Login';
 import Home from './Home';
 import NotFound from './NotFound';
 import { injectAsyncReducer } from '../store';
-// import discussion from './Discussion/content';
-// import discussionReducer from './Discussion/reducer';
-// import PostPage from './Post/containers/PostPage';
-// import postReducer from './Post/reducer';
-// import postListPage from './PostList/containers/PostList';
-// import postListReducer from './PostList/reducer';
-
-// function lazyLoadComponents(lazyModules) {
-//   return (location, cb) => {
-//     const moduleKeys = Object.keys(lazyModules);
-//     const promises = moduleKeys.map(key =>
-//       new Promise(resolve => lazyModules[key](resolve)),
-//     );
-//
-//     Promise.all(promises).then((modules) => {
-//       cb(null, modules.reduce((obj, module, i) => {
-//         obj[moduleKeys[i]] = module;
-//         return obj;
-//       }, {}));
-//     });
-//   };
-// }
-
-// function lazyLoadComponentPost(store, lazyModule) {
-//   return (location, cb) => {
-//     lazyModule(module => cb(null, PostPage));
-//     // injectAsyncReducer(store, 'PostList', postListReducer);
-//     // injectAsyncReducer(store, 'Post', postReducer);
-//   };
-// }
-
-// function lazyLoadComponentDiscussion(store, lazyModule) {
-//   return (location, cb) => {
-//     lazyModule(module => cb(null, discussion));
-//     // injectAsyncReducer(store, 'currentPost', discussionReducer);
-//   };
-// }
 
 //  Should return all the routes
 export default function createRouter(store) {
@@ -59,22 +24,9 @@ export default function createRouter(store) {
           });
         }}
         />
-        <Route path="posts" getComponent={(props, cb) => {
-          require.ensure(['./Post/containers/PostPage', './Post/reducer'], (require) => {
-            const postPage = require('./Post/containers/PostPage').default;
-            const postReducer = require('./PostList/reducer').default;
-            injectAsyncReducer(store, 'currentPost', postReducer);
-            cb(null, postPage);
-          });
-        }}
-        />
-        <Route path="posts" getComponent={(props, cb) => {
-          require.ensure(['./PostList/containers/PostList', './PostList/reducer'], (require) => {
-            const postListPage = require('./PostList/containers/PostList').default;
-            const postListReducer = require('./PostList/reducer').default;
-            injectAsyncReducer(store, 'currentPost', postListReducer);
-            cb(null, postListPage);
-          });
+        <Route path="feed/:group" getComponent={(props, cb) => {
+          injectAsyncReducer(store, 'articles', articleReducer);
+          cb(null, ArticleList);
         }}
         />
         <Route path="*" component={NotFound} />

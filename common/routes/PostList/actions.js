@@ -1,29 +1,76 @@
-import { LOAD_POSTS_REQUEST, LOAD_POSTS_SUCCESS, LOAD_POSTS_FAILURE } from '../../constants';
+import * as types from '../../constants/ActionTypes';
+import * as api from '../../api';
 
-/* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
-/* eslint-disable import/prefer-default-export */
+function loadAnnotationsRequest() {
+  return {
+    type: types.LOAD_ANNOTATIONS_REQUEST,
+  };
+}
 
-export function loadPosts() {
-  return (dispatch, getState, { axios }) => {
-    const { protocol, host } = getState().sourceRequest;
-    dispatch({ type: LOAD_POSTS_REQUEST });
-    return axios.get(`${protocol}://${host}/api/v0/posts`)
-      .then((res) => {
-        dispatch({
-          type: LOAD_POSTS_SUCCESS,
-          payload: res.data,
-          meta: {
-            lastFetched: Date.now(),
-          },
-        });
-      })
-      .catch((error) => {
-        console.error(`Error in reducer that handles ${LOAD_POSTS_SUCCESS}: `, error);
-        dispatch({
-          type: LOAD_POSTS_FAILURE,
-          payload: error,
-          error: true,
-        });
+function loadAnnotationsFailure(error) {
+  return {
+    type: types.LOAD_ANNOTATIONS_FAILURE,
+    error,
+  };
+}
+
+function loadAnnotationsSuccess(annotations) {
+  return {
+    type: types.LOAD_ANNOTATIONS_SUCCESS,
+    annotations,
+  };
+}
+
+function loadAnnotations(articleURI) {
+  return (dispatch, getState) => {
+    dispatch(loadAnnotationsRequest);
+    return api.fetchArticleAnnotations(articleURI).then((annotations) => {
+      if (annotations.ERROR) {
+        return dispatch(loadAnnotationsFailure(annotations.ERROR));
+      } else {
+        return dispatch(loadAnnotationsSuccess(annotations));
+      }
+    });
+  };
+}
+
+function loadArticlesSuccess(articles) {
+  return (dispatch, getState) => {
+    articles.forEach(article => dispatch(loadAnnotations(article.uri)));
+    return dispatch({
+      type: types.LOAD_ARTICLES_SUCCESS,
+      articles,
+      lastFetched: Date.now(),
+    });
+  };
+}
+
+function loadArticlesFailure(error) {
+  return {
+    type: types.LOAD_ARTICLES_FAILURE,
+    error,
+  };
+}
+
+function loadArticlesRequest() {
+  return {
+    type: types.LOAD_ARTICLES_REQUEST,
+  };
+}
+
+export default function loadArticles(groupId) {
+  return (dispatch, getState) => {
+    dispatch(loadArticlesRequest());
+    if (!getState().isLoading) {
+      return api.fetchGroupArticles(groupId).then((articles) => {
+        if (articles.ERROR) {
+          return dispatch(loadArticlesFailure(articles.ERROR));
+        } else {
+          return dispatch(loadArticlesSuccess(articles));
+        }
       });
+    } else {
+      return Promise.resolve();
+    }
   };
 }
