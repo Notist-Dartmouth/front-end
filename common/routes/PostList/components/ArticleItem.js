@@ -15,12 +15,13 @@ const ArticleItem = props => (
     numAnnotations={props.annotations.length}
     numReplies={4}
     currentVotes={43}
-    slug="slug"
+    slug={props.articleID}
   />
 );
 
 ArticleItem.propTypes = {
   articleURI: PropTypes.string.isRequired,
+  articleID: PropTypes.string.isRequired,
   annotations: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
     articleText: PropTypes.string,
