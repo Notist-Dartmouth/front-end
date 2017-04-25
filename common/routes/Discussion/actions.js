@@ -1,29 +1,35 @@
-import { LOAD_COMMENTS_REQUEST, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAILURE } from '../../constants';
+import * as types from '../../constants/ActionTypes';
+import * as api from '../../api';
 
-/* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
-/* eslint-disable import/prefer-default-export */
+function loadAnnotationsRequest() {
+  return {
+    type: types.LOAD_ANNOTATIONS_REQUEST,
+  };
+}
 
-export function loadComments() {
-  return (dispatch, getState, { axios }) => {
-    const { protocol, host } = getState().sourceRequest;
-    dispatch({ type: LOAD_COMMENTS_REQUEST });
-    return axios.get(`${protocol}://${host}/api/v0/posts`)
-      .then((res) => {
-        dispatch({
-          type: LOAD_COMMENTS_SUCCESS,
-          payload: res.data,
-          meta: {
-            lastFetched: Date.now(),
-          },
-        });
-      })
-      .catch((error) => {
-        console.error(`Error in reducer that handles ${LOAD_COMMENTS_SUCCESS}: `, error);
-        dispatch({
-          type: LOAD_COMMENTS_FAILURE,
-          payload: error,
-          error: true,
-        });
-      });
+function loadAnnotationsFailure(error) {
+  return {
+    type: types.LOAD_ANNOTATIONS_FAILURE,
+    error,
+  };
+}
+
+function loadAnnotationsSuccess(annotations) {
+  return {
+    type: types.LOAD_ANNOTATIONS_SUCCESS,
+    annotations,
+  };
+}
+
+export default function loadAnnotations(articleURI) {
+  return (dispatch, getState) => {
+    dispatch(loadAnnotationsRequest);
+    return api.fetchArticleAnnotations(articleURI).then((annotations) => {
+      if (annotations.ERROR) {
+        return dispatch(loadAnnotationsFailure(annotations.ERROR));
+      } else {
+        return dispatch(loadAnnotationsSuccess(annotations));
+      }
+    });
   };
 }

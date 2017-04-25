@@ -115,7 +115,6 @@ class CommentBox extends Component {
             </CardText>
             <CardActions>
               <FlatButton label="Reply" onClick={this.onToggleReply} />
-              <FlatButton label="Action2" />
             </CardActions>
           </Card>
         </MuiThemeProvider>

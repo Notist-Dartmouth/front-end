@@ -7,7 +7,7 @@ import RightSideBar from './components/RightSideBar';
 const App = props => (
   <div>
     <MuiThemeProvider>
-      <Media query="(min-width: 1200px)" render={() => (
+      <Media query="(min-width: 4000px)" render={() => (
         <RightSideBar /> //  Only show if user's screen is big enough
         )}
       />
