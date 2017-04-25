@@ -1,6 +1,5 @@
 import React from 'react';
 import IndexLink from 'react-router/lib/IndexLink';
-import Link from 'react-router/lib/Link';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -116,8 +115,6 @@ export default class TopNav extends React.Component {
             <IndexLink to="/" className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
               Home
             </IndexLink>
-            <Link to="/posts" className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}> Example Feed
-            </Link>
           </ToolbarGroup>
         </Toolbar>
       </MuiThemeProvider>

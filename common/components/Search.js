@@ -1,32 +1,21 @@
 import React from 'react';
 import AutoComplete from 'material-ui/AutoComplete';
 import { fullBlack } from 'material-ui/styles/colors';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-const fruit = [
-  'Apple', 'Apricot', 'Avocado',
-  'Banana', 'Bilberry', 'Blackberry', 'Blackcurrant', 'Blueberry',
-  'Boysenberry', 'Blood Orange',
-  'Cantaloupe', 'Currant', 'Cherry', 'Cherimoya', 'Cloudberry',
-  'Coconut', 'Cranberry', 'Clementine',
-  'Damson', 'Date', 'Dragonfruit', 'Durian',
-  'Elderberry',
-  'Feijoa', 'Fig',
-  'Goji berry', 'Gooseberry', 'Grape', 'Grapefruit', 'Guava',
-  'Honeydew', 'Huckleberry',
-  'Jabouticaba', 'Jackfruit', 'Jambul', 'Jujube', 'Juniper berry',
-  'Kiwi fruit', 'Kumquat',
-  'Lemon', 'Lime', 'Loquat', 'Lychee',
-  'Nectarine',
-  'Mango', 'Marion berry', 'Melon', 'Miracle fruit', 'Mulberry', 'Mandarine',
-  'Olive', 'Orange',
-  'Papaya', 'Passionfruit', 'Peach', 'Pear', 'Persimmon', 'Physalis', 'Plum', 'Pineapple',
-  'Pumpkin', 'Pomegranate', 'Pomelo', 'Purple Mangosteen',
-  'Quince',
-  'Raspberry', 'Raisin', 'Rambutan', 'Redcurrant',
-  'Salal berry', 'Satsuma', 'Star fruit', 'Strawberry', 'Squash', 'Salmonberry',
-  'Tamarillo', 'Tamarind', 'Tomato', 'Tangerine',
-  'Ugli fruit',
-  'Watermelon',
+const muiTheme = getMuiTheme({
+  fontFamily: 'Roboto, sans-serif',
+  palette: {
+    textColor: fullBlack,
+    primaryText: fullBlack,
+    secondaryText: fullBlack,
+  },
+  userAgent: (typeof navigator !== 'undefined' && navigator.userAgent) || 'all',
+});
+
+const strings = [
+  'Whats', 'up', 'CS', '98', 'friends',
 ];
 
 /**
@@ -35,16 +24,16 @@ const fruit = [
  * http://www.material-ui.com/#/components/auto-complete
  */
 const Search = () => (
-  <div>
+  <MuiThemeProvider muiTheme={muiTheme}>
     <AutoComplete
-      floatingLabelText="Type 'peah', fuzzy search"
+      floatingLabelText="Search"
       filter={AutoComplete.fuzzyFilter}
-      dataSource={fruit}
+      dataSource={strings}
       maxSearchResults={5}
       style={{ color: fullBlack }}
     />
     {/* changing the style isn't working */}
-  </div>
+  </MuiThemeProvider>
 );
 
 export default Search;
