@@ -39,17 +39,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const App = ({ children }) => (
+const App = ({ children, location }) => (
   <div className={css(styles.root)}>
     <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />
     <LeftNavContainer />
     <div className={css(styles.shiftRight)}>
       <TopNav
-        currentFeedName="My feed name"
+        currentFeedName={location.state ? location.state.groupName : ''}
         subscribed
         numFeedMembers={6}
         numNotifications={4}
-        feedDescription="My feed description"
+        feedDescription={location.state ? location.state.groupDescription : ''}
       />
       {children}
       <footer className={css(styles.footer)}>
