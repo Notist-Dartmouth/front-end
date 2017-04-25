@@ -53,6 +53,7 @@ class ArticleList extends Component {
               key={a._id}
               articleURI={a.uri}
               annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
+              articleID={a._id}
             />)
         }
       </div>

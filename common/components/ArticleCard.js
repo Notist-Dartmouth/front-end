@@ -95,7 +95,7 @@ class ArticleCard extends React.Component {
           </aside>
           <CardActions style={{ clear: 'both', position: 'relative', left: '35%', padding: '3%' }}>
             <Link to={`/${this.slug}`}><RaisedButton style={{ top: '10%' }} label="SEE DISCUSSION" /></Link>
-            <Link to={this.domain} ><RaisedButton style={{ top: '10%', leftMargin: '20px' }} label="VIEW ORIGINAL ARTICLE" /></Link>
+            <a href={this.domain} target="_blank" rel="noopener noreferrer"><RaisedButton style={{ top: '10%', leftMargin: '20px' }} label="VIEW ORIGINAL ARTICLE" /></a>
           </CardActions>
         </Card>
       </MuiThemeProvider>
