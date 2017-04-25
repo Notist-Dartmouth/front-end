@@ -55,6 +55,7 @@ class ArticleList extends Component {
               imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
               articleURI={a.uri}
               annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
+              articleID={a._id}
             />)
         }
       </div>
