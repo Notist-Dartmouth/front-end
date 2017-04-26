@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import { StyleSheet, css } from 'aphrodite';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -39,56 +39,24 @@ const styles = StyleSheet.create({
   },
 });
 
-class App extends Component {
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.state !== this.props.location.state) {
-      window.location.reload();
-    }
-  }
-
-  render() {
-    return (
-      <div className={css(styles.root)}>
-        <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />
-        <LeftNavContainer />
-        <div className={css(styles.shiftRight)}>
-          <TopNav
-            currentFeedName={this.props.location.state ? this.props.location.state.groupName : ''}
-            subscribed
-            numFeedMembers={6}
-            numNotifications={4}
-            feedDescription={this.props.location.state ? this.props.location.state.groupDescription : ''}
-          />
-          {this.props.children}
-          <footer className={css(styles.footer)}>
-            Copyright © 2017 <a className={css(styles.footerLink)} href="http://notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
-          </footer>
-        </div>
-      </div>
-    );
-  }
-}
-
-//
-// const App = ({ children, location }) => (
-//   <div className={css(styles.root)}>
-//     <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />
-//     <LeftNavContainer />
-//     <div className={css(styles.shiftRight)}>
-//       <TopNav
-//         currentFeedName={location.state ? location.state.groupName : ''}
-//         subscribed
-//         numFeedMembers={6}
-//         numNotifications={4}
-//         feedDescription={location.state ? location.state.groupDescription : ''}
-//       />
-//       {children}
-//       <footer className={css(styles.footer)}>
-//         Copyright © 2017 <a className={css(styles.footerLink)} href="http://notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
-//       </footer>
-//     </div>
-//   </div>
-// );
+const App = ({ children, location }) => (
+  <div className={css(styles.root)}>
+    <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />
+    <LeftNavContainer />
+    <div className={css(styles.shiftRight)}>
+      <TopNav
+        currentFeedName={location.state ? location.state.groupName : ''}
+        subscribed
+        numFeedMembers={6}
+        numNotifications={4}
+        feedDescription={location.state ? location.state.groupDescription : ''}
+      />
+      {children}
+      <footer className={css(styles.footer)}>
+        Copyright © 2017 <a className={css(styles.footerLink)} href="http://notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
+      </footer>
+    </div>
+  </div>
+);
 
 export default App;
