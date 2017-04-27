@@ -33,3 +33,11 @@ export default function loadAnnotations(articleURI) {
     });
   };
 }
+
+// export function saveReply(text, parent, articleURI) {
+//   return (dispatch, getState) => {
+//     return api.saveReply(text, parent, articleURI).then((annotation) => {
+//
+//     });
+//   }
+// }
