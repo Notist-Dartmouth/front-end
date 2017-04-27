@@ -1,5 +1,6 @@
 import React from 'react';
 import IndexLink from 'react-router/lib/IndexLink';
+import Link from 'react-router/lib/Link';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -64,11 +65,7 @@ export default class TopNav extends React.Component {
       value: 2,
       subscribed: false,
     };
-    this.currentFeedName = props.currentFeedName || 'No feed name given';
-    this.numFeedMembers = props.numFeedMembers || 0;
-    this.numNotifications = props.numNotifications || 0;
     this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
-    this.feedDescription = props.feedDescription || 'No feed description given';
   }
 
   handleChange = (event, index, value) => this.setState({ value });
@@ -79,7 +76,7 @@ export default class TopNav extends React.Component {
 
   render() {
     let subButton = null;
-    // LOOK: this logic is backwards! remove the flag on line 83 for normal behavior! only like this for presentation on 4/25
+    // remove ! in the following line after 4/25 demo
     if (!this.state.subscribed) {
       subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} style={{ marginTop: -20 }} />;
     } else {
@@ -100,15 +97,15 @@ export default class TopNav extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Toolbar style={{ height: 90, top: 0, left: 0, width: '100%', position: 'fixed', zIndex: 200, color: white, fontFamily: 'Roboto, sans-serif' }}>
           <ToolbarGroup>
-            <span className={css(styles.feedName)}>{this.currentFeedName}</span>
+            <span className={css(styles.feedName)}>{this.props.currentFeedName}</span>
             {subButton}
             <PeopleIcon style={{ marginTop: -40 }} />
-            <span className={css(styles.numMembers)}>{this.numFeedMembers} members</span>
-            <p className={css(styles.feedDescription)}>{this.feedDescription}</p>
+            <span className={css(styles.numMembers)}>{this.props.numFeedMembers || 0} members</span>
+            <p className={css(styles.feedDescription)}>{this.props.feedDescription}</p>
           </ToolbarGroup>
           <ToolbarGroup>
             <NotificationsDialog
-              numNotifications={this.numNotifications}
+              numNotifications={this.props.numNotifications || 0}
             />
             <SettingsDialog />
             <ToolbarSeparator />
@@ -116,9 +113,8 @@ export default class TopNav extends React.Component {
             <IndexLink to="/" className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}>
               Home
             </IndexLink>
-            <a href="http://about.notist.io" style={{ color: grey900 }}>
-              About
-            </a>
+            <Link to="/posts" className={css(styles.link)} activeClassName={css(styles.link, styles.activeLink)}> Example Feed
+            </Link>
           </ToolbarGroup>
         </Toolbar>
       </MuiThemeProvider>

@@ -77,7 +77,11 @@ export default class LeftNav extends React.Component {
                 <Link
                   to={{
                     pathname: `/feed/${g._id}`,
-                    state: { groupId: g._id },
+                    state: {
+                      groupId: g._id,
+                      groupName: g.name,
+                      groupDescription: g.description,
+                    },
                   }}
                 >
                   <ListItem

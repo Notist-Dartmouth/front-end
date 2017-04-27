@@ -3,24 +3,26 @@ import ArticleCard from '../../../components/ArticleCard';
 
 const ArticleItem = props => (
   <ArticleCard
-    title="Title"
+    title={props.title}
     domain={props.articleURI}
     subtitle={props.annotations.length > 0 ? props.annotations[0].articleText : 'article text'}
     annotationContent={props.annotations.length > 0 ? props.annotations[0].text : 'text'}
-    image=""
-    username="merwin"
-    points={16}
-    timeSince="2 hours"
+    image={props.imageURL}
+    username="ethan"
+    points={1}
+    timeSince="1 minute"
     numUsers={2}
     numAnnotations={props.annotations.length}
-    numReplies={4}
-    currentVotes={43}
+    numReplies={1}
+    currentVotes={0}
     slug={props.articleID}
   />
 );
 
 ArticleItem.propTypes = {
   articleURI: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  imageURL: PropTypes.string.isRequired,
   articleID: PropTypes.string.isRequired,
   annotations: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
