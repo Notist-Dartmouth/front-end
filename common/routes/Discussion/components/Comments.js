@@ -1,17 +1,6 @@
 import React, { PropTypes, Component } from 'react';
-// import CommentBox from './CommentBox';
-
-// const Comments = props => (
-//   <div>
-//     {console.log('About to print the result of loadAnnotations!')}
-//     {console.log(loadAnnotations(props.location)())}
-//     {loadAnnotations(props.location).map((node, i) => {
-//       /* eslint-disable */
-//       return (<CommentBox node={node} key={i} id={i} />);
-//       /* eslint-enable */
-//     })}
-//   </div>
-// );
+import { connect } from 'react-redux';
+import CommentBox from './CommentBox';
 
 class Comments extends Component {
   constructor(props) {
@@ -23,19 +12,27 @@ class Comments extends Component {
   render() {
     return (
       <div>
-        blah
+        {this.props.replies.map((node, i) => {
+          return (
+            <CommentBox
+              node={node}
+              key={node._id}
+              dispatch={this.props.dispatch}
+              id={i}
+            />);
+        })}
       </div>
     );
   }
 }
 
-
 /* eslint-disable */
 
 Comments.propTypes = {
   replies: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 /* eslint-enable */
 
-export default Comments;
+export default connect()(Comments);
