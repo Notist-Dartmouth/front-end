@@ -14,8 +14,8 @@ export default class MyCard extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Card>
           <CardHeader style={styles.cardHeader}
-            title={this.props.annotation.title}
-            subtitle={this.props.annotation.subtitle}
+            title={this.props.annotation.articleText}
+            subtitle={this.props.annotation.text}
             actAsExpander
             showExpandableButton
           />

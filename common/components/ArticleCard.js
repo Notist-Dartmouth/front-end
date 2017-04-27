@@ -81,7 +81,7 @@ class ArticleCard extends React.Component {
             <br style={{ lineHeight: 2 }} />
             <div>
               <span style={{ fontWeight: 900, padding: 10 }}>{username}</span>
-              <span style={{ fontStyle: 'italic', padding: 10 }}>{points} {this.pointsText}</span>
+              <span style={{ fontStyle: 'italic', padding: 10 }}>{points} points</span>
               <span>{timeSince} ago</span>
               <span className={css(styles.annotationTextStyle)}><br />{this.props.annotationContent}</span>
             </div>

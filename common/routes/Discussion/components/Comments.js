@@ -1,7 +1,5 @@
-import { PropTypes, Component } from 'react';
-import { connect } from 'react-redux';
+import React, { PropTypes, Component } from 'react';
 // import CommentBox from './CommentBox';
-// import loadAnnotations from '../actions';
 
 // const Comments = props => (
 //   <div>
@@ -18,7 +16,16 @@ import { connect } from 'react-redux';
 class Comments extends Component {
   constructor(props) {
     super(props);
-    console.log(props.location.state);
+    console.log('blank');
+    console.log(props.replies);
+  }
+
+  render() {
+    return (
+      <div>
+        blah
+      </div>
+    );
   }
 }
 
@@ -26,19 +33,9 @@ class Comments extends Component {
 /* eslint-disable */
 
 Comments.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  ordering: PropTypes.array.isRequired,
-  location: PropTypes.string.isRequired,
+  replies: PropTypes.array.isRequired,
 };
 
 /* eslint-enable */
 
-function mapStateToProps(state) {
-  const { ordering } = state.Discussion;
-  return {
-    ordering,
-    location,
-  };
-}
-
-export default connect(mapStateToProps)(Comments);
+export default Comments;
