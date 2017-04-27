@@ -58,48 +58,51 @@ const styles = StyleSheet.create({
 });
 
 class ArticleCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.title = props.title;
-    this.domain = props.domain;
-    this.numUsers = props.numUsers;
-    this.numReplies = props.numReplies;
-    this.username = props.username;
-    this.points = props.points;
-    this.timeSince = props.timeSince;
-    this.currentVotes = props.currentVotes;
-    this.image = props.image;
-    this.slug = props.slug;
-    this.pointsText = 'points';
-  }
-
   render() {
-    if (this.points < 2) {
-      this.pointsText = 'point';
-    }
+    const {
+      title,
+      domain,
+      numUsers,
+      numReplies,
+      username,
+      points,
+      timeSince,
+      currentVotes,
+      image,
+      slug,
+    } = this.props;
     return (
       <MuiThemeProvider>
         <Card className={css(styles.cardStyle)}>
           <div className={css(styles.cardHeaderStyle)}>
-            <span className={css(styles.articleTitleTextStyle)}>{this.title}</span>
-            <span className={css(styles.domainTextStyle)}><br />{this.domain}</span>
+            <span className={css(styles.articleTitleTextStyle)}>{title}</span>
+            <span className={css(styles.domainTextStyle)}><br />{domain}</span>
             <span className={css(styles.articleTextStyle)}><br />&quot;{this.props.subtitle}&quot;</span>
             <br style={{ lineHeight: 2 }} />
             <div>
-              <span style={{ fontWeight: 900, padding: 10 }}>{this.username}</span>
-              <span style={{ fontStyle: 'italic', padding: 10 }}>{this.points} {this.pointsText}</span>
-              <span>{this.timeSince} ago</span>
+              <span style={{ fontWeight: 900, padding: 10 }}>{username}</span>
+              <span style={{ fontStyle: 'italic', padding: 10 }}>{points} {this.pointsText}</span>
+              <span>{timeSince} ago</span>
               <span className={css(styles.annotationTextStyle)}><br />{this.props.annotationContent}</span>
             </div>
           </div>
           <aside className={css(styles.articleInfoBar)}>
-            <span><MdGroup /> {`     ${this.numUsers}`} users</span>
+            <span><MdGroup /> {`     ${numUsers}`} users</span>
             <span><MdComment /> {`     ${this.props.numAnnotations}`} annotations</span>
-            <img width={'100%'} src={this.image} alt="card" />
+            <img width={'100%'} src={image} alt="card" />
           </aside>
           <CardActions style={{ clear: 'both', position: 'relative', left: '35%', padding: '3%' }}>
-            <Link to={`/${this.slug}`}><RaisedButton style={{ top: '10%' }} label="SEE DISCUSSION" /></Link>
-            <a href={this.domain} target="_blank" rel="noopener noreferrer"><RaisedButton style={{ top: '10%', leftMargin: '20px' }} label="VIEW ORIGINAL ARTICLE" /></a>
+            <Link
+              to={{
+                pathname: `/discussion/${slug}`,
+                state: {
+                  articleId: slug,
+                },
+              }}
+            >
+              <RaisedButton style={{ top: '10%' }} label="SEE DISCUSSION" />
+            </Link>
+            <a href={domain} target="_blank" rel="noopener noreferrer"><RaisedButton style={{ top: '10%', leftMargin: '20px' }} label="VIEW ORIGINAL ARTICLE" /></a>
           </CardActions>
         </Card>
       </MuiThemeProvider>
@@ -121,7 +124,6 @@ ArticleCard.propTypes = {
   image: React.PropTypes.string.isRequired,
   currentVotes: React.PropTypes.number.isRequired,
   slug: React.PropTypes.string.isRequired,
-
 };
 
 export default ArticleCard;

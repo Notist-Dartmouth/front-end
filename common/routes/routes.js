@@ -23,7 +23,7 @@ export default function createRouter(store) {
     <Router history={browserHistory} >
       <Route path="/login" component={Login} />
       <Route path="/" component={App} >
-        <Route path="discussion" getComponent={(props, cb) => {
+        <Route path="discussion/:article" getComponent={(props, cb) => {
           require.ensure(['./Discussion/content', './Discussion/reducer'], (require) => {
             const discussion = require('./Discussion/content').default;
             const discussionReducer = require('./Discussion/reducer').default;
