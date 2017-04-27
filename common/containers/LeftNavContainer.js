@@ -64,16 +64,10 @@ const followingList = [
 ];
 
 class LeftNavContainer extends Component {
-
-  constructor(props) {
-    super(props);
-    this.groups = props.groups;
-  }
-
   render() {
     return (
       <LeftNav
-        groups={this.groups}
+        groups={this.props.groups}
         personalList={personalList}
         exploreList={exploreList}
         followingList={followingList}

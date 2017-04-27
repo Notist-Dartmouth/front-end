@@ -65,11 +65,7 @@ export default class TopNav extends React.Component {
       value: 2,
       subscribed: false,
     };
-    this.currentFeedName = props.currentFeedName;
-    this.numFeedMembers = props.numFeedMembers || 0;
-    this.numNotifications = props.numNotifications || 0;
     this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
-    this.feedDescription = props.feedDescription;
   }
 
   handleChange = (event, index, value) => this.setState({ value });
@@ -80,7 +76,8 @@ export default class TopNav extends React.Component {
 
   render() {
     let subButton = null;
-    if (this.state.subscribed) {
+    // remove ! in the following line after 4/25 demo
+    if (!this.state.subscribed) {
       subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} style={{ marginTop: -20 }} />;
     } else {
       subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} style={{ marginTop: -20 }} />;
@@ -100,15 +97,15 @@ export default class TopNav extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Toolbar style={{ height: 90, top: 0, left: 0, width: '100%', position: 'fixed', zIndex: 200, color: white, fontFamily: 'Roboto, sans-serif' }}>
           <ToolbarGroup>
-            <span className={css(styles.feedName)}>{this.currentFeedName}</span>
+            <span className={css(styles.feedName)}>{this.props.currentFeedName}</span>
             {subButton}
             <PeopleIcon style={{ marginTop: -40 }} />
-            <span className={css(styles.numMembers)}>{this.numFeedMembers} members</span>
-            <p className={css(styles.feedDescription)}>{this.feedDescription}</p>
+            <span className={css(styles.numMembers)}>{this.props.numFeedMembers || 0} members</span>
+            <p className={css(styles.feedDescription)}>{this.props.feedDescription}</p>
           </ToolbarGroup>
           <ToolbarGroup>
             <NotificationsDialog
-              numNotifications={this.numNotifications}
+              numNotifications={this.props.numNotifications || 0}
             />
             <SettingsDialog />
             <ToolbarSeparator />
