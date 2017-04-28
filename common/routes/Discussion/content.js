@@ -12,7 +12,7 @@ class App extends Component {
       <div>
         <MuiThemeProvider>
           <Media query="(min-width: 4000px)" render={() => (
-            <RightSideBar /> //  Only show if user's screen is big enough
+            <RightSideBar />
             )}
           />
         </MuiThemeProvider>
@@ -21,6 +21,8 @@ class App extends Component {
             {this.props.annotations.filter(a => a.article === this.props.location.state.articleId)
               .map(a =>
                 <div key={a._id} >
+                  { console.log('A is: ') }
+                  { console.log(a) }
                   <MyCard annotation={a} />
                   <Comments replies={a.childAnnotations} />
                 </div>,
