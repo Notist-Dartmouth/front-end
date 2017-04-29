@@ -5,46 +5,46 @@ import CommentBox from './CommentBox';
 import traverseDF from '../produceCommentGraph';
 /* eslint-enable */
 
-function sortByTime(order) {
-  // Loop through the order array and update and bucketized neighbors in same array if of the same depth
-  // Sort each of the sub arrays in the big array in probably O(nlgn) time
-  // Flatten the newly sorted array to obtain array sorted by most recent!
-
-  // 1 Divide into sub arrays
-  for elem in ordering:
-
-    if (ordering.length < 2) { //Array is only one element -- already sorted
-      return;
-    }
-
-    if (i == ordering.length - 2) { //Don't go out of bounds of the array
-      break;
-    }
-
-    a = new Array[];
-
-    if (ordering[i].depth == ordering[i+1].depth)
-      a.push;
-
-// 2 // Sort sub arrays
-for (elem in a) {
-  if (!(elem.length < 2)) {
-    elem = sort(elem);
-  }
-}
-
-// 3 Flatten Array
-  var merged = [].concat([a]);
-
-
-
-  order.map((node, i) => {
-    const date = node.createDate;
-
-    return 5;
-  });
-  return 0;
-}
+// function sortByTime(order) {
+//   // Loop through the order array and update and bucketized neighbors in same array if of the same depth
+//   // Sort each of the sub arrays in the big array in probably O(nlgn) time
+//   // Flatten the newly sorted array to obtain array sorted by most recent!
+//
+//   // 1 Divide into sub arrays
+//   for elem in ordering:
+//
+//     if (ordering.length < 2) { //Array is only one element -- already sorted
+//       return;
+//     }
+//
+//     if (i == ordering.length - 2) { //Don't go out of bounds of the array
+//       break;
+//     }
+//
+//     a = new Array[];
+//
+//     if (ordering[i].depth == ordering[i+1].depth)
+//       a.push;
+//
+// // 2 // Sort sub arrays
+// for (elem in a) {
+//   if (!(elem.length < 2)) {
+//     elem = sort(elem);
+//   }
+// }
+//
+// // 3 Flatten Array
+//   var merged = [].concat([a]);
+//
+//
+//
+//   order.map((node, i) => {
+//     const date = node.createDate;
+//
+//     return 5;
+//   });
+//   return 0;
+// }
 
 class Comments extends Component {
   constructor(props) {
@@ -67,7 +67,6 @@ class Comments extends Component {
         {order.map((node, i) => {
           return (
             <CommentBox
-              articleURI={this.props.articleURI}
               ordering={order}
               node={node}
               key={node._id}
@@ -83,8 +82,7 @@ class Comments extends Component {
 /* eslint-disable */
 
 Comments.propTypes = {
-  articleURI: PropTypes.string.isRequired,
-  replies: PropTypes.object.isRequired,
+  replies: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
