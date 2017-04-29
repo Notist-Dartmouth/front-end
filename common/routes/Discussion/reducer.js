@@ -1,12 +1,13 @@
+import * as types from '../../constants/ActionTypes';
+
 export default function discussionViewReducer(state = {
   parentIdx: 0,
   replyText: '',
   isVisible: true,
   annotations: [],
   ordering: [],
+  error: null,
 }, action) {
-  console.log('I called the reducer! Yay!');
-  console.log('ORDERING is: '.concat(state.ordering)); // Have the ordering here
   switch (action.type) {
     case 'TOGGLE_REPLY':
       return Object.assign({}, state, {
@@ -21,6 +22,14 @@ export default function discussionViewReducer(state = {
         replyText: action.replyText,
         isVisible: action.isVisible,
         ordering: action.ordering,
+      });
+    case types.LOAD_DISCUSSION_FAILURE:
+      return Object.assign({}, state, {
+        error: action.error,
+      });
+    case types.LOAD_DISCUSSION_SUCCESS:
+      return Object.assign({}, state, {
+        annotations: action.annotations,
       });
     default:
       return state;

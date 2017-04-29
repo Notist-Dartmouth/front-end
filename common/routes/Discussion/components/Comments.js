@@ -84,7 +84,7 @@ class Comments extends Component {
 
 Comments.propTypes = {
   articleURI: PropTypes.string.isRequired,
-  replies: PropTypes.array.isRequired,
+  replies: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

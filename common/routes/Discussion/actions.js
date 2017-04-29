@@ -1,29 +1,29 @@
 import * as types from '../../constants/ActionTypes';
 import * as api from '../../api';
 
-function loadAnnotationsRequest() {
-  return {
-    type: types.LOAD_ANNOTATIONS_REQUEST,
-  };
-}
+// function loadAnnotationsRequest() {
+//   return {
+//     type: types.LOAD_ANNOTATIONS_REQUEST,
+//   };
+// }
 
 function loadAnnotationsFailure(error) {
   return {
-    type: types.LOAD_ANNOTATIONS_FAILURE,
+    type: types.LOAD_DISCUSSION_FAILURE,
     error,
   };
 }
 
 function loadAnnotationsSuccess(annotations) {
   return {
-    type: types.LOAD_ANNOTATIONS_SUCCESS,
+    type: types.LOAD_DISCUSSION_SUCCESS,
     annotations,
   };
 }
 
 export function loadAnnotations(articleURI) {
   return (dispatch, getState) => {
-    dispatch(loadAnnotationsRequest);
+    // dispatch(loadAnnotationsRequest);
     return api.fetchArticleAnnotations(articleURI).then((annotations) => {
       if (annotations.ERROR) {
         return dispatch(loadAnnotationsFailure(annotations.ERROR));

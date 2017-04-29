@@ -6,25 +6,14 @@ import RightSideBar from './components/RightSideBar';
 // import loadArticles from './actions';
 import MyCard from './components/MyCard';
 import Comments from './components/Comments';
+import { loadAnnotations } from './actions';
 
 class App extends Component {
 
-  // componentDidMount() {
-  //   this.fetchArticles = this.fetchArticles.bind(this);
-  //   const { groupId } = this.props.location.state;
-  //   this.fetchArticles(groupId);
-  // }
-  //
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.location.pathname !== this.props.location.pathname) {
-  //     const { groupId } = nextProps.location.state;
-  //     this.fetchArticles(groupId);
-  //   }
-  // }
-  //
-  // fetchArticles(groupId) {
-  //   this.props.dispatch(loadArticles(groupId));
-  // }
+  componentDidMount() {
+    const { articleURI } = this.props.location.state;
+    this.props.dispatch(loadAnnotations(articleURI));
+  }
 
   render() {
     return (
@@ -59,13 +48,14 @@ class App extends Component {
 }
 
 App.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   annotations: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 function mapStateToProps(state) {
   console.log('Executing mapStateToProps!');
   console.log(state);
-  const { annotations } = state.articles;
+  const { annotations } = state.Discussion;
   return {
     annotations,
   };
