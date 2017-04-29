@@ -7,12 +7,15 @@ export default function dfTraversal(rootNode, callback) {
   const order = [];
   // this is a recurse and immediately-invoking function
   (function recurse(currentNode, depth = 0) {
+    console.log('RootNode is: ');
+    console.log(rootNode);
     currentNode.depth = depth;
     order.push(currentNode);
 
     for (let i = 0, length = currentNode.childAnnotations.length; i < length; i += 1) {
       recurse(currentNode.childAnnotations[i], currentNode.depth + 1);
     }
+
     callback(currentNode);
   }(rootNode));
 

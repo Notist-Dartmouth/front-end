@@ -4,8 +4,8 @@ import Media from 'react-media';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RightSideBar from './components/RightSideBar';
 // import loadArticles from './actions';
-// import MyCard from './components/MyCard';
-// import Comments from './components/Comments';
+import MyCard from './components/MyCard';
+import Comments from './components/Comments';
 
 class App extends Component {
 
@@ -44,6 +44,8 @@ class App extends Component {
                 <div key={a._id} >
                   { console.log('A is: ') }
                   { console.log(a) }
+                  <MyCard annotation={a} />
+                  <Comments replies={a} />
                 </div>,
               )}
           </div>

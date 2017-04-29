@@ -36,7 +36,7 @@ class CommentBox extends Component {
     this.props.dispatch({
       type: 'TOGGLE_REPLY',
       parentIdx: this.props.id, // This is the index in the orderings array
-      replyText: '',
+      replyText: 'hello',
       isVisible: visible,
       ordering: this.props.ordering,
     });
@@ -59,7 +59,7 @@ class CommentBox extends Component {
     ];
 
     console.log('Post! '.concat(textInsideTextArea));
-    this.props.dispatch({
+    this.props.dispatch({ // Instead of this --> import action and connect action to component -- directly call the action
       type: 'POST_REPLY',
       parentIdx: this.id,
       replyText: textInsideTextArea,
@@ -87,6 +87,9 @@ class CommentBox extends Component {
 
     let textarea = <span id={'Hi'} />;
 
+    console.log('Precrash: ');
+    console.log(this.props.ordering);
+
     if (this.props.isVisible && this.props.parentIdx === this.props.ordering.indexOf(this.props.node)) {
       textarea = (
         <div>
@@ -111,7 +114,7 @@ class CommentBox extends Component {
         <MuiThemeProvider muiTheme={muiTheme}>
           <Card>
             <CardText expandable={false}>
-              {this.props.node.data}
+              {this.props.node.text}
             </CardText>
             <CardActions>
               <FlatButton label="Reply" onClick={this.onToggleReply} />

@@ -5,6 +5,7 @@ export default function discussionViewReducer(state = {
   replyText: '',
   isVisible: true,
   annotations: [],
+  ordering: [],
 }, action) {
   console.log('I called the reducer! Yay!');
   console.log('ORDERING is: '.concat(state.ordering)); // Have the ordering here
