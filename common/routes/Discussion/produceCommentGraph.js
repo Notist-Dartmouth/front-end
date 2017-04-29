@@ -49,12 +49,12 @@ export default function dfTraversal(rootNode, callback) {
 //
 // });
 
-// function Node(data) {
-//   this.data = data;
-//   this.parent = null;
-//   this.depth = 0;
-//   this.children = [];
-// }
+export function Node(data) {
+  this.text = data;
+  this.parent = null;
+  this.depth = 0;
+  this.children = [];
+}
 //
 //
 // function Tree(data) {
