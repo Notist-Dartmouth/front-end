@@ -24,6 +24,7 @@ class Comments extends Component {
         {order.map((node, i) => {
           return (
             <CommentBox
+              articleURI={this.props.articleURI}
               ordering={order}
               node={node}
               key={node._id}
@@ -39,7 +40,8 @@ class Comments extends Component {
 /* eslint-disable */
 
 Comments.propTypes = {
-  replies: PropTypes.array.isRequired,
+  articleURI: PropTypes.string.isRequired,
+  replies: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

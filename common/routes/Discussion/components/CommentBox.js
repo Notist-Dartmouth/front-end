@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
+import { saveReply } from '../actions';
 
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
@@ -70,18 +71,14 @@ class CommentBox extends Component {
                               // If ordering were attached to the state, we could just update that, but that's confusing because we're receiving ordering as
                               // a prop so if we connect it to the state then it will be overwritten by the initial load with the reducer and we won't be able to read
                               // the initial value since it will be overwritten from the mapStateToProps call.
-
-    console.log('POST ADD');
-    console.log(this.ordering);
-
-    console.log('Post! '.concat(textInsideTextArea));
-    this.props.dispatch({ // Instead of this --> import action and connect action to component -- directly call the action
-      type: 'POST_REPLY',
-      parentIdx: this.id,
-      replyText: textInsideTextArea,
-      isVisible: false,
-      ordering,
-    });
+    this.props.dispatch(saveReply(textInsideTextArea, addedNode.parent._id, this.props.articleURI));
+    // this.props.dispatch({
+    //   type: 'POST_REPLY',
+    //   parentIdx: this.id,
+    //   replyText: textInsideTextArea,
+    //   isVisible: false,
+    //   ordering,
+    // });
   }
 
   getLastBeforeEnd() {
@@ -146,6 +143,7 @@ class CommentBox extends Component {
 /* eslint-disable */
 
 CommentBox.propTypes = {
+  articleURI: PropTypes.string.isRequired,
   parentIdx: PropTypes.number.isRequired,
   isVisible: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,

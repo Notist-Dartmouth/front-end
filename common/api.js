@@ -63,7 +63,7 @@ export const saveGroup = (group) => {
 };
 
 export const saveReply = (text, parent, articleURI) => {
-  return fetch(`http://${config.apiHost}/api/group`, {
+  return fetch(`http://${config.apiHost}/api/annotation`, {
     method: 'POST',
     credentials: 'include',
     headers,
