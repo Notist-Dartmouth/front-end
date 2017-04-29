@@ -21,7 +21,7 @@ function loadAnnotationsSuccess(annotations) {
   };
 }
 
-export default function loadAnnotations(articleURI) {
+export function loadAnnotations(articleURI) {
   return (dispatch, getState) => {
     dispatch(loadAnnotationsRequest);
     return api.fetchArticleAnnotations(articleURI).then((annotations) => {
@@ -34,10 +34,14 @@ export default function loadAnnotations(articleURI) {
   };
 }
 
-// export function saveReply(text, parent, articleURI) {
-//   return (dispatch, getState) => {
-//     return api.saveReply(text, parent, articleURI).then((annotation) => {
-//
-//     });
-//   }
-// }
+export function saveReply(text, parent, articleURI) {
+  return (dispatch, getState) => {
+    return api.saveReply(text, parent, articleURI).then((reply) => {
+      if (reply.ERROR) {
+        return dispatch(loadAnnotationsFailure(reply.ERROR));
+      } else {
+        return dispatch(loadAnnotations(articleURI));
+      }
+    });
+  };
+}

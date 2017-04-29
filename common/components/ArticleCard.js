@@ -97,6 +97,7 @@ class ArticleCard extends React.Component {
                 pathname: `/discussion/${slug}`,
                 state: {
                   articleId: slug,
+                  articleURI: domain,
                 },
               }}
             >

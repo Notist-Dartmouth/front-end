@@ -45,7 +45,10 @@ class App extends Component {
                   { console.log('A is: ') }
                   { console.log(a) }
                   <MyCard annotation={a} />
-                  <Comments replies={a} />
+                  <Comments
+                    articleURI={this.props.location.state.articleURI}
+                    replies={a}
+                  />
                 </div>,
               )}
           </div>
