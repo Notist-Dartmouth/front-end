@@ -18,26 +18,25 @@ class CommentBox extends Component {
     this.onToggleReply = this.onToggleReply.bind(this);
     this.onPostReply = this.onPostReply.bind(this);
     this.getLastBeforeEnd = this.getLastBeforeEnd.bind(this);
-
-    // store.subscribe(() => {     //  Will execute everytime the state is updated
-    //   this.render();
-    // });
   }
 
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
 
   onToggleReply() {
     console.log('Trying to toggle the reply box!');
-    let visible = false;
-    if (this.props.id !== this.props.parentIdx) {
+    let visible = true;
+    if (this.props.commentId !== this.props.currentlyOpen) {
       visible = true;
     } else {
       visible = !this.props.isVisible;
     }
 
+    console.log(`VISIBLE IS: ${visible}`);
+
     this.props.dispatch({
       type: 'TOGGLE_REPLY',
       parentIdx: this.props.id, // This is the index in the orderings array
+      currentlyOpen: (visible ? this.props.commentId : '0'),
       replyText: 'hello',
       isVisible: visible,
       ordering: this.ordering,
@@ -47,7 +46,7 @@ class CommentBox extends Component {
   onPostReply() {
     console.log('POSTING REPLY!');
     const textInsideTextArea = document.getElementById('textarea'.concat(this.props.id.toString())).value;
-    const arrayIndex = this.getLastBeforeEnd();   //  this.getLastBeforeEnd(); //  This is where commentBox should be inserted in the array
+    // const arrayIndex = this.getLastBeforeEnd();   //  this.getLastBeforeEnd(); //  This is where commentBox should be inserted in the array
 
     //  Splice this node into ordering
     const addedNode = new Node(textInsideTextArea);
@@ -57,28 +56,21 @@ class CommentBox extends Component {
     console.log('PRE ADD: ');
     console.log(this.ordering);
 
-    const ordering = [
-      ...this.ordering.slice(0, arrayIndex),
-      addedNode,
-      ...this.ordering.slice(arrayIndex, this.ordering.length),
-    ];
+    // const ordering = [
+    //   ...this.ordering.slice(0, arrayIndex),
+    //   addedNode,
+    //   ...this.ordering.slice(arrayIndex, this.ordering.length),
+    // ];
 
 
     /* TODO: Post this reply so the backend receives the information about the updated comment tree.
     Then ordering will be received as comments by a prop and it will render correctly */
 
-    this.ordering = ordering; // This updates the local state, but doesn't show because we loop over ordering in Comments.js and this.ordering is local to here.
+    // this.ordering = ordering; // This updates the local state, but doesn't show because we loop over ordering in Comments.js and this.ordering is local to here.
                               // If ordering were attached to the state, we could just update that, but that's confusing because we're receiving ordering as
                               // a prop so if we connect it to the state then it will be overwritten by the initial load with the reducer and we won't be able to read
                               // the initial value since it will be overwritten from the mapStateToProps call.
     this.props.dispatch(saveReply(textInsideTextArea, addedNode.parent._id, this.props.articleURI));
-    // this.props.dispatch({
-    //   type: 'POST_REPLY',
-    //   parentIdx: this.id,
-    //   replyText: textInsideTextArea,
-    //   isVisible: false,
-    //   ordering,
-    // });
   }
 
   getLastBeforeEnd() {
@@ -103,7 +95,7 @@ class CommentBox extends Component {
     // console.log('Precrash: ');
     // console.log(this.ordering);
 
-    if (this.props.isVisible && this.props.parentIdx === this.ordering.indexOf(this.props.node)) {
+    if (this.props.isVisible && this.props.commentId === this.props.currentlyOpen) {
       textarea = (
         <div>
           <textarea id={'textarea'.concat(this.id.toString())}
@@ -153,10 +145,11 @@ CommentBox.propTypes = {
 /* eslint-enable */
 
 function mapStateToProps(state) {
-  const { parentIdx, isVisible } = state.Discussion;
+  const { parentIdx, isVisible, currentlyOpen } = state.Discussion;
   return {
     parentIdx,
     isVisible,
+    currentlyOpen,
   };
 }
 

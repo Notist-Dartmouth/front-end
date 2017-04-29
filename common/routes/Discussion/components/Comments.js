@@ -71,6 +71,7 @@ class Comments extends Component {
               ordering={order}
               node={node}
               key={node._id}
+              commentId={node._id}
               dispatch={this.props.dispatch}
               id={i}
             />);
