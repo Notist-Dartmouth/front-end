@@ -4,6 +4,7 @@ import marked from 'marked';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
+import { RaisedButton } from 'material-ui';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
 import { saveReply } from '../actions';
@@ -105,7 +106,7 @@ class CommentBox extends Component {
               borderLeft: '3px solid '.concat(COLORARRAY[this.props.node.depth + 1]),
             }}
           />
-          <button onClick={this.onPostReply}>POST</button>
+          <RaisedButton label="Post" primary onClick={this.onPostReply} style={{ marginLeft: '20px' }} />
         </div>
       );
     }
