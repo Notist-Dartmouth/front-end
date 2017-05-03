@@ -18,8 +18,8 @@ class App extends Component {
     return (
       <div>
         <MuiThemeProvider>
-          <Media query="(min-width: 4000px)" render={() => (
-            <RightSideBar />
+          <Media query="(min-width: 1000px)" render={() => (
+            <RightSideBar articleURI={this.props.location.state.articleURI} />
             )}
           />
         </MuiThemeProvider>
