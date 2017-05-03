@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
+import marked from 'marked';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
@@ -119,7 +120,7 @@ class CommentBox extends Component {
         <MuiThemeProvider muiTheme={muiTheme}>
           <Card>
             <CardText expandable={false}>
-              {this.props.node.text}
+              <div dangerouslySetInnerHTML={{ __html: marked(this.props.node.text || '') }} />
             </CardText>
             <CardActions>
               <FlatButton label="Reply" onClick={this.onToggleReply} />
