@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Media from 'react-media';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RightSideBar from './components/RightSideBar';
-import MyCard from './components/MyCard';
 import Comments from './components/Comments';
 import { loadDiscussion } from './actions';
 
@@ -31,7 +30,6 @@ class App extends Component {
             {this.props.annotations.filter(a => a.article === this.props.location.state.articleId)
               .map(a =>
                 <div key={a._id} >
-                  <MyCard annotation={a} />
                   <Comments
                     articleURI={this.props.location.state.articleURI}
                     replies={a}
