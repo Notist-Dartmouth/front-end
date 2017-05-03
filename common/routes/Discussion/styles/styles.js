@@ -51,7 +51,7 @@ export const styles = {
   },
 
   iframeContainer: {
-    height: '55%',
+    height: '87.5%',
     paddingLeft: '25px',
     paddingRight: '25px',
   },
