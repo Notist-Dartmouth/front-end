@@ -1,21 +1,63 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Media from 'react-media';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MiddleContent from './components/MiddleContent';
 import RightSideBar from './components/RightSideBar';
+import MyCard from './components/MyCard';
+import Comments from './components/Comments';
+import { loadDiscussion } from './actions';
 
-const App = props => (
-  <div>
-    <MuiThemeProvider>
-      <Media query="(min-width: 1200px)" render={() => (
-        <RightSideBar /> //  Only show if user's screen is big enough
-        )}
-      />
-    </MuiThemeProvider>
-    <MuiThemeProvider>
-      <MiddleContent />
-    </MuiThemeProvider>
-  </div>
-);
+class App extends Component {
 
-export default App;
+  componentDidMount() {
+    const { articleURI } = this.props.location.state;
+    this.props.dispatch(loadDiscussion(articleURI));
+  }
+
+  render() {
+    return (
+      <div>
+        <MuiThemeProvider>
+          <Media query="(min-width: 4000px)" render={() => (
+            <RightSideBar />
+            )}
+          />
+        </MuiThemeProvider>
+        <MuiThemeProvider>
+          <div>
+            {this.props.isLoading &&
+              <h2>Loading...</h2>
+            }
+            {this.props.annotations.filter(a => a.article === this.props.location.state.articleId)
+              .map(a =>
+                <div key={a._id} >
+                  <MyCard annotation={a} />
+                  <Comments
+                    articleURI={this.props.location.state.articleURI}
+                    replies={a}
+                  />
+                </div>,
+              )}
+          </div>
+        </MuiThemeProvider>
+      </div>
+    );
+  }
+}
+
+App.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  annotations: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+function mapStateToProps(state) {
+  console.log('Executing mapStateToProps!');
+  console.log(state);
+  const { annotations, isLoading } = state.Discussion;
+  return {
+    annotations,
+    isLoading,
+  };
+}
+
+export default connect(mapStateToProps)(App);

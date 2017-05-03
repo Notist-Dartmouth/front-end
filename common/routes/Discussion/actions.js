@@ -1,29 +1,47 @@
-import { LOAD_COMMENTS_REQUEST, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAILURE } from '../../constants';
+import * as types from '../../constants/ActionTypes';
+import * as api from '../../api';
 
-/* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
-/* eslint-disable import/prefer-default-export */
+function loadDiscussionRequest() {
+  return {
+    type: types.LOAD_ANNOTATIONS_REQUEST,
+  };
+}
 
-export function loadComments() {
-  return (dispatch, getState, { axios }) => {
-    const { protocol, host } = getState().sourceRequest;
-    dispatch({ type: LOAD_COMMENTS_REQUEST });
-    return axios.get(`${protocol}://${host}/api/v0/posts`)
-      .then((res) => {
-        dispatch({
-          type: LOAD_COMMENTS_SUCCESS,
-          payload: res.data,
-          meta: {
-            lastFetched: Date.now(),
-          },
-        });
-      })
-      .catch((error) => {
-        console.error(`Error in reducer that handles ${LOAD_COMMENTS_SUCCESS}: `, error);
-        dispatch({
-          type: LOAD_COMMENTS_FAILURE,
-          payload: error,
-          error: true,
-        });
-      });
+function loadDiscussionFailure(error) {
+  return {
+    type: types.LOAD_DISCUSSION_FAILURE,
+    error,
+  };
+}
+
+function loadDiscussionSuccess(annotations) {
+  return {
+    type: types.LOAD_DISCUSSION_SUCCESS,
+    annotations,
+  };
+}
+
+export function loadDiscussion(articleURI) {
+  return (dispatch, getState) => {
+    dispatch(loadDiscussionRequest);
+    return api.fetchArticleAnnotations(articleURI).then((annotations) => {
+      if (annotations.ERROR) {
+        return dispatch(loadDiscussionFailure(annotations.ERROR));
+      } else {
+        return dispatch(loadDiscussionSuccess(annotations));
+      }
+    });
+  };
+}
+
+export function saveReply(text, parent, articleURI) {
+  return (dispatch, getState) => {
+    return api.saveReply(text, parent, articleURI).then((reply) => {
+      if (reply.ERROR) {
+        return dispatch(loadDiscussionFailure(reply.ERROR));
+      } else {
+        return dispatch(loadDiscussion(articleURI));
+      }
+    });
   };
 }

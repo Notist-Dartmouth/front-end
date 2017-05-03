@@ -61,3 +61,18 @@ export const saveGroup = (group) => {
   })
   .then(res => handleResponse(res));
 };
+
+export const saveReply = (text, parent, articleURI) => {
+  return fetch(`http://${config.apiHost}/api/annotation`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+    body: JSON.stringify({
+      text,
+      parent,
+      groups: [], // TODO save reply to groups
+      uri: articleURI,
+    }),
+  })
+  .then(res => handleResponse(res));
+};

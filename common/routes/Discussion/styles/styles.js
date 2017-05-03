@@ -100,13 +100,14 @@ export const styles = {
     left: '0px',
   },
 
-  card: {
-    position: 'fixed',
-    height: '200px',
-    top: '100px',
-    left: '330px',
-    right: '410px',
-  },
+  // card: {
+  //   position: 'fixed',
+  //   overflowY: 'scroll',
+  //   height: 'auto',
+  //   top: '100px',
+  //   left: '330px',
+  //   right: '410px',
+  // },
 
   cardHeader: {
     color: grey500,

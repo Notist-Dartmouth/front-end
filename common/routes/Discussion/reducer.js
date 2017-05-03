@@ -1,16 +1,19 @@
-import order from './produceCommentGraph';
+import * as types from '../../constants/ActionTypes';
 
 export default function discussionViewReducer(state = {
-  parentIdx: 0,
+  parentIdx: '',
   replyText: '',
   isVisible: true,
-  ordering: order,
+  currentlyOpen: 'BBB',
+  annotations: [],
+  ordering: [],
+  error: null,
+  isLoading: false,
 }, action) {
-  console.log('I called the reducer! Yay!');
-  console.log('ORDERING is: '.concat(state.ordering)); // Have the ordering here
   switch (action.type) {
     case 'TOGGLE_REPLY':
       return Object.assign({}, state, {
+        currentlyOpen: action.currentlyOpen,
         parentIdx: action.parentIdx,
         replyText: action.replyText,
         isVisible: action.isVisible,
@@ -18,10 +21,27 @@ export default function discussionViewReducer(state = {
       });
     case 'POST_REPLY':
       return Object.assign({}, state, {
-        parentIdx: action.parentIdx,
+        parentIdx: state.parentIdx,
         replyText: action.replyText,
         isVisible: action.isVisible,
         ordering: action.ordering,
+      });
+    case types.LOAD_DISCUSSION_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
+    case types.LOAD_DISCUSSION_FAILURE:
+      return Object.assign({}, state, {
+        error: action.error,
+        isLoading: false,
+      });
+    case types.LOAD_DISCUSSION_SUCCESS:
+      return Object.assign({}, state, {
+        annotations: action.annotations,
+        parentIdx: '',
+        replyText: '',
+        isVisible: true,
+        isLoading: false,
       });
     default:
       return state;
