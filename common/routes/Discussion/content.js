@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 import Media from 'react-media';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RightSideBar from './components/RightSideBar';
-// import loadArticles from './actions';
 import MyCard from './components/MyCard';
 import Comments from './components/Comments';
-import { loadAnnotations } from './actions';
+import { loadDiscussion } from './actions';
 
 class App extends Component {
 
   componentDidMount() {
     const { articleURI } = this.props.location.state;
-    this.props.dispatch(loadAnnotations(articleURI));
+    this.props.dispatch(loadDiscussion(articleURI));
   }
 
   render() {
@@ -26,13 +25,12 @@ class App extends Component {
         </MuiThemeProvider>
         <MuiThemeProvider>
           <div>
-            {console.log('Printing annotations!')}
-            {console.log(this.props.annotations)}
+            {this.props.isLoading &&
+              <h2>Loading...</h2>
+            }
             {this.props.annotations.filter(a => a.article === this.props.location.state.articleId)
               .map(a =>
                 <div key={a._id} >
-                  { console.log('A is: ') }
-                  { console.log(a) }
                   <MyCard annotation={a} />
                   <Comments
                     articleURI={this.props.location.state.articleURI}
@@ -55,9 +53,10 @@ App.propTypes = {
 function mapStateToProps(state) {
   console.log('Executing mapStateToProps!');
   console.log(state);
-  const { annotations } = state.Discussion;
+  const { annotations, isLoading } = state.Discussion;
   return {
     annotations,
+    isLoading,
   };
 }
 

@@ -1,34 +1,34 @@
 import * as types from '../../constants/ActionTypes';
 import * as api from '../../api';
 
-// function loadAnnotationsRequest() {
-//   return {
-//     type: types.LOAD_ANNOTATIONS_REQUEST,
-//   };
-// }
+function loadDiscussionRequest() {
+  return {
+    type: types.LOAD_ANNOTATIONS_REQUEST,
+  };
+}
 
-function loadAnnotationsFailure(error) {
+function loadDiscussionFailure(error) {
   return {
     type: types.LOAD_DISCUSSION_FAILURE,
     error,
   };
 }
 
-function loadAnnotationsSuccess(annotations) {
+function loadDiscussionSuccess(annotations) {
   return {
     type: types.LOAD_DISCUSSION_SUCCESS,
     annotations,
   };
 }
 
-export function loadAnnotations(articleURI) {
+export function loadDiscussion(articleURI) {
   return (dispatch, getState) => {
-    // dispatch(loadAnnotationsRequest);
+    dispatch(loadDiscussionRequest);
     return api.fetchArticleAnnotations(articleURI).then((annotations) => {
       if (annotations.ERROR) {
-        return dispatch(loadAnnotationsFailure(annotations.ERROR));
+        return dispatch(loadDiscussionFailure(annotations.ERROR));
       } else {
-        return dispatch(loadAnnotationsSuccess(annotations));
+        return dispatch(loadDiscussionSuccess(annotations));
       }
     });
   };
@@ -38,9 +38,9 @@ export function saveReply(text, parent, articleURI) {
   return (dispatch, getState) => {
     return api.saveReply(text, parent, articleURI).then((reply) => {
       if (reply.ERROR) {
-        return dispatch(loadAnnotationsFailure(reply.ERROR));
+        return dispatch(loadDiscussionFailure(reply.ERROR));
       } else {
-        return dispatch(loadAnnotations(articleURI));
+        return dispatch(loadDiscussion(articleURI));
       }
     });
   };

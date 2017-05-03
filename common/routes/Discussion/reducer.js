@@ -8,6 +8,7 @@ export default function discussionViewReducer(state = {
   annotations: [],
   ordering: [],
   error: null,
+  isLoading: false,
 }, action) {
   switch (action.type) {
     case 'TOGGLE_REPLY':
@@ -25,9 +26,14 @@ export default function discussionViewReducer(state = {
         isVisible: action.isVisible,
         ordering: action.ordering,
       });
+    case types.LOAD_DISCUSSION_REQUEST:
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
     case types.LOAD_DISCUSSION_FAILURE:
       return Object.assign({}, state, {
         error: action.error,
+        isLoading: false,
       });
     case types.LOAD_DISCUSSION_SUCCESS:
       return Object.assign({}, state, {
@@ -35,6 +41,7 @@ export default function discussionViewReducer(state = {
         parentIdx: '',
         replyText: '',
         isVisible: true,
+        isLoading: false,
       });
     default:
       return state;
