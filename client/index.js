@@ -7,8 +7,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { StyleSheet } from 'aphrodite';
 import { configureStore } from '../common/store';
-import * as api from '../common/api';
-import { updateUser } from '../common/actions/groups';
 import createRouter from '../common/routes/routes';
 
 /* I'm being a bad dude and disabling some eslint rules on a per file basis -- Byrne */
@@ -28,15 +26,12 @@ const container = document.getElementById('root');
 StyleSheet.rehydrate(window.renderedClassNames);
 
 const render = () => {
-  api.fetchUser().then((user) => {
-    store.dispatch(updateUser(user.groups, user.username));
-    ReactDOM.render(
-      <Provider store={store}>
-        { createRouter(store) }
-      </Provider>,
-      container,
-    );
-  });
+  ReactDOM.render(
+    <Provider store={store}>
+      { createRouter(store) }
+    </Provider>,
+    container,
+  );
 };
 
 render();
