@@ -1,28 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import LeftNav from '../components/LeftNav';
-
-// const groups = [
-//   {
-//     _id: 'abcd190d',
-//     name: 'Group 1',
-//     des: 'posts',
-//     icon: 'iconName',
-//   },
-//   {
-//     id: 'bacd190d',
-//     groupName: 'Group 2',
-//     groupLink: 'posts',
-//     icon: 'iconName',
-//   },
-//   {
-//     id: 'dacd190d',
-//     groupName: 'Group 3',
-//     groupLink: 'posts',
-//     icon: 'iconName',
-//   },
-// ];
-//
+import { fetchUser } from '../actions/groups';
 
 const personalList = [
   {
@@ -64,6 +43,11 @@ const followingList = [
 ];
 
 class LeftNavContainer extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(fetchUser());
+  }
+
   render() {
     return (
       <LeftNav
@@ -80,6 +64,7 @@ class LeftNavContainer extends Component {
 }
 
 LeftNavContainer.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   groups: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
     name: PropTypes.string,

@@ -26,6 +26,14 @@ export function updateUser(groups, username) {
   };
 }
 
+export function fetchUser() {
+  return (dispatch, getState) => {
+    api.fetchUser().then((user) => {
+      dispatch(updateUser(user.groups, user.username));
+    });
+  };
+}
+
 export function updateAuthStatus(isAuthenticated) {
   return {
     type: types.UPDATE_AUTH_STATUS,
