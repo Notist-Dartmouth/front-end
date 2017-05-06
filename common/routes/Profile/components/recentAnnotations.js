@@ -1,5 +1,5 @@
 import React from 'react';
-import Annotation from '../../Discussion/components/MyCard';
+import Annotation from './annotation';
 // An arraylist of annotations queried from the adipiscing -- each of them are myCard objects
 
 const recentAnnotationsArray = [

@@ -11,6 +11,7 @@ import { saveReply } from '../actions';
 
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
+let notAbleToPost = true;
 
 class CommentBox extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class CommentBox extends Component {
     this.onToggleReply = this.onToggleReply.bind(this);
     this.onPostReply = this.onPostReply.bind(this);
     this.getLastBeforeEnd = this.getLastBeforeEnd.bind(this);
+    this.updateNotAbleToPost = this.updateNotAbleToPost.bind(this);
   }
 
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
@@ -47,9 +49,8 @@ class CommentBox extends Component {
 
   onPostReply() {
     console.log('POSTING REPLY!');
-    const textInsideTextArea = document.getElementById('textarea'.concat(this.props.id.toString())).value;
+    const textInsideTextArea = this.getTextAreaText();
     // const arrayIndex = this.getLastBeforeEnd();   //  this.getLastBeforeEnd(); //  This is where commentBox should be inserted in the array
-
     //  Splice this node into ordering
     const addedNode = new Node(textInsideTextArea);
     addedNode.depth = this.props.node.depth + 1;
@@ -58,20 +59,6 @@ class CommentBox extends Component {
     console.log('PRE ADD: ');
     console.log(this.ordering);
 
-    // const ordering = [
-    //   ...this.ordering.slice(0, arrayIndex),
-    //   addedNode,
-    //   ...this.ordering.slice(arrayIndex, this.ordering.length),
-    // ];
-
-
-    /* TODO: Post this reply so the backend receives the information about the updated comment tree.
-    Then ordering will be received as comments by a prop and it will render correctly */
-
-    // this.ordering = ordering; // This updates the local state, but doesn't show because we loop over ordering in Comments.js and this.ordering is local to here.
-                              // If ordering were attached to the state, we could just update that, but that's confusing because we're receiving ordering as
-                              // a prop so if we connect it to the state then it will be overwritten by the initial load with the reducer and we won't be able to read
-                              // the initial value since it will be overwritten from the mapStateToProps call.
     this.props.dispatch(saveReply(textInsideTextArea, addedNode.parent._id, this.props.articleURI));
   }
 
@@ -89,6 +76,26 @@ class CommentBox extends Component {
     return this.ordering.length;
   }
 
+  getTextAreaText() {
+    const textInsideTextArea = document.getElementById('textarea'.concat(this.props.id.toString())).value;
+    return textInsideTextArea;
+  }
+
+  updateNotAbleToPost() {
+    const previousNotAbleToPost = notAbleToPost;
+    if (document.getElementById('textarea'.concat(this.props.id.toString())) !== null) {
+      if (this.getTextAreaText() === '') {
+        notAbleToPost = true;
+      } else {
+        notAbleToPost = false;
+      }
+    }
+
+    if (previousNotAbleToPost !== notAbleToPost) { // Rerender only when state changes
+      this.forceUpdate();
+    }
+  }
+
   render() {
     console.log('RENDERING AGAIN!');
 
@@ -100,13 +107,13 @@ class CommentBox extends Component {
     if (this.props.isVisible && this.props.commentId === this.props.currentlyOpen) {
       textarea = (
         <div>
-          <textarea id={'textarea'.concat(this.id.toString())}
+          <textarea id={'textarea'.concat(this.id.toString())} onChange={this.updateNotAbleToPost}
             style={{
-              marginLeft: COMMENTINDENTAMOUNT * (this.props.node.depth + 1),
+              marginLeft: COMMENTINDENTAMOUNT,
               borderLeft: '3px solid '.concat(COLORARRAY[this.props.node.depth + 1]),
             }}
           />
-          <RaisedButton label="Post" primary onClick={this.onPostReply} style={{ marginLeft: '20px' }} />
+          <RaisedButton label="Post" primary disabled={notAbleToPost} onClick={this.onPostReply} style={{ marginLeft: '20px' }} />
         </div>
       );
     }
@@ -121,6 +128,7 @@ class CommentBox extends Component {
         <MuiThemeProvider muiTheme={muiTheme}>
           <Card>
             <CardText expandable={false}>
+              {(this.props.id === 0) ? this.props.articleText : ''}
               <div dangerouslySetInnerHTML={{ __html: marked(this.props.node.text || '') }} />
             </CardText>
             <CardActions>
