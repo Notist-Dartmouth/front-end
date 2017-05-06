@@ -11,6 +11,7 @@ const headers = {
 
 const handleUnauthorizedRequest = () => {
   console.log('unauthorized');
+  window.location = 'http://notist.io/login';
   return { ERROR: 'Unauthorized: you must be logged in' };
 };
 
@@ -44,7 +45,7 @@ export const fetchUser = () => {
     if (res.status === 401) {
       window.location = 'http://notist.io/login';
     }
-  }).then(jsonRes => handleResponse(jsonRes));
+  }).then(res => handleResponse(res));
 };
 
 export const fetchGroupArticles = (groupId) => {
