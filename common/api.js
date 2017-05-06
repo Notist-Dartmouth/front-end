@@ -5,6 +5,7 @@ import config from '../server/config';
 
 const headers = {
   'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
   Accept: 'application/json',
 };
 
@@ -22,7 +23,7 @@ const handleResponse = (res) => {
 };
 
 export const fetchArticleAnnotations = (articleURI) => {
-  const endpointString = `http://${config.apiHost}/api/article/annotations`;
+  const endpointString = `${config.apiHost}/api/article/annotations`;
   const annotationsEndpoint = new URL(endpointString);
   annotationsEndpoint.search = new URLSearchParams(`?uri=${articleURI}`);
   return fetch(annotationsEndpoint, {
@@ -34,7 +35,7 @@ export const fetchArticleAnnotations = (articleURI) => {
 };
 
 export const fetchUser = () => {
-  return fetch(`http://${config.apiHost}/api/user`, {
+  return fetch(`${config.apiHost}/api/user`, {
     method: 'GET',
     credentials: 'include',
     headers,
@@ -47,7 +48,7 @@ export const fetchUser = () => {
 };
 
 export const fetchGroupArticles = (groupId) => {
-  return fetch(`http://${config.apiHost}/api/group/${groupId}/articles`, {
+  return fetch(`${config.apiHost}/api/group/${groupId}/articles`, {
     method: 'GET',
     credentials: 'include',
     headers,
@@ -56,7 +57,7 @@ export const fetchGroupArticles = (groupId) => {
 };
 
 export const saveGroup = (group) => {
-  return fetch(`http://${config.apiHost}/api/group`, {
+  return fetch(`${config.apiHost}/api/group`, {
     method: 'POST',
     mode: 'cors',
     credentials: 'include',
@@ -67,7 +68,7 @@ export const saveGroup = (group) => {
 };
 
 export const saveReply = (text, parent, articleURI) => {
-  return fetch(`http://${config.apiHost}/api/annotation`, {
+  return fetch(`${config.apiHost}/api/annotation`, {
     method: 'POST',
     credentials: 'include',
     headers,

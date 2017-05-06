@@ -68,6 +68,7 @@ class Comments extends Component {
           return (
             <CommentBox
               articleURI={this.props.articleURI}
+              articleText={this.props.replies.articleText}
               ordering={order}
               node={node}
               key={node._id}
