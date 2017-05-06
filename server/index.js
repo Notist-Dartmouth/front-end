@@ -98,6 +98,7 @@ export const createServer = (config) => {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge">
           ${head.title.toString()}
           <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="google-site-verification" content="2thhQs5IZRYRWjjqjEy7d9FGlI4Waq9XeHOASmfb6PE" />
           <link rel="shortcut icon" href="/favicon.ico">
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
