@@ -5,6 +5,7 @@ import config from '../server/config';
 
 const headers = {
   'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
   Accept: 'application/json',
 };
 
