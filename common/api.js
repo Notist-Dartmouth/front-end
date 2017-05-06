@@ -39,7 +39,11 @@ export const fetchUser = () => {
     credentials: 'include',
     headers,
   })
-  .then(res => handleResponse(res));
+  .then((res) => {
+    if (res.status === 401) {
+      window.location = 'http://notist.io/login';
+    }
+  }).then(jsonRes => handleResponse(jsonRes));
 };
 
 export const fetchGroupArticles = (groupId) => {
