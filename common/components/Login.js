@@ -31,13 +31,13 @@ const Login = props => (
     <div className={css(styles.loginForm)}>
       <h1 className={css(styles.header)}>Notist</h1>
       <br />
-      <a href={`http://${config.apiHost}/login/facebook`}
+      <a href={`https://${config.apiHost}/login/facebook`}
         className={`btn btn-block btn-social btn-lg btn-facebook ${css(styles.button)}`}
       >
         <i className="fa fa-facebook" /> Sign in with Facebook
       </a>
       <br />
-      <a href={`http://${config.apiHost}/auth/google`}
+      <a href={`https://${config.apiHost}/auth/google`}
         className={`btn btn-block btn-social btn-lg btn-google ${css(styles.button)}`}
       >
         <i className="fa fa-google" /> Sign in with Google
