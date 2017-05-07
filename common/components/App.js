@@ -9,17 +9,13 @@ injectTapEventPlugin();
 
 const styles = StyleSheet.create({
   root: {
-    position: 'relative',
-    top: 80,
-    margin: '2rem auto',
-    maxWidth: '100%',
-    overflowX: 'hidden',
-    // width: '70%',
+    // margin: '2rem auto',
+  },
+  belowTopNav: {
+    paddingTop: 90,
   },
   shiftRight: {
-    position: 'relative',
-    left: 350,
-    width: '75%',
+    paddingLeft: 320,
   },
   title: {
     color: '#000',
@@ -42,19 +38,21 @@ const styles = StyleSheet.create({
 const App = ({ children, location }) => (
   <div className={css(styles.root)}>
     <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />
-    <LeftNavContainer />
-    <div className={css(styles.shiftRight)}>
-      <TopNav
-        currentFeedName={location.state ? location.state.groupName : ''}
-        subscribed
-        numFeedMembers={6}
-        numNotifications={4}
-        feedDescription={location.state ? location.state.groupDescription : ''}
-      />
-      {children}
-      <footer className={css(styles.footer)}>
-        Copyright © 2017 <a className={css(styles.footerLink)} href="http://notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
-      </footer>
+    <TopNav
+      currentFeedName={location.state ? location.state.groupName : ''}
+      subscribed
+      numFeedMembers={6}
+      numNotifications={4}
+      feedDescription={location.state ? location.state.groupDescription : ''}
+    />
+    <div className={css(styles.belowTopNav)}>
+      <LeftNavContainer />
+      <div className={css(styles.shiftRight)}>
+        {children}
+        <footer className={css(styles.footer)}>
+          Copyright © 2017 <a className={css(styles.footerLink)} href="http://notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
+        </footer>
+      </div>
     </div>
   </div>
 );

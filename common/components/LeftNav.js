@@ -3,18 +3,13 @@ import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { deepOrange600, red700, cyan500, white, blue500 } from 'material-ui/styles/colors';
-// blueGrey700
 import Drawer from 'material-ui/Drawer';
-// import Divider from 'material-ui/Divider';
-import MenuItem from 'material-ui/MenuItem';
 import { List, ListItem } from 'material-ui/List';
 import ActionInfo from 'material-ui/svg-icons/action/info';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router';
-// import FileFolder from 'material-ui/svg-icons/file/folder';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-// import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
 import HourglassIcon from 'material-ui/svg-icons/action/hourglass-empty';
 import GroupDialog from '../containers/GroupDialog';
 
@@ -32,14 +27,19 @@ const muiTheme = getMuiTheme({
 });
 
 const styles = StyleSheet.create({
+  drawerContainer: {
+    '@media (max-width: 1000px)': {
+      maxWidth: '30%',
+    },
+  },
   subheaderInset: {
     color: white,
     fontSize: 24,
   },
   drawer: {
     position: 'fixed',
-    // top: 90,
-    zIndex: 30,
+    zIndex: 190,
+    height: '100%',
     color: white,
     fontFamily: 'Roboto, sans-serif',
   },
@@ -58,11 +58,8 @@ export default class LeftNav extends React.Component {
     const { profilePicture, groups, userName, userPoints, personalList, exploreList, followingList } = this.props;
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div>
-          {/* make position: 'relative' */}
-          <Drawer docked width={340} containerStyle={{ backgroundColor: '#44808C', paddingLeft: 20 }} className={css(styles.drawer)}>
-            <MenuItem>Hidden 1</MenuItem>
-            <MenuItem>Hidden 2</MenuItem>
+        <div className={css(styles.drawerContainer)}>
+          <Drawer docked containerStyle={{ position: 'relative', backgroundColor: '#44808C', paddingLeft: 20, width: 320 }} className={css(styles.drawer)}>
             <Link to={'/profile'} style={{ textDecoration: 'none', position: 'relative', top: 10, paddingLeft: 20, color: white }}>
               <Avatar
                 src={profilePicture}

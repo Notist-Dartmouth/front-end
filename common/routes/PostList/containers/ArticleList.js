@@ -11,13 +11,17 @@ const mapStateToProps = state => ({
   isLoading: state.articles.isLoading,
 });
 
-/* I added padding so it doesn't go underneath nav */
+/* can uncomment out articleList to have multiple cards in one row */
 const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     margin: '0 auto 1.5rem',
     color: '#b7b7b7',
   },
+  // articleList: {
+  //   display: 'flex',
+  //   flexWrap: 'nowrap',
+  // },
 });
 
 class ArticleList extends Component {
@@ -47,17 +51,21 @@ class ArticleList extends Component {
           <div>
             <h2>Loading....</h2>
           </div>}
-        {!this.props.isLoading &&
-          this.props.data.map(a =>
-            <ArticleItem
-              key={a._id}
-              title={a.info && a.info.title ? a.info.title : ''}
-              imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
-              articleURI={a.uri}
-              annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
-              articleID={a._id}
-            />)
-        }
+        <div className={css(styles.articleList)}>
+          {!this.props.isLoading &&
+            this.props.data.map(a =>
+              <div style={{ width: '100%' }}>
+                <ArticleItem
+                  key={a._id}
+                  title={a.info && a.info.title ? a.info.title : ''}
+                  imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
+                  articleURI={a.uri}
+                  annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
+                  articleID={a._id}
+                />
+              </div>)
+          }
+        </div>
       </div>
     );
   }
