@@ -2,11 +2,13 @@ import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { red700, white, yellow400, grey900 } from 'material-ui/styles/colors';
+import { red700, white, yellow400, grey900, grey300 } from 'material-ui/styles/colors';
 // deepOrange600
 import PeopleIcon from 'material-ui/svg-icons/social/people';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar } from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import BugReport from 'material-ui/svg-icons/action/bug-report';
 import SettingsDialog from './SettingsDialog';
 import NotificationsDialog from './NotificationsDialog';
 import Search from './Search';
@@ -134,6 +136,13 @@ export default class TopNav extends React.Component {
               </div>
               <div>
                 <SettingsDialog />
+              </div>
+              <div>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScKa0F2eyB9fpUbVB9LrCGnwhnWHbiU-eJ2Ab4vPTC5LcUM9g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
+                  <IconButton tooltip="Submit a bug report">
+                    <BugReport color={white} hoverColor={grey300} />
+                  </IconButton>
+                </a>
               </div>
             </div>
             <div className={css(styles.searchBar)}>
