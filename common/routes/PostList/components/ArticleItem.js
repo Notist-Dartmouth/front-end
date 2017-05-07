@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import ArticleCard from '../../../components/ArticleCard';
 
+// set narrowCard to true here if want smaller card
+
 const ArticleItem = props => (
   <ArticleCard
     title={props.title}
