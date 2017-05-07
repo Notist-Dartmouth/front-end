@@ -40,11 +40,6 @@ export const fetchUser = () => {
     method: 'GET',
     credentials: 'include',
     headers,
-  })
-  .then((res) => {
-    if (res.status === 401) {
-      window.location = 'http://notist.io/login';
-    }
   }).then(res => handleResponse(res));
 };
 
