@@ -43,10 +43,16 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     flex: 1,
+    '@media (max-width: 900px)': {
+      display: 'none',
+    },
   },
-  // searchBar: {
-  //   flex: 1,
-  // },
+  searchBar: {
+    '@media (max-width: 900px)': {
+      display: 'none',
+    },
+    // flex: 1,
+  },
   link: {
     maxWidth: 700,
     color: '#999',
