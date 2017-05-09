@@ -48,6 +48,15 @@ class CommentBox extends Component {
   }
 
   onPostReply() {
+    this.props.dispatch({
+      type: 'TOGGLE_REPLY',
+      parentIdx: this.props.id, // This is the index in the orderings array
+      currentlyOpen: '-1',
+      replyText: 'hello',
+      isVisible: false,
+      ordering: this.ordering,
+    });
+
     console.log('POSTING REPLY!');
     const textInsideTextArea = this.getTextAreaText();
     // const arrayIndex = this.getLastBeforeEnd();   //  this.getLastBeforeEnd(); //  This is where commentBox should be inserted in the array
