@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
@@ -124,19 +126,14 @@ export default class TopNav extends React.Component {
             <div className={css(styles.feedDetails)}>
               <div className={css(styles.feedTopRow)}>
                 <div className={css(styles.feedName)}>{this.props.currentFeedName}</div>
-                <div style={{ paddingRight: 15 }}>{subButton}</div>
-                <div><PeopleIcon /></div>
-                <div className={css(styles.numMembers)}>{this.props.numFeedMembers || 0} members</div>
+
+
               </div>
               <div className={css(styles.feedDescription)}>{this.props.feedDescription}</div>
             </div>
             <div className={css(styles.notificationsAndSettings)}>
-              <div>
-                <NotificationsDialog numNotifications={this.props.numNotifications || 0} />
-              </div>
-              <div>
-                <SettingsDialog />
-              </div>
+
+
               <div>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScKa0F2eyB9fpUbVB9LrCGnwhnWHbiU-eJ2Ab4vPTC5LcUM9g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
                   <IconButton tooltip="Submit a bug report">
@@ -145,12 +142,28 @@ export default class TopNav extends React.Component {
                 </a>
               </div>
             </div>
-            <div className={css(styles.searchBar)}>
-              <Search />
-            </div>
+
           </div>
         </Toolbar>
       </MuiThemeProvider>
     );
   }
 }
+
+// <div><PeopleIcon /></div>
+
+// <div className={css(styles.searchBar)}>
+//   <Search />
+// </div>
+
+//<div className={css(styles.numMembers)}>{this.props.numFeedMembers || 0} members</div>
+
+//   <div style={{ paddingRight: 15 }}>{subButton}</div>
+
+// <div>
+//   <SettingsDialog />
+// </div>
+
+// <div>
+//   <NotificationsDialog numNotifications={this.props.numNotifications || 0} />
+// </div>

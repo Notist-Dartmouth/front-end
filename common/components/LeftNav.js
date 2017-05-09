@@ -1,3 +1,4 @@
+ /* eslint-disable */
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -60,14 +61,6 @@ export default class LeftNav extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={css(styles.drawerContainer)}>
           <Drawer docked containerStyle={{ position: 'relative', backgroundColor: '#44808C', paddingLeft: 20, width: 320 }} className={css(styles.drawer)}>
-            <Link to={'/profile'} style={{ textDecoration: 'none', position: 'relative', top: 10, paddingLeft: 20, color: white }}>
-              <Avatar
-                src={profilePicture}
-                size={50}
-              />
-              <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{userName}</span>
-              <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{userPoints}</span>
-            </Link>
             <List>
               <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
               {groups.map(g => (
@@ -90,43 +83,58 @@ export default class LeftNav extends React.Component {
               ))}
             </List>
             {/* <Divider */}
-            <List>
-              {/* removed inset */}
-              <Subheader className={css(styles.subheader)}>Personal</Subheader>
-              {personalList.map(d => (
-                <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-                  <ListItem
-                    leftAvatar={<Avatar icon={<HourglassIcon />} backgroundColor={blue500} />}
-                    primaryText={d.groupName}
-                  />
-                </Link>
-              ))}
-            </List>
-            <List>
-              <Subheader className={css(styles.subheader)}>Explore</Subheader>
-              {exploreList.map(d => (
-                <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-                  <ListItem
-                    leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
-                    primaryText={d.groupName}
-                  />
-                </Link>
-                ))}
-            </List>
-            <List>
-              <Subheader className={css(styles.subheader)}>People</Subheader>
-              {followingList.map(d => (
-                <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-                  <ListItem
-                    leftAvatar={<Avatar icon={<ActionInfo />} backgroundColor={cyan500} />}
-                    primaryText={d.groupName}
-                  />
-                </Link>
-                ))}
-            </List>
+
           </Drawer>
         </div>
       </MuiThemeProvider>
     );
   }
 }
+
+/* eslint-enable */
+
+// <Link to={'/profile'} style={{ textDecoration: 'none', position: 'relative', top: 10, paddingLeft: 20, color: white }}>
+//   <Avatar
+//     src={profilePicture}
+//     size={50}
+//   />
+//   <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{userName}</span>
+//   <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{userPoints}</span>
+// </Link>
+
+// <List>
+//   {/* removed inset */}
+//   <Subheader className={css(styles.subheader)}>Personal</Subheader>
+//   {personalList.map(d => (
+//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
+//       <ListItem
+//         leftAvatar={<Avatar icon={<HourglassIcon />} backgroundColor={blue500} />}
+//         primaryText={d.groupName}
+//       />
+//     </Link>
+//   ))}
+// </List>
+
+// <List>
+//   <Subheader className={css(styles.subheader)}>Explore</Subheader>
+//   {exploreList.map(d => (
+//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
+//       <ListItem
+//         leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
+//         primaryText={d.groupName}
+//       />
+//     </Link>
+//     ))}
+// </List>
+
+// <List>
+//   <Subheader className={css(styles.subheader)}>People</Subheader>
+//   {followingList.map(d => (
+//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
+//       <ListItem
+//         leftAvatar={<Avatar icon={<ActionInfo />} backgroundColor={cyan500} />}
+//         primaryText={d.groupName}
+//       />
+//     </Link>
+//     ))}
+// </List>
