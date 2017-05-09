@@ -5,9 +5,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import { RaisedButton } from 'material-ui';
+import { yellow200 } from 'material-ui/styles/colors';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
 import { saveReply } from '../actions';
+
 
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
@@ -137,7 +139,14 @@ class CommentBox extends Component {
         <MuiThemeProvider muiTheme={muiTheme}>
           <Card>
             <CardText expandable={false}>
-              {(this.props.id === 0) ? this.props.articleText : ''}
+              <div style={{
+                display: 'inline',
+                fontStyle: 'italic',
+                backgroundColor: yellow200,
+              }}
+              >
+                {(this.props.id === 0) ? this.props.articleText : ''}
+              </div>
               <div dangerouslySetInnerHTML={{ __html: marked(this.props.node.text || '') }} />
             </CardText>
             <CardActions>
