@@ -14,6 +14,7 @@ import BugReport from 'material-ui/svg-icons/action/bug-report';
 import SettingsDialog from './SettingsDialog';
 import NotificationsDialog from './NotificationsDialog';
 import Search from './Search';
+import config from '../../server/config';
 
 const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
@@ -66,6 +67,10 @@ const styles = StyleSheet.create({
     ':hover': {
       opacity: 0.6,
     },
+  },
+  topLink: {
+    color: '#fff',
+    fontSize: '20px',
   },
   activeLink: {
     color: '#000',
@@ -142,7 +147,12 @@ export default class TopNav extends React.Component {
                 </a>
               </div>
             </div>
-
+            <div>
+              <li>
+                <a className={css(styles.link, styles.topLink)}
+                  href={`${config.apiHost}/logout`}>Logout</a>
+              </li>
+            </div>
           </div>
         </Toolbar>
       </MuiThemeProvider>
