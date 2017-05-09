@@ -148,10 +148,8 @@ export default class TopNav extends React.Component {
               </div>
             </div>
             <div>
-              <li>
-                <a className={css(styles.link, styles.topLink)}
+              <a className={css(styles.link, styles.topLink)}
                   href={`${config.apiHost}/logout`}>Logout</a>
-              </li>
             </div>
           </div>
         </Toolbar>
