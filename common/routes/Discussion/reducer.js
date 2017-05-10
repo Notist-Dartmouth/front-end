@@ -1,7 +1,7 @@
 import * as types from '../../constants/ActionTypes';
 
 export default function discussionViewReducer(state = {
-  parentIdx: '',
+  parentIdx: 0,
   replyText: '',
   isVisible: true,
   currentlyOpen: 'BBB',
@@ -38,7 +38,7 @@ export default function discussionViewReducer(state = {
     case types.LOAD_DISCUSSION_SUCCESS:
       return Object.assign({}, state, {
         annotations: action.annotations,
-        parentIdx: '',
+        parentIdx: 0,
         replyText: '',
         isVisible: true,
         isLoading: false,

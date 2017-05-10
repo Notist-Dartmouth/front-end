@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Router, browserHistory } from 'react-router';
+import { IndexRoute, Route, Router, browserHistory } from 'react-router';
 import App from '../components/App';
 import ArticleList from './PostList/containers/ArticleList';
 import articleReducer from './PostList/reducer';
@@ -16,6 +16,11 @@ export default function createRouter(store) {
     <Router history={browserHistory} >
       <Route path="/login" component={Login} />
       <Route path="/" component={App} >
+        <IndexRoute getComponent={(props, cb) => {
+          injectAsyncReducer(store, 'articles', articleReducer);
+          cb(null, ArticleList);
+        }}
+        />
         <Route path="discussion/:annotation" getComponent={(props, cb) => {
           injectAsyncReducer(store, 'Discussion', discussionReducer);
           cb(null, discussion);

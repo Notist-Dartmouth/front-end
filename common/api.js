@@ -44,6 +44,14 @@ export const fetchUser = () => {
   }).then(res => handleResponse(res));
 };
 
+export const fetchPublicArticles = () => {
+  return fetch(`${config.apiHost}/api/public/articles/paginated`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
 export const fetchGroupArticles = (groupId) => {
   return fetch(`${config.apiHost}/api/group/${groupId}/articles`, {
     method: 'GET',
