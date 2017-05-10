@@ -57,17 +57,15 @@ class ArticleList extends Component {
         <div className={css(styles.articleList)}>
           {!this.props.isLoading &&
             this.props.data.map(a =>
-              <div style={{ width: '100%' }}>
-                <ArticleItem
-                  key={a._id}
-                  title={a.info && a.info.title ? a.info.title : ''}
-                  imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
-                  articleURI={a.uri}
-                  annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
-                  articleID={a._id}
-                />
-              </div>)
-          }
+              <ArticleItem
+                style={{ width: '100%' }}
+                key={a._id}
+                title={a.info && a.info.title ? a.info.title : ''}
+                imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
+                articleURI={a.uri}
+                annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
+                articleID={a._id}
+              />)}
         </div>
       </div>
     );

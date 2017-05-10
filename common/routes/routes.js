@@ -16,7 +16,7 @@ export default function createRouter(store) {
     <Router history={browserHistory} >
       <Route path="/login" component={Login} />
       <Route path="/" component={App} >
-        <IndexRoute path="/" getComponent={(props, cb) => {
+        <IndexRoute getComponent={(props, cb) => {
           injectAsyncReducer(store, 'articles', articleReducer);
           cb(null, ArticleList);
         }}
