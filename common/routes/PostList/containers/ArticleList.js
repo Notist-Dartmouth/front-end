@@ -28,22 +28,22 @@ class ArticleList extends Component {
 
   componentDidMount() {
     this.fetchArticles = this.fetchArticles.bind(this);
-    this.fetchArticles();
+    this.fetchArticles(this.props.location.state ?
+      this.props.location.state.groupId : null);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.fetchArticles();
+    if (nextProps.location.state) {
+      const currGroupId = this.props.location.state ? this.props.location.state.groupId : null;
+      const nextGroupdId = nextProps.location.state.groupId;
+      if (currGroupId !== nextGroupdId) {
+        this.fetchArticles(nextGroupdId);
+      }
     }
   }
 
-  fetchArticles() {
-    if (this.props.location.state) {
-      const { groupId } = this.props.location.state;
-      this.props.dispatch(loadArticles(groupId, false));
-    } else {
-      this.props.dispatch(loadArticles(null, true));
-    }
+  fetchArticles(groupId) {
+    this.props.dispatch(loadArticles(groupId, groupId === null));
   }
 
   render() {
