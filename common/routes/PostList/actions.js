@@ -58,17 +58,25 @@ function loadArticlesRequest() {
   };
 }
 
-export default function loadArticles(groupId) {
+function handleArticleResponse(dispatch, articles) {
+  if (articles.ERROR) {
+    return dispatch(loadArticlesFailure(articles.ERROR));
+  } else {
+    return dispatch(loadArticlesSuccess(articles));
+  }
+}
+
+export default function loadArticles(groupId, isPublic) {
   return (dispatch, getState) => {
     dispatch(loadArticlesRequest());
     if (!getState().isLoading) {
-      return api.fetchGroupArticles(groupId).then((articles) => {
-        if (articles.ERROR) {
-          return dispatch(loadArticlesFailure(articles.ERROR));
-        } else {
-          return dispatch(loadArticlesSuccess(articles));
-        }
-      });
+      if (isPublic) {
+        return api.fetchPublicArticles().then(articles =>
+          handleArticleResponse(dispatch, articles));
+      } else {
+        return api.fetchGroupArticles(groupId).then(articles =>
+          handleArticleResponse(dispatch, articles));
+      }
     } else {
       return Promise.resolve();
     }

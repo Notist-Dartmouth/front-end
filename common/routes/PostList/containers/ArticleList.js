@@ -28,19 +28,22 @@ class ArticleList extends Component {
 
   componentDidMount() {
     this.fetchArticles = this.fetchArticles.bind(this);
-    const { groupId } = this.props.location.state;
-    this.fetchArticles(groupId);
+    this.fetchArticles();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.location.pathname !== this.props.location.pathname) {
-      const { groupId } = nextProps.location.state;
-      this.fetchArticles(groupId);
+      this.fetchArticles();
     }
   }
 
-  fetchArticles(groupId) {
-    this.props.dispatch(loadArticles(groupId));
+  fetchArticles() {
+    if (this.props.location.state) {
+      const { groupId } = this.props.location.state;
+      this.props.dispatch(loadArticles(groupId, false));
+    } else {
+      this.props.dispatch(loadArticles(null, true));
+    }
   }
 
   render() {
@@ -73,9 +76,14 @@ class ArticleList extends Component {
 
 ArticleList.PropTypes = {
   isLoading: PropTypes.bool.isRequired,
+  isPublic: PropTypes.bool,
   data: PropTypes.array.isRequired,
   annotations: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
+};
+
+ArticleList.defaultProps = {
+  isPublic: false,
 };
 
 export default connect(mapStateToProps)(ArticleList);
