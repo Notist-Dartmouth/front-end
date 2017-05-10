@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 
 import React from 'react';
 import { Card, CardActions } from 'material-ui/Card';
@@ -103,7 +104,7 @@ class ArticleCard extends React.Component {
         <Card style={cardStyle}>
           <div className={css(styles.flexContainer)}>
             <div className={css(styles.leftFlex)}>
-              <span className={css(styles.articleTitleTextStyle)}>{title}</span>
+              <span className={css(styles.articleTitleTextStyle)}>{title || <a href="https://docs.google.com/forms/d/e/1FAIpQLScKa0F2eyB9fpUbVB9LrCGnwhnWHbiU-eJ2Ab4vPTC5LcUM9g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer"> No title gotten from article. Submit a bug report?</a>}</span>
               <div className={css(styles.domainTextStyle)}>
                 <a style={{ color: fullBlack }} href={domain} target="_blank" rel="noopener noreferrer">{domain}</a>
               </div>
@@ -124,7 +125,7 @@ class ArticleCard extends React.Component {
                 <span><MdComment /> {this.props.numAnnotations} annotations</span>
               </div>
               <div className={css(styles.imageStyle)}>
-                <img width={'100%'} style={{ maxHeight: '35%' }} src={image} alt="nothing for this article" />
+                <img width={'100%'} style={{ maxHeight: '35%' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
               </div>
             </div> }
           </div>
