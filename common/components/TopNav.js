@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   feedName: {
-    fontSize: 30,
+    fontSize: 33,
     paddingRight: 15,
   },
   feedDescription: {
@@ -126,11 +126,11 @@ export default class TopNav extends React.Component {
       */
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <Toolbar style={{ position: 'fixed', zIndex: 200, height: 90, top: 0, left: 0, width: '100%', color: white, fontFamily: 'Roboto, sans-serif' }}>
+        <Toolbar style={{ position: 'fixed', zIndex: 200, height: 90, top: 0, left: 0, width: '100%', color: white, fontFamily: 'Roboto, sans-serif', boxShadow: '0 2px 4px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.22)' }}>
           <div className={css(styles.toolbarContainer)}>
             <div className={css(styles.feedDetails)}>
               <div className={css(styles.feedTopRow)}>
-                <div className={css(styles.feedName)}>{this.props.currentFeedName}</div>
+                <div className={css(styles.feedName)}>{this.props.currentFeedName || 'Notist'}</div>
 
 
               </div>
