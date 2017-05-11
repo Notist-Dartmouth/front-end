@@ -132,7 +132,7 @@ class ArticleCard extends React.Component {
                 <span><MdComment /> {this.props.numAnnotations} annotations</span>
               </div>
               <div className={css(styles.imageStyle)}>
-                <img width={'100%'} style={{ maxHeight: '30%' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
+                <img width={'100%'} style={{ maxHeight: '150px !important' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
               </div>
             </div> }
           </div>
