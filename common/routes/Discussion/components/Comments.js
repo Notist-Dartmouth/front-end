@@ -17,12 +17,11 @@ class Comments extends Component {
 
     });
 
-
     let name = this.props.replies.author.name;
     const filteredName = this.props.replies.author.name.split(' ');
 
     if (filteredName.length >= 2) {
-      if (filteredName[1].charAt(0)) { // If it's not null
+      if (filteredName[1].charAt(0)) {
         name = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
       }
     }
