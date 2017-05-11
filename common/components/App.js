@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
   root: {
     // margin: '2rem auto',
     backgroundColor: '#E0F7FA',
+    height: '100%',
   },
   belowTopNav: {
     paddingTop: 60,
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
     margin: '4rem auto',
     textAlign: 'center',
     color: '#b7b7b7',
-    paddingBottom: '60px',
   },
   footerLink: {
     display: 'inline-block',

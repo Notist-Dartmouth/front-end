@@ -5,8 +5,14 @@ import config from '../../server/config';
 const styles = StyleSheet.create({
   root: {
     position: 'absolute',
-    top: '20%',
+    // top: '20%',
     width: '100%',
+    height: '100%',
+    backgroundColor: '#44808C',
+  },
+  topNav: {
+    height: '100px',
+    backgroundColor: '#ec8523',
   },
   loginForm: {
     position: 'relative',
@@ -15,11 +21,14 @@ const styles = StyleSheet.create({
     margin: '0 auto',
   },
   header: {
-    fontSize: 80,
+    fontSize: 70,
     lineHeight: 1,
+    color: '#ffffff',
+    paddingLeft: 20,
+    paddingTop: 10,
   },
   button: {
-    width: '25%',
+    width: 300,
     display: 'block',
     margin: '0 auto',
     top: '20px',
@@ -28,9 +37,10 @@ const styles = StyleSheet.create({
 
 const Login = props => (
   <div className={css(styles.root)}>
-    <div className={css(styles.loginForm)}>
+    <div className={css(styles.topNav)}>
       <h1 className={css(styles.header)}>Notist</h1>
-      <br />
+    </div>
+    <div className={css(styles.loginForm)}>
       <a href={`${config.apiHost}/login/facebook`}
         className={`btn btn-block btn-social btn-lg btn-facebook ${css(styles.button)}`}
       >
