@@ -139,6 +139,15 @@ class CommentBox extends Component {
         <MuiThemeProvider muiTheme={muiTheme}>
           <Card>
             <CardText expandable={false}>
+
+              {/* <Avatar  */}
+              {/*  src={'https://i.imgur.com/9zgiD0u.jpg'} */}
+              {/*    size={35} */}
+              {/*  /> */}
+
+              <b>{this.props.authorName}</b>
+              <br /> <br />
+
               <div style={{
                 display: 'inline',
                 fontStyle: 'italic',
