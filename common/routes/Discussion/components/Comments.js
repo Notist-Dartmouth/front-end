@@ -17,10 +17,16 @@ class Comments extends Component {
 
     });
 
-    // const newOrder = sortByTime(order);
 
-    console.log('Posting ordering!');
-    // console.log(newOrder);
+    let name = this.props.replies.author.name;
+    const filteredName = this.props.replies.author.name.split(' ');
+
+    if (filteredName.length >= 2) {
+      if (filteredName[1].charAt(0)) { // If it's not null
+        name = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
+      }
+    }
+
     return (
       <div>
         {order.map((node, i) => {
@@ -28,6 +34,8 @@ class Comments extends Component {
             <CommentBox
               articleURI={this.props.articleURI}
               articleText={this.props.replies.articleText}
+              authorName={name}
+              profilePicture={this.props.replies.author.name}
               ordering={order}
               node={node}
               key={node._id}
