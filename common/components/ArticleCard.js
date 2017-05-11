@@ -4,7 +4,7 @@
 import React from 'react';
 import { Card, CardActions } from 'material-ui/Card';
 import { MdComment, MdForum, MdGroup } from 'react-icons/lib/md';
-import { yellow200, fullBlack } from 'material-ui/styles/colors';
+import { yellow200, fullBlack, deepOrange100, indigo100, amber100, teal100 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleSheet, css } from 'aphrodite';
@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
     '@media (max-width: 1000px)': {
       flexDirection: 'column',
     },
+  },
+  articleTitleBar: {
+    paddingLeft: 10,
+    paddingTop: 10,
+    paddingRight: 10,
   },
   leftFlex: {
     flex: 2,
@@ -56,20 +61,20 @@ const styles = StyleSheet.create({
   },
   annotationTextStyle: {
     position: 'relative',
-    fontSize: 14,
+    fontSize: 19,
   },
   articleTitleTextStyle: {
     fontWeight: 700,
-    fontSize: 26,
+    fontSize: 38,
   },
   articleTextStyle: {
-    fontSize: 15,
+    fontSize: 25,
     fontStyle: 'italic',
     fontWeight: 100,
     backgroundColor: yellow200,
   },
   domainTextStyle: {
-    fontSize: 10,
+    fontSize: 19,
     textDecoration: 'underline',
   },
 });
@@ -102,9 +107,11 @@ class ArticleCard extends React.Component {
     return (
       <MuiThemeProvider>
         <Card style={cardStyle}>
+          <div className={css(styles.articleTitleBar)}>
+            <span className={css(styles.articleTitleTextStyle)}>{title || <a href="https://docs.google.com/forms/d/e/1FAIpQLScKa0F2eyB9fpUbVB9LrCGnwhnWHbiU-eJ2Ab4vPTC5LcUM9g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer"> No title gotten from article. Submit a bug report?</a>}</span>
+          </div>
           <div className={css(styles.flexContainer)}>
             <div className={css(styles.leftFlex)}>
-              <span className={css(styles.articleTitleTextStyle)}>{title || <a href="https://docs.google.com/forms/d/e/1FAIpQLScKa0F2eyB9fpUbVB9LrCGnwhnWHbiU-eJ2Ab4vPTC5LcUM9g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer"> No title gotten from article. Submit a bug report?</a>}</span>
               <div className={css(styles.domainTextStyle)}>
                 <a style={{ color: fullBlack }} href={domain} target="_blank" rel="noopener noreferrer">{domain}</a>
               </div>
@@ -125,7 +132,7 @@ class ArticleCard extends React.Component {
                 <span><MdComment /> {this.props.numAnnotations} annotations</span>
               </div>
               <div className={css(styles.imageStyle)}>
-                <img width={'100%'} style={{ maxHeight: '35%' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
+                <img width={'100%'} style={{ maxHeight: '30%' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
               </div>
             </div> }
           </div>
@@ -139,9 +146,9 @@ class ArticleCard extends React.Component {
                 },
               }}
             >
-              <RaisedButton className={css(styles.bottomButton)} label="See Discussion" />
+              <RaisedButton backgroundColor={'#FFCC80'} className={css(styles.bottomButton)} label="See Discussion" />
             </Link>
-            <a href={domain} target="_blank" rel="noopener noreferrer"><RaisedButton className={css(styles.bottomButton)} label="View Original Article" /></a>
+            <a href={domain} target="_blank" rel="noopener noreferrer"><RaisedButton backgroundColor={'#b6d3d9'} className={css(styles.bottomButton)} label="View Original Article" /></a>
           </CardActions>
         </Card>
       </MuiThemeProvider>

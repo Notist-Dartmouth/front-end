@@ -13,6 +13,12 @@ const mapStateToProps = state => ({
 
 /* can uncomment out articleList to have multiple cards in one row */
 const styles = StyleSheet.create({
+  root: {
+    // backgroundColor: '#E0F7FA',
+  },
+  subroot: {
+    paddingTop: 2,
+  },
   title: {
     fontSize: 28,
     margin: '0 auto 1.5rem',
@@ -49,23 +55,25 @@ class ArticleList extends Component {
   render() {
     return (
       <div className={css(styles.root)}>
-        <Helmet title="Annotations" />
-        {this.props.isLoading &&
-          <div>
-            <h2>Loading....</h2>
-          </div>}
-        <div className={css(styles.articleList)}>
-          {!this.props.isLoading &&
-            this.props.data.map(a =>
-              <ArticleItem
-                style={{ width: '100%' }}
-                key={a._id}
-                title={a.info && a.info.title ? a.info.title : ''}
-                imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
-                articleURI={a.uri}
-                annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
-                articleID={a._id}
-              />)}
+        <div className={css(styles.subroot)}>
+          <Helmet title="Annotations" />
+          {this.props.isLoading &&
+            <div>
+              <h2>Loading....</h2>
+            </div>}
+          <div className={css(styles.articleList)}>
+            {!this.props.isLoading &&
+              this.props.data.map(a =>
+                <ArticleItem
+                  style={{ width: '100%' }}
+                  key={a._id}
+                  title={a.info && a.info.title ? a.info.title : ''}
+                  imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
+                  articleURI={a.uri}
+                  annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
+                  articleID={a._id}
+                />)}
+          </div>
         </div>
       </div>
     );

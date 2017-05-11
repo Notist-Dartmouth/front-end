@@ -10,7 +10,7 @@ const ArticleItem = props => (
     subtitle={props.annotations.length > 0 ? props.annotations[0].articleText : 'article text'}
     annotationContent={props.annotations.length > 0 ? props.annotations[0].text : 'text'}
     image={props.imageURL}
-    username="ethan"
+    username={props.annotations[0].author}
     points={1}
     timeSince="1 minute"
     numUsers={2}

@@ -10,12 +10,16 @@ injectTapEventPlugin();
 const styles = StyleSheet.create({
   root: {
     // margin: '2rem auto',
+    backgroundColor: '#E0F7FA',
   },
   belowTopNav: {
-    paddingTop: 90,
+    paddingTop: 60,
   },
   shiftRight: {
     paddingLeft: 320,
+  },
+  leftNavShiftDown: {
+    paddingTop: 25,
   },
   title: {
     color: '#000',
@@ -27,6 +31,7 @@ const styles = StyleSheet.create({
     margin: '4rem auto',
     textAlign: 'center',
     color: '#b7b7b7',
+    paddingBottom: '60px',
   },
   footerLink: {
     display: 'inline-block',
@@ -46,7 +51,9 @@ const App = ({ children, location }) => (
       feedDescription={location.state ? location.state.groupDescription : ''}
     />
     <div className={css(styles.belowTopNav)}>
-      <LeftNavContainer />
+      <div className={css(styles.leftNavShiftDown)}>
+        <LeftNavContainer />
+      </div>
       <div className={css(styles.shiftRight)}>
         {children}
         <footer className={css(styles.footer)}>

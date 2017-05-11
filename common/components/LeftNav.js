@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   subheaderInset: {
     color: white,
-    fontSize: 24,
+    fontSize: 26,
   },
   drawer: {
     position: 'fixed',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   subheader: {
     paddingTop: 20,
     color: white,
-    fontSize: 30,
+    fontSize: 33,
   },
   user: {
   },

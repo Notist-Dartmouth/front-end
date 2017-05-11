@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   feedDetails: {
     display: 'flex',
     flexDirection: 'column',
-    flex: 2,
+    flex: 1,
     // alignItems: 'center',
   },
   feedTopRow: {
@@ -137,8 +137,7 @@ export default class TopNav extends React.Component {
               <div className={css(styles.feedDescription)}>{this.props.feedDescription}</div>
             </div>
             <div className={css(styles.notificationsAndSettings)}>
-
-
+              Found any bugs?
               <div>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScKa0F2eyB9fpUbVB9LrCGnwhnWHbiU-eJ2Ab4vPTC5LcUM9g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer">
                   <IconButton tooltip="Submit a bug report">
