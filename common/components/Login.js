@@ -82,7 +82,7 @@ const Login = props => (
     </div>
     <div className={css(styles.loginForm)}>
       <h1 className={css(styles.header)}>Login</h1>
-      <p className={css(styles.loginText)}> Not a member yet? Login
+      <p className={css(styles.loginText)}> Not a member yet? Signup
           <a href={'http://notist.io/signup'}> here </a>
       </p>
       <br />
