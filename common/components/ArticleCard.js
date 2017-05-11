@@ -128,8 +128,8 @@ class ArticleCard extends React.Component {
             {this.props.narrowCard ? '' :
             <div className={css(styles.rightFlex)}>
               <div className={css(styles.usersAndAnnotations)}>
-                <span><MdGroup /> {numUsers} users</span>
-                <span><MdComment /> {this.props.numAnnotations} annotations</span>
+                {/* <span><MdGroup /> {numUsers} users</span> */}
+                <span><MdComment /> {this.props.numAnnotations} {this.props.numAnnotations > 1 ? 'annotations' : 'annotation'}</span>
               </div>
               <div className={css(styles.imageStyle)}>
                 <img width={'100%'} style={{ maxHeight: '150px !important' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />

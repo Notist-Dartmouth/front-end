@@ -10,12 +10,12 @@ const ArticleItem = props => (
     subtitle={props.annotations.length > 0 ? props.annotations[0].articleText : 'article text'}
     annotationContent={props.annotations.length > 0 ? props.annotations[0].text : 'text'}
     image={props.imageURL}
-    username={props.annotations[0].author}
-    timeSince={props.annotations[0].createDate}
-    numUsers={2}
+    username={props.annotations[0] ? props.annotations[0].author : 'username'}
+    timeSince={props.annotations[0] ? props.annotations[0].createDate : String(Date.now())}
+    numUsers={0}
     numAnnotations={props.annotations.length}
     numReplies={1}
-    currentVotes={0}
+    currentVotes={1}
     slug={props.articleID}
   />
 );
