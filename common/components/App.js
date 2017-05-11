@@ -57,7 +57,7 @@ const App = ({ children, location }) => (
       <div className={css(styles.shiftRight)}>
         {children}
         <footer className={css(styles.footer)}>
-          Copyright © 2017 <a className={css(styles.footerLink)} href="http://notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
+          Copyright © 2017 <a className={css(styles.footerLink)} href="http://about.notist.io/" target="_blank" rel="noopener noreferrer">Notist</a>
         </footer>
       </div>
     </div>
