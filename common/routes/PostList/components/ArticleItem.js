@@ -11,8 +11,7 @@ const ArticleItem = props => (
     annotationContent={props.annotations.length > 0 ? props.annotations[0].text : 'text'}
     image={props.imageURL}
     username={props.annotations[0].author}
-    points={1}
-    timeSince="1 minute"
+    timeSince={props.annotations[0].createDate}
     numUsers={2}
     numAnnotations={props.annotations.length}
     numReplies={1}

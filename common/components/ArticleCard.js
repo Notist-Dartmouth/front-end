@@ -8,6 +8,7 @@ import { yellow200, fullBlack, deepOrange100, indigo100, amber100, teal100 } fro
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleSheet, css } from 'aphrodite';
+import moment from 'moment';
 import { Link } from 'react-router';
 import Upvote from './Upvote';
 
@@ -88,11 +89,11 @@ class ArticleCard extends React.Component {
       numReplies,
       username,
       points,
-      timeSince,
       currentVotes,
       image,
       slug,
     } = this.props;
+    const timeSince = moment(this.props.timeSince).fromNow();
     let cardStyle;
     if (this.props.narrowCard) {
       cardStyle = {
@@ -120,8 +121,7 @@ class ArticleCard extends React.Component {
               </div>
               <div style={{ marginTop: 8 }}>
                 <span style={{ fontWeight: 900 }}>{username}</span>
-                <span style={{ fontStyle: 'italic', paddingLeft: 12 }}>{points} points</span>
-                <span style={{ paddingLeft: 12 }}>{timeSince} ago</span>
+                <span style={{ paddingLeft: 12 }}>{timeSince}</span>
                 <span className={css(styles.annotationTextStyle)}><br />{this.props.annotationContent}</span>
               </div>
             </div>
@@ -165,7 +165,6 @@ ArticleCard.propTypes = {
   numAnnotations: React.PropTypes.number.isRequired,
   numReplies: React.PropTypes.number.isRequired,
   username: React.PropTypes.string.isRequired,
-  points: React.PropTypes.number.isRequired,
   timeSince: React.PropTypes.string.isRequired,
   image: React.PropTypes.string.isRequired,
   currentVotes: React.PropTypes.number.isRequired,
