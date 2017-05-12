@@ -49,8 +49,6 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log('Executing mapStateToProps!');
-  console.log(state);
   const { annotations, isLoading } = state.Discussion;
   return {
     annotations,

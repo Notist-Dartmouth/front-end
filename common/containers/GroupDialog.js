@@ -36,7 +36,6 @@ class GroupDialog extends React.Component {
       name: this.state.name,
       description: this.state.description,
     };
-    console.log(newGroup);
     this.props.dispatch(saveGroup(newGroup));
   }
 

@@ -7,10 +7,6 @@ import moment from 'moment';
 /* eslint-enable */
 
 class Comments extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props.replies);
-  }
 
 // Connect this to comment id -- rerender --> compute order in the action
   render() {

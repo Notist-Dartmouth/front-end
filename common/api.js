@@ -10,8 +10,6 @@ const headers = {
 };
 
 const handleUnauthorizedRequest = () => {
-  console.log('unauthorized');
-  console.log(window.location.host);
   if (window.location.host !== 'localhost:5000') { window.location = 'http://notist.io/login'; } // If not in dev mode then redirect
   return { ERROR: 'Unauthorized: you must be logged in' };
 };
