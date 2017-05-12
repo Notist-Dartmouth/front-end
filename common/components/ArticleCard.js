@@ -16,15 +16,15 @@ import Upvote from './Upvote';
 const styles = StyleSheet.create({
   flexContainer: {
     display: 'flex',
-    paddingLeft: 20,
+    paddingLeft: 30,
     paddingTop: 10,
-    paddingRight: 20,
+    paddingRight: 30,
     '@media (max-width: 1000px)': {
       flexDirection: 'column',
     },
   },
   articleTitleBar: {
-    paddingLeft: 10,
+    paddingLeft: 30,
     paddingTop: 10,
     paddingRight: 10,
   },
