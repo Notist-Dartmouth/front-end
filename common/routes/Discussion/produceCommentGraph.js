@@ -6,8 +6,6 @@
 export default function dfTraversal(rootNode, callback) {
   const order = [];
   (function recurse(currentNode, depth = 0) {
-    console.log('RootNode is: ');
-    console.log(rootNode);
     currentNode.depth = depth;
     order.push(currentNode);
 
@@ -18,7 +16,6 @@ export default function dfTraversal(rootNode, callback) {
     callback(currentNode);
   }(rootNode));
 
-  console.log('Returning order!');
   return order;
 }
 
