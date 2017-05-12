@@ -17,21 +17,21 @@ class Comments extends Component {
 
     });
 
-    let name = 'Anonymous';
-    if (this.props.replies.author && this.props.replies.author.name) {
-      name = this.props.replies.author.name;
-      const filteredName = this.props.replies.author.name.split(' ');
-
-      if (filteredName.length >= 2) {
-        if (filteredName[1].charAt(0)) { // If it's not null
-          name = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
-        }
-      }
-    }
-
     return (
       <div>
         {order.map((node, i) => {
+          let name = 'Anonymous';
+          if (node.author && node.author.name) {
+            name = node.author.name;
+            const filteredName = node.author.name.split(' ');
+
+            if (filteredName.length >= 2) {
+              if (filteredName[1].charAt(0)) { // If it's not null
+                name = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
+              }
+            }
+          }
+
           return (
             <CommentBox
               articleURI={this.props.articleURI}
