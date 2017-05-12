@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     },
   },
   cardButtons: {
+    paddingTop: 40,
     display: 'flex',
     alignSelf: 'center',
     justifyContent: 'center',
