@@ -4,7 +4,7 @@ import ArticleCard from '../../../components/ArticleCard';
 // set narrowCard to true here if want smaller card
 
 function convertName(name) {
-  const filteredName = this.props.replies.author.name.split(' ');
+  const filteredName = name.split(' ');
 
   if (filteredName.length >= 2) {
     if (filteredName[1].charAt(0)) { // If it's not null
