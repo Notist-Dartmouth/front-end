@@ -108,7 +108,7 @@ class CommentBox extends Component {
           <textarea id={'textarea'.concat(this.id.toString())} onChange={this.updateNotAbleToPost}
             style={{
               marginLeft: COMMENTINDENTAMOUNT,
-              borderLeft: '3px solid '.concat(COLORARRAY[this.props.node.depth + 1]),
+              borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth + 1) % 5]),
             }}
           />
           <RaisedButton label="Post" primary disabled={notAbleToPost} onClick={this.onPostReply} style={{ marginLeft: '20px' }} />
@@ -119,7 +119,7 @@ class CommentBox extends Component {
     return (
       <div style={{
         marginLeft: COMMENTINDENTAMOUNT * this.props.node.depth,
-        borderLeft: '3px solid '.concat(COLORARRAY[this.props.node.depth]),
+        borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth % 5)]),
         backgroundColor: (this.props.node.depth % 2 === 0) ? 'white' : 'grey',
       }}
       >
