@@ -3,6 +3,17 @@ import ArticleCard from '../../../components/ArticleCard';
 
 // set narrowCard to true here if want smaller card
 
+function convertName(name) {
+  const filteredName = this.props.replies.author.name.split(' ');
+
+  if (filteredName.length >= 2) {
+    if (filteredName[1].charAt(0)) { // If it's not null
+      return `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
+    }
+  }
+  return name;
+}
+
 const ArticleItem = props => (
   <ArticleCard
     title={props.title}
@@ -10,7 +21,7 @@ const ArticleItem = props => (
     subtitle={props.annotations.length > 0 ? props.annotations[0].articleText : 'article text'}
     annotationContent={props.annotations.length > 0 ? props.annotations[0].text : 'text'}
     image={props.imageURL}
-    username={props.annotations[0] && props.annotations[0].author ? props.annotations[0].author.name : 'username'}
+    username={props.annotations[0] && props.annotations[0].author ? convertName(props.annotations[0].author.name) : 'Anonymous'}
     timeSince={props.annotations[0] ? props.annotations[0].createDate : String(Date.now())}
     numUsers={0}
     numAnnotations={props.annotations.length}
