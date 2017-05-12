@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import CommentBox from './CommentBox';
 /* eslint-disable */
 import traverseDF from '../produceCommentGraph';
+import moment from 'moment';
 /* eslint-enable */
 
 class Comments extends Component {
@@ -38,6 +39,7 @@ class Comments extends Component {
               articleText={this.props.replies.articleText}
               authorName={name}
               profilePicture={name}
+              timeSince={moment(node.createDate).fromNow()}
               ordering={order}
               node={node}
               key={node._id}

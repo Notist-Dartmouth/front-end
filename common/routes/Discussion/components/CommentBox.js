@@ -29,15 +29,12 @@ class CommentBox extends Component {
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
 
   onToggleReply() {
-    console.log('Trying to toggle the reply box!');
     let visible = true;
     if (this.props.commentId !== this.props.currentlyOpen) {
       visible = true;
     } else {
       visible = !this.props.isVisible;
     }
-
-    console.log(`VISIBLE IS: ${visible}`);
 
     this.props.dispatch({
       type: 'TOGGLE_REPLY',
@@ -59,7 +56,6 @@ class CommentBox extends Component {
       ordering: this.ordering,
     });
 
-    console.log('POSTING REPLY!');
     const textInsideTextArea = this.getTextAreaText();
     // const arrayIndex = this.getLastBeforeEnd();   //  this.getLastBeforeEnd(); //  This is where commentBox should be inserted in the array
     //  Splice this node into ordering
@@ -67,20 +63,13 @@ class CommentBox extends Component {
     addedNode.depth = this.props.node.depth + 1;
     addedNode.parent = this.props.node;
 
-    console.log('PRE ADD: ');
-    console.log(this.ordering);
-
     this.props.dispatch(saveReply(textInsideTextArea, addedNode.parent._id, this.props.articleURI));
   }
 
   getLastBeforeEnd() {
     const idx = this.id;
     for (let i = idx + 1; i < this.ordering.length; i += 1) {
-      console.log('i: '.concat(i));
-      console.log('ordering\'s depth: '.concat(this.ordering[i].depth));
-      console.log('Node depth: '.concat(this.props.node.depth));
       if (this.ordering[i].depth <= this.props.node.depth) {
-        console.log('Found matching depth!');
         return i;
       }
     }
@@ -108,8 +97,6 @@ class CommentBox extends Component {
   }
 
   render() {
-    console.log('RENDERING AGAIN!');
-
     let textarea = <span id={'Hi'} />;
 
     // console.log('Precrash: ');
@@ -145,7 +132,7 @@ class CommentBox extends Component {
               {/*    size={35} */}
               {/*  /> */}
 
-              <b>{this.props.authorName}</b>
+              <b>{this.props.authorName}</b>{' '}{this.props.timeSince}
               <br /> <br />
 
               <div style={{
