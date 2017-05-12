@@ -29,15 +29,21 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingTop: 10,
   },
+  loginHeader: {
+    paddingTop: 20,
+    color: '#1d5661',
+    fontSize: 60,
+    paddingBottom: 20,
+  },
   button: {
-    margin: 20,
+    margin: 13,
     width: 270,
   },
   chromeButton: {
-    width: 400,
+    width: 320,
   },
   chromeButtonDiv: {
-    margin: 40,
+    margin: 13,
     display: 'flex',
     alignItems: 'center',
     flexDirection: 'column',
@@ -48,9 +54,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
   },
+  bottomText: {
+    paddingTop: 15,
+  },
   cardStyle: {
-    width: '60%',
-    height: 400,
+    width: '50%',
+    height: 450,
+    minWidth: 450,
   },
 });
 
@@ -63,6 +73,7 @@ const Login = props => (
       <div className={css(styles.cardContainer)}>
         <Card className={css(styles.cardStyle)}>
           <div className={css(styles.loginForm)}>
+            <div className={css(styles.loginHeader)}>Login</div>
             <div>
               <a href={`${config.apiHost}/login/facebook`}
                 className={`btn btn-block btn-social btn-lg btn-facebook ${css(styles.button)}`}
@@ -77,14 +88,17 @@ const Login = props => (
                 <i className="fa fa-google" /> Sign in with Google
               </a>
             </div>
-            <div className="chromeButtonDiv">
-              You can also download our Chrome extension if you havent yet:
-              <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf" target="_blank" rel="noopener noreferrer"
-                className={`btn btn-block btn-social btn-lg btn-openid ${css(styles.chromeButton)}`}
-              >
-                <i className="fa fa-chrome" /> Get Notist chrome extension
-              </a>
+            <div className={css(styles.chromeButtonDiv)}>
+              {/* You can also download our Chrome extension if you havent yet: */}
+              <div>
+                <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf" target="_blank" rel="noopener noreferrer"
+                  className={`btn btn-block btn-social btn-lg btn-openid ${css(styles.chromeButton)}`}
+                >
+                  <i className="fa fa-chrome" /> Get Notist chrome extension
+                </a>
+              </div>
             </div>
+            <div className={css(styles.bottomText)}>Want to learn more? Check out our <a href="http://about.notist.io" target="_blank" rel="noopener noreferrer">about page</a></div>
           </div>
         </Card>
       </div>
