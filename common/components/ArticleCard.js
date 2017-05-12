@@ -7,6 +7,7 @@ import { MdComment, MdForum, MdGroup } from 'react-icons/lib/md';
 import { yellow200, fullBlack, deepOrange100, indigo100, amber100, teal100 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import marked from 'marked';
 import { StyleSheet, css } from 'aphrodite';
 import moment from 'moment';
 import { Link } from 'react-router';
@@ -15,9 +16,9 @@ import Upvote from './Upvote';
 const styles = StyleSheet.create({
   flexContainer: {
     display: 'flex',
-    paddingLeft: 10,
+    paddingLeft: 20,
     paddingTop: 10,
-    paddingRight: 10,
+    paddingRight: 20,
     '@media (max-width: 1000px)': {
       flexDirection: 'column',
     },
@@ -62,20 +63,20 @@ const styles = StyleSheet.create({
   },
   annotationTextStyle: {
     position: 'relative',
-    fontSize: 19,
+    fontSize: 21,
   },
   articleTitleTextStyle: {
     fontWeight: 700,
-    fontSize: 38,
+    fontSize: 33,
   },
   articleTextStyle: {
-    fontSize: 25,
+    fontSize: 24,
     fontStyle: 'italic',
     fontWeight: 100,
     backgroundColor: yellow200,
   },
   domainTextStyle: {
-    fontSize: 19,
+    fontSize: 17,
     textDecoration: 'underline',
   },
 });
@@ -122,7 +123,7 @@ class ArticleCard extends React.Component {
               <div style={{ marginTop: 8 }}>
                 <span style={{ fontWeight: 900 }}>{username}</span>
                 <span style={{ paddingLeft: 12 }}>{timeSince}</span>
-                <span className={css(styles.annotationTextStyle)}><br />{this.props.annotationContent}</span>
+                <div className={css(styles.annotationTextStyle)} dangerouslySetInnerHTML={{ __html: marked(this.props.annotationContent || '') }} />
               </div>
             </div>
             {this.props.narrowCard ? '' :
