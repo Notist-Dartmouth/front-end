@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
@@ -10,11 +9,45 @@ import PeopleIcon from 'material-ui/svg-icons/social/people';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Toolbar } from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
+import TextField from 'material-ui/TextField';
+import { connect } from 'react-redux';
 import BugReport from 'material-ui/svg-icons/action/bug-report';
-import SettingsDialog from './SettingsDialog';
-import NotificationsDialog from './NotificationsDialog';
-import Search from './Search';
+import Fuse from 'fuse.js';
+// import SettingsDialog from './SettingsDialog';
+// import NotificationsDialog from './NotificationsDialog';
 import config from '../../server/config';
+import dfsTraversal from '../routes/Discussion/produceCommentGraph';
+
+/* eslint-enable */
+
+function getTotalAuthorNumber(annotations, groupId = '0') {
+  if (!annotations) {
+    return 0;
+  }
+
+  let filtered = annotations;
+
+  if (groupId !== '0') {
+    filtered = annotations.filter(a => a.groups.includes(groupId));
+  }
+
+  const authorArray = [];
+
+  for (let i = 0; i < filtered.length; i += 1) {
+    if (!filtered[i].author) {
+      /* eslint-disable */
+      continue;
+      /* eslint-enable */
+    }
+    authorArray.push(filtered[i].author._id);
+  }
+
+  const uniqueArray = authorArray.filter((authorID, i) => { // Filter out so we don't count the same person more than once
+    return authorArray.indexOf(authorID) === i;
+  });
+
+  return uniqueArray.length;
+}
 
 const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
@@ -89,8 +122,27 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class TopNav extends React.Component {
+function search(list, query) { // Will return the array in sorted order
+  const options = {
+    shouldSort: true,
+    threshold: 0.6,
+    location: 0,
+    distance: 100,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+      'info.title',
+      'info.domain',
+    ],
+  };
 
+  const fuse = new Fuse(list, options);
+  const result = fuse.search(query);
+
+  return result;
+}
+
+class TopNav extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,13 +158,25 @@ export default class TopNav extends React.Component {
     this.setState({ subscribed: !this.state.subscribed });
   }
 
+  handleChange = (event, index, value) => this.setState({ value });
+
+  executeSearch = (props) => {
+    const textfield = document.getElementById('Search');
+    const searchResults = search(this.props.data, textfield.value);
+    console.log(searchResults);
+  }
+
   render() {
-    let subButton = null;
-    if (this.state.subscribed) {
-      subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} />;
-    } else {
-      subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} />;
-    }
+    const subButton = null;
+
+    /* if (window.location.href.includes('feed')) {
+      if (this.state.subscribed) { // Check if subscribed to group
+        subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} />;
+      } else {
+        subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} />;
+      }
+    }*/
+
     /*
       when not yet response from button click, use
       import RefreshIndicator from 'material-ui/lib/refresh-indicator';
@@ -124,6 +188,29 @@ export default class TopNav extends React.Component {
      style={style.refresh}
    />
       */
+
+    /* eslint-disable */
+
+    let annotations = [];
+    let groupId = '0';
+    if (window.location.href.includes("feed")) {
+      groupId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    }
+    const isFeedOrDiscussionView = (window.location.href.includes('feed') || window.location.href.includes('discussion'));
+    let allComments = [];
+    if (isFeedOrDiscussionView) {
+      annotations = window.location.href.includes("feed")  ? this.props.annotationsF : this.props.annotationsD;
+      for (let i = 0; i < annotations.length; i += 1) {
+        const order = dfsTraversal(annotations[i], () => {
+
+        });
+        allComments = allComments.concat(order);
+      }
+    }
+
+    const totalAuthorNumber = getTotalAuthorNumber(allComments);
+    const shouldLoadMembers = (totalAuthorNumber !== 0 && isFeedOrDiscussionView);
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Toolbar style={{ position: 'fixed', zIndex: 200, height: 90, top: 0, left: 0, width: '100%', color: white, fontFamily: 'Roboto, sans-serif', boxShadow: '0 2px 4px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.22)' }}>
@@ -131,8 +218,9 @@ export default class TopNav extends React.Component {
             <div className={css(styles.feedDetails)}>
               <div className={css(styles.feedTopRow)}>
                 <div className={css(styles.feedName)}>{this.props.currentFeedName || 'Notist'}</div>
-
-
+                <div style={{ paddingRight: 15 }}>{subButton}</div>
+                { shouldLoadMembers ? <PeopleIcon /> : '' }
+                <div className={css(styles.numMembers)}>{shouldLoadMembers ? (totalAuthorNumber.toString().concat(totalAuthorNumber === 1 ? ' member' : ' members')) : ''}</div>
               </div>
               <div className={css(styles.feedDescription)}>{this.props.feedDescription}</div>
             </div>
@@ -146,9 +234,13 @@ export default class TopNav extends React.Component {
                 </a>
               </div>
             </div>
+            {/* <div className={css(styles.searchBar)}>  */}
+              {/* <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} /> */}
+            {/* </div> */}
             <div>
               <a className={css(styles.link, styles.topLink)}
-                  href={`${config.apiHost}/logout`}>Logout</a>
+                href={`${config.apiHost}/logout`}
+              >Logout</a>
             </div>
           </div>
         </Toolbar>
@@ -157,13 +249,26 @@ export default class TopNav extends React.Component {
   }
 }
 
+/* eslint-enable */
+
+function mapStateToProps(state) {
+  const annotationsD = state.Discussion ? state.Discussion.annotations : [];
+  const annotationsF = state.articles ? state.articles.annotations : [];
+  return {
+    annotationsD,
+    annotationsF,
+  };
+}
+
+export default connect(mapStateToProps)(TopNav);
+
 // <div><PeopleIcon /></div>
 
 // <div className={css(styles.searchBar)}>
 //   <Search />
 // </div>
 
-//<div className={css(styles.numMembers)}>{this.props.numFeedMembers || 0} members</div>
+// <div className={css(styles.numMembers)}>{this.props.numFeedMembers || 0} members</div>
 
 //   <div style={{ paddingRight: 15 }}>{subButton}</div>
 
