@@ -106,7 +106,7 @@ class CommentBox extends Component {
     if (this.props.isVisible && this.props.commentId === this.props.currentlyOpen) {
       textarea = (
         <div>
-          <CommentEditor id={'textarea'.concat(this.id.toString())} onChange={this.updateNotAbleToPost}
+          <CommentEditor id={'textarea'.concat(this.id.toString())} onTextChange={this.updateNotAbleToPost}
             style={{
               marginLeft: COMMENTINDENTAMOUNT,
               borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth + 1) % 5]),

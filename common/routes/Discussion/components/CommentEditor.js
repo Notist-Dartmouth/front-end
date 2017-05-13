@@ -21,6 +21,7 @@ const styles = {
   },
   editorStyle: {
     border: '1px solid gray',
+    backgroundColor: 'white',
     borderTop: 'none',
     minHeight: '100px',
     width: '30%',
@@ -44,7 +45,7 @@ class CommentEditor extends React.Component {
 
   onEditorChange(event) {
     this.setState({ markdown: event.target.value });
-    this.props.onChange();
+    this.props.onTextChange();
   }
 
   render() {
@@ -95,7 +96,7 @@ class CommentEditor extends React.Component {
 
 CommentEditor.propTypes = {
   id: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onTextChange: PropTypes.func.isRequired,
 };
 
 export default CommentEditor;
