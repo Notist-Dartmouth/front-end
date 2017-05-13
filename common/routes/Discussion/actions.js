@@ -1,5 +1,19 @@
+import path from 'path';
 import * as types from '../../constants/ActionTypes';
 import * as api from '../../api';
+
+const headers = {
+  'Content-Type': 'application/json',
+  Accept: 'application/json',
+};
+
+let apiHost;
+// @if ENVIRONMENT='production'
+apiHost = 'https://notist.herokuapp.com';
+// @endif
+// @if ENVIRONMENT='development'
+apiHost = 'http://localhost:3000';
+// @endif
 
 function loadDiscussionRequest() {
   return {
@@ -41,6 +55,37 @@ export function saveReply(text, parent, articleURI) {
         return dispatch(loadDiscussionFailure(reply.ERROR));
       } else {
         return dispatch(loadDiscussion(articleURI));
+      }
+    });
+  };
+}
+
+export function deleteAnnotation(annotationId) {
+  return {
+    type: types.REQUEST_DELETE_ANNOTATION,
+    annotationId,
+  };
+}
+
+export function handleDeleteAnnotationSuccess(annotationId) {
+  return {
+    type: types.DELETE_ANNOTATION,
+    annotationId,
+  };
+}
+
+export function deleteAnnotationAsync(annotationId) {
+  return (dispatch, getState) => {
+    const deleteEndpoint = path.join(apiHost, `api/annotation/${annotationId}`);
+    return fetch(deleteEndpoint, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers,
+    })
+    .then(res => res.json())
+    .then((json) => {
+      if (json.SUCCESS) {
+        dispatch(handleDeleteAnnotationSuccess(annotationId));
       }
     });
   };
