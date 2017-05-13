@@ -19,17 +19,6 @@ const styles = {
     width: '30%',
     backgroundColor: 'white',
   },
-  editorStyle: {
-    border: '1px solid gray',
-    backgroundColor: 'white',
-    borderTop: 'none',
-    minHeight: '100px',
-    width: '30%',
-    fontSize: '14px',
-    cursor: 'text',
-    padding: '5px',
-    fontFamily: 'inherit',
-  },
 };
 
 class CommentEditor extends React.Component {
@@ -38,17 +27,22 @@ class CommentEditor extends React.Component {
     super(props);
     this.state = {
       isPreview: false,
-      markdown: '',
     };
-    this.onEditorChange = this.onEditorChange.bind(this);
-  }
-
-  onEditorChange(event) {
-    this.setState({ markdown: event.target.value });
-    this.props.onTextChange();
   }
 
   render() {
+    const editorStyle = {
+      border: this.state.isPreview ? 'none' : '1px solid gray',
+      backgroundColor: 'white',
+      borderTop: 'none',
+      width: this.state.isPreview ? '100%' : '30%',
+      minHeight: '100px',
+      fontSize: '14px',
+      cursor: 'text',
+      padding: '5px',
+      fontFamily: 'inherit',
+      resize: 'none',
+    };
     return (
       <div style={styles.container}>
         <div style={styles.controlBar}>
@@ -75,18 +69,17 @@ class CommentEditor extends React.Component {
           />
         </div>
         <textarea
-          id={this.props.id}
-          style={styles.editorStyle}
+          style={editorStyle}
           hidden={this.state.isPreview}
-          value={this.state.markdown}
-          onChange={this.onEditorChange}
+          value={this.props.markdown}
+          onChange={this.props.onMarkdownChange}
           placeholder="Enter Comment"
         />
         <div
-          style={styles.editorStyle}
+          style={editorStyle}
           hidden={!this.state.isPreview}
           dangerouslySetInnerHTML={{
-            __html: this.state.markdown.length > 0 ? marked(this.state.markdown) : marked('Nothing to preview'),
+            __html: this.props.markdown.length > 0 ? marked(this.props.markdown) : marked('Nothing to preview'),
           }}
         />
       </div>
@@ -95,8 +88,8 @@ class CommentEditor extends React.Component {
 }
 
 CommentEditor.propTypes = {
-  id: PropTypes.string.isRequired,
-  onTextChange: PropTypes.func.isRequired,
+  onMarkdownChange: PropTypes.func.isRequired,
+  markdown: PropTypes.string.isRequired,
 };
 
 export default CommentEditor;
