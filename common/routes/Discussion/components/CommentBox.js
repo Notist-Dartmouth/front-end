@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import { RaisedButton } from 'material-ui';
 import { yellow200 } from 'material-ui/styles/colors';
+import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
 import { saveReply } from '../actions';
@@ -105,7 +106,7 @@ class CommentBox extends Component {
     if (this.props.isVisible && this.props.commentId === this.props.currentlyOpen) {
       textarea = (
         <div>
-          <textarea id={'textarea'.concat(this.id.toString())} onChange={this.updateNotAbleToPost}
+          <CommentEditor id={'textarea'.concat(this.id.toString())} onChange={this.updateNotAbleToPost}
             style={{
               marginLeft: COMMENTINDENTAMOUNT,
               borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth + 1) % 5]),
