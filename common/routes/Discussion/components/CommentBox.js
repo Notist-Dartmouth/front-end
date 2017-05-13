@@ -93,6 +93,8 @@ class CommentBox extends Component {
     // console.log('Precrash: ');
     // console.log(this.ordering);
 
+    /* eslint-disable */
+
     if (this.props.isVisible && this.props.commentId === this.props.currentlyOpen) {
       textarea = (
         <div>
@@ -104,7 +106,10 @@ class CommentBox extends Component {
               borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth + 1) % 5]),
             }}
           />
-          <RaisedButton label="Post" primary disabled={this.state.markdown === ''} onClick={this.onPostReply} style={{ marginLeft: '20px' }} />
+        <div style={{display: 'flex'}}>
+            <RaisedButton label="Post" primary disabled={this.state.markdown === ''} onClick={this.onPostReply} style={{ marginLeft: '20px' }} />
+            <div style={{ fontSize: '8pt', opacity: '0.5', textColor: 'grey', }} dangerouslySetInnerHTML={{ __html: marked('\\*\\***bold**\\*\\*  \\__italics_\\_  \\~\\~~~strike~~\\~\\~  \\``code`\\` \\`\\`\\````preformatted```\\`\\`\\` >quote') }} />
+          </div>
         </div>
       );
     }
@@ -113,7 +118,7 @@ class CommentBox extends Component {
       <div style={{
         marginLeft: COMMENTINDENTAMOUNT * this.props.node.depth,
         borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth % 5)]),
-        backgroundColor: (this.props.node.depth % 2 === 0) ? 'white' : 'grey',
+        backgroundColor: 'white',
       }}
       >
         <MuiThemeProvider muiTheme={muiTheme}>
