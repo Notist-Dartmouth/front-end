@@ -208,7 +208,7 @@ class TopNav extends React.Component {
       }
     }
 
-    const totalAuthorNumber = getTotalAuthorNumber(allComments);
+    const totalAuthorNumber = getTotalAuthorNumber(allComments, groupId);
     const shouldLoadMembers = (totalAuthorNumber !== 0 && isFeedOrDiscussionView);
 
     return (
