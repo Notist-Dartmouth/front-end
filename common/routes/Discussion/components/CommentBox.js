@@ -6,6 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import { RaisedButton } from 'material-ui';
 import { yellow200 } from 'material-ui/styles/colors';
+import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
 import { saveReply } from '../actions';
@@ -13,17 +14,19 @@ import { saveReply } from '../actions';
 
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
-let notAbleToPost = true;
 
 class CommentBox extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      markdown: '',
+    };
     this.ordering = this.props.ordering;
     this.id = props.id;
     this.onToggleReply = this.onToggleReply.bind(this);
     this.onPostReply = this.onPostReply.bind(this);
     this.getLastBeforeEnd = this.getLastBeforeEnd.bind(this);
-    this.updateNotAbleToPost = this.updateNotAbleToPost.bind(this);
+    this.updateMarkdown = this.updateMarkdown.bind(this);
   }
 
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
@@ -56,14 +59,13 @@ class CommentBox extends Component {
       ordering: this.ordering,
     });
 
-    const textInsideTextArea = this.getTextAreaText();
     // const arrayIndex = this.getLastBeforeEnd();   //  this.getLastBeforeEnd(); //  This is where commentBox should be inserted in the array
     //  Splice this node into ordering
-    const addedNode = new Node(textInsideTextArea);
+    const addedNode = new Node(this.state.markdown);
     addedNode.depth = this.props.node.depth + 1;
     addedNode.parent = this.props.node;
 
-    this.props.dispatch(saveReply(textInsideTextArea, addedNode.parent._id, this.props.articleURI));
+    this.props.dispatch(saveReply(this.state.markdown, addedNode.parent._id, this.props.articleURI));
   }
 
   getLastBeforeEnd() {
@@ -81,19 +83,8 @@ class CommentBox extends Component {
     return textInsideTextArea;
   }
 
-  updateNotAbleToPost() {
-    const previousNotAbleToPost = notAbleToPost;
-    if (document.getElementById('textarea'.concat(this.props.id.toString())) !== null) {
-      if (this.getTextAreaText() === '') {
-        notAbleToPost = true;
-      } else {
-        notAbleToPost = false;
-      }
-    }
-
-    if (previousNotAbleToPost !== notAbleToPost) { // Rerender only when state changes
-      this.forceUpdate();
-    }
+  updateMarkdown(event) {
+    this.setState({ markdown: event.target.value });
   }
 
   render() {
@@ -105,13 +96,15 @@ class CommentBox extends Component {
     if (this.props.isVisible && this.props.commentId === this.props.currentlyOpen) {
       textarea = (
         <div>
-          <textarea id={'textarea'.concat(this.id.toString())} onChange={this.updateNotAbleToPost}
+          <CommentEditor
+            markdown={this.state.markdown}
+            onMarkdownChange={this.updateMarkdown}
             style={{
               marginLeft: COMMENTINDENTAMOUNT,
               borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth + 1) % 5]),
             }}
           />
-          <RaisedButton label="Post" primary disabled={notAbleToPost} onClick={this.onPostReply} style={{ marginLeft: '20px' }} />
+          <RaisedButton label="Post" primary disabled={this.state.markdown === ''} onClick={this.onPostReply} style={{ marginLeft: '20px' }} />
         </div>
       );
     }
