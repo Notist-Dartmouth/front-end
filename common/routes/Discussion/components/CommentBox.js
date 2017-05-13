@@ -6,10 +6,11 @@ import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import { RaisedButton } from 'material-ui';
 import { yellow200 } from 'material-ui/styles/colors';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
 import { saveReply } from '../actions';
-
 
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
@@ -66,6 +67,15 @@ class CommentBox extends Component {
     this.props.dispatch(saveReply(textInsideTextArea, addedNode.parent._id, this.props.articleURI));
   }
 
+  onDeleteComment() {
+    this.props.dispatch({
+      type: 'DELETE_COMMENT',
+      currentlyOpen: '-1',
+      isVisible: false,
+      ordering: this.ordering,
+    });
+  }
+
   getLastBeforeEnd() {
     const idx = this.id;
     for (let i = idx + 1; i < this.ordering.length; i += 1) {
@@ -98,7 +108,7 @@ class CommentBox extends Component {
 
   render() {
     let textarea = <span id={'Hi'} />;
-
+    const madeThisComment = this.props.node.author ? (this.props.username === this.props.node.author.username) : false;
     // console.log('Precrash: ');
     // console.log(this.ordering);
 
@@ -133,6 +143,8 @@ class CommentBox extends Component {
               {/*  /> */}
 
               <b>{this.props.authorName}</b>{' '}{this.props.timeSince}
+              {madeThisComment ? <EditIcon onClick={this.onToggleReply} /> : ''}
+              {madeThisComment ? <DeleteIcon onClick={this.onToggleReply} /> : ''}
               <br /> <br />
 
               <div style={{
@@ -169,8 +181,10 @@ CommentBox.propTypes = {
 /* eslint-enable */
 
 function mapStateToProps(state) {
+  const { username } = state.user;
   const { parentIdx, isVisible, currentlyOpen } = state.Discussion;
   return {
+    username,
     parentIdx,
     isVisible,
     currentlyOpen,

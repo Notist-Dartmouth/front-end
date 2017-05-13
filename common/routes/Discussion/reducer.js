@@ -26,6 +26,13 @@ export default function discussionViewReducer(state = {
         isVisible: action.isVisible,
         ordering: action.ordering,
       });
+    case 'DELETE_REPLY':
+      return Object.assign({}, state, {
+        parentIdx: state.parentIdx,
+        replyText: action.replyText,
+        isVisible: action.isVisible,
+        ordering: action.ordering,
+      });
     case types.LOAD_DISCUSSION_REQUEST:
       return Object.assign({}, state, {
         isLoading: true,
