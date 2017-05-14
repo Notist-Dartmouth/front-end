@@ -4,6 +4,7 @@ const initialState = {
   data: [],
   annotations: [],
   lastFetched: null,
+  searchIsEmpty: true,
   isLoading: false,
   error: null,
 };
@@ -38,6 +39,7 @@ export default function articles(state = initialState, action) {
     case 'EXECUTE_SEARCH':
       return { ...state,
         search: action.search,
+        searchIsEmpty: action.searchIsEmpty,
       };
     default:
       return state;

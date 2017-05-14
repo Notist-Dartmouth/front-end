@@ -47,7 +47,7 @@ class ArticleList extends Component {
   }
 
   render() {
-    const data = (this.props.search.length === 0 ? this.props.data : this.props.search);
+    const data = (this.props.searchIsEmpty ? this.props.data : this.props.search);
 
     return (
       <div className={css(styles.root)}>
@@ -79,7 +79,8 @@ class ArticleList extends Component {
 ArticleList.PropTypes = {
   isLoading: PropTypes.bool.isRequired,
   isPublic: PropTypes.bool,
-  searchResults: PropTypes.array.isRequired,
+  search: PropTypes.array.isRequired,
+  searchIsEmpty: PropTypes.bool,
   data: PropTypes.array.isRequired,
   annotations: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -93,6 +94,7 @@ const mapStateToProps = state => ({
   data: state.articles.data,
   annotations: state.articles.annotations,
   search: state.articles.search || [],
+  searchIsEmpty: state.articles.searchIsEmpty,
   isLoading: state.articles.isLoading,
 });
 
