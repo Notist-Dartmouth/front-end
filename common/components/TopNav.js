@@ -164,7 +164,6 @@ class TopNav extends React.Component {
     const textfield = document.getElementById('Search');
     const searchResults = search(this.props.data, textfield.value);
     const searchIsEmpty = textfield.value.length === 0;
-    console.log(searchIsEmpty);
     this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults, searchIsEmpty });
   }
 
@@ -257,7 +256,7 @@ class TopNav extends React.Component {
 /* eslint-enable */
 
 const mapStateToProps = state => ({
-  data: state.articles.data,
+  data: state.articles ? state.articles.data : [],
   annotationsD: state.Discussion ? state.Discussion.annotations : [],
   annotationsF: state.articles ? state.articles.annotations : [],
 });
