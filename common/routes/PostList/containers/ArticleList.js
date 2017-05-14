@@ -5,12 +5,6 @@ import { connect } from 'react-redux';
 import loadArticles from '../actions';
 import ArticleItem from '../components/ArticleItem';
 
-const mapStateToProps = state => ({
-  data: state.articles.data,
-  annotations: state.articles.annotations,
-  isLoading: state.articles.isLoading,
-});
-
 /* can uncomment out articleList to have multiple cards in one row */
 const styles = StyleSheet.create({
   root: {
@@ -53,6 +47,8 @@ class ArticleList extends Component {
   }
 
   render() {
+    const data = (this.props.search.length === 0 ? this.props.data : this.props.search);
+
     return (
       <div className={css(styles.root)}>
         <div className={css(styles.subroot)}>
@@ -63,7 +59,7 @@ class ArticleList extends Component {
             </div>}
           <div className={css(styles.articleList)}>
             {!this.props.isLoading &&
-              this.props.data.map(a =>
+              data.map(a =>
                 <ArticleItem
                   style={{ width: '100%' }}
                   key={a._id}
@@ -83,6 +79,7 @@ class ArticleList extends Component {
 ArticleList.PropTypes = {
   isLoading: PropTypes.bool.isRequired,
   isPublic: PropTypes.bool,
+  searchResults: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   annotations: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -91,5 +88,12 @@ ArticleList.PropTypes = {
 ArticleList.defaultProps = {
   isPublic: false,
 };
+
+const mapStateToProps = state => ({
+  data: state.articles.data,
+  annotations: state.articles.annotations,
+  search: state.articles.search || [],
+  isLoading: state.articles.isLoading,
+});
 
 export default connect(mapStateToProps)(ArticleList);

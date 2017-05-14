@@ -164,6 +164,8 @@ class TopNav extends React.Component {
     const textfield = document.getElementById('Search');
     const searchResults = search(this.props.data, textfield.value);
     console.log(searchResults);
+    console.log(this.props.dispatch);
+    this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults });
   }
 
   render() {
@@ -196,11 +198,11 @@ class TopNav extends React.Component {
     if (window.location.href.includes("feed")) {
       groupId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
     }
-    const inFeedView = window.location.href.includes('feed');
-    const isFeedOrDiscussionView = inFeedView || window.location.href.includes('discussion');
+    const isFeedView = window.location.href.includes('feed');
+    const isFeedOrDiscussionView = isFeedView || window.location.href.includes('discussion');
     let allComments = [];
     if (isFeedOrDiscussionView) {
-      annotations = inFeedView  ? this.props.annotationsF : this.props.annotationsD;
+      annotations = isFeedView  ? this.props.annotationsF : this.props.annotationsD;
       for (let i = 0; i < annotations.length; i += 1) {
         const order = dfsTraversal(annotations[i], () => {
 
@@ -236,9 +238,10 @@ class TopNav extends React.Component {
                 </a>
               </div>
             </div>
-            {/* <div className={css(styles.searchBar)}>  */}
-              {/* <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} /> */}
-            {/* </div> */}
+            {isFeedView ?
+              <div className={css(styles.searchBar)}>
+                <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
+              </div> : ''}
             <div>
               <a className={css(styles.link, styles.topLink)}
                 href={`${config.apiHost}/logout`}
@@ -253,14 +256,12 @@ class TopNav extends React.Component {
 
 /* eslint-enable */
 
-function mapStateToProps(state) {
-  const annotationsD = state.Discussion ? state.Discussion.annotations : [];
-  const annotationsF = state.articles ? state.articles.annotations : [];
-  return {
-    annotationsD,
-    annotationsF,
-  };
-}
+const mapStateToProps = state => ({
+  data: state.articles.data,
+  annotationsD: state.Discussion ? state.Discussion.annotations : [],
+  annotationsF: state.articles ? state.articles.annotations : [],
+});
+
 
 export default connect(mapStateToProps)(TopNav);
 
