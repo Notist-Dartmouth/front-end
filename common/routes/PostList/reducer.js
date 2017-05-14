@@ -35,6 +35,10 @@ export default function articles(state = initialState, action) {
         ],
         isLoading: false,
       });
+    case 'EXECUTE_SEARCH':
+      return { ...state,
+        search: action.search,
+      };
     default:
       return state;
   }
