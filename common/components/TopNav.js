@@ -211,6 +211,8 @@ class TopNav extends React.Component {
     const totalNumberOfAnnotations = allComments.length; // This could go on the articleCard
     const shouldLoadMembers = (totalAuthorNumber !== 0 && isFeedOrDiscussionView);
 
+    let feedName;
+    
     if (this.props.feedDescription) {
       feedName = {
         fontSize: 33,
