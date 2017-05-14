@@ -213,14 +213,14 @@ class TopNav extends React.Component {
 
     let feedName;
 
-    if (this.props.feedDescription) {
+    if (this.props.feedDescription === '') {
       feedName = {
-        fontSize: 33,
+        fontSize: 38,
         paddingRight: 15,
       };
     } else {
       feedName = {
-        fontSize: 41,
+        fontSize: 33,
         paddingRight: 15,
       };
     }
