@@ -163,8 +163,6 @@ class TopNav extends React.Component {
   executeSearch = (props) => {
     const textfield = document.getElementById('Search');
     const searchResults = search(this.props.data, textfield.value);
-    console.log(searchResults);
-    console.log(this.props.dispatch);
     this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults });
   }
 
