@@ -80,6 +80,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
     textDecoration: 'underline',
   },
+  publishedTime: {
+    fontSize: 15,
+  },
 });
 
 class ArticleCard extends React.Component {
@@ -107,11 +110,18 @@ class ArticleCard extends React.Component {
         margin: 30,
       };
     }
+    const publishedAgo = moment(this.props.datePublished).fromNow();
+    const readingTime = Math.floor(this.props.wordCount / 275);
     return (
       <MuiThemeProvider>
         <Card style={cardStyle}>
           <div className={css(styles.articleTitleBar)}>
             <span className={css(styles.articleTitleTextStyle)}>{title || <a href="https://docs.google.com/forms/d/e/1FAIpQLScKa0F2eyB9fpUbVB9LrCGnwhnWHbiU-eJ2Ab4vPTC5LcUM9g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer"> No title gotten from article. Submit a bug report?</a>}</span>
+            <div className={css(styles.publishedTime)}>{readingTime} min read • Article originally published {publishedAgo}</div>
+            {/* <span>
+              maybe on hover of title, show article excerpt
+              {this.props.excerpt}
+            </span> */}
           </div>
           <div className={css(styles.flexContainer)}>
             <div className={css(styles.leftFlex)}>

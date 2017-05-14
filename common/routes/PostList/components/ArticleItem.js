@@ -23,13 +23,17 @@ const ArticleItem = props => (
     image={props.imageURL}
     username={props.annotations[0] && props.annotations[0].author ? convertName(props.annotations[0].author.name) : 'Anonymous'}
     timeSince={props.annotations[0] ? props.annotations[0].createDate : String(Date.now())}
-    numUsers={0}
     numAnnotations={props.annotations.length}
-    numReplies={1}
     currentVotes={1}
     slug={props.articleID}
+    wordCount={props.wordCount}
+    datePublished={props.datePublished}
+    excerpt={props.excerpt}
   />
 );
+
+// numUsers={0}
+// numReplies={1}
 
 ArticleItem.propTypes = {
   articleURI: PropTypes.string.isRequired,

@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 function search(list, query) { // Will return the array in sorted order
   const options = {
     shouldSort: true,
-    threshold: 0.6,
+    threshold: 0.5,
     location: 0,
     distance: 100,
     maxPatternLength: 32,
@@ -133,6 +133,7 @@ function search(list, query) { // Will return the array in sorted order
     keys: [
       'info.title',
       'info.domain',
+      'annotations[0]',
     ],
   };
 
