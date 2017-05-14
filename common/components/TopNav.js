@@ -108,10 +108,6 @@ const styles = StyleSheet.create({
   activeLink: {
     color: '#000',
   },
-  feedName: {
-    fontSize: 33,
-    paddingRight: 15,
-  },
   feedDescription: {
     left: 25,
     fontSize: 20,
@@ -215,13 +211,25 @@ class TopNav extends React.Component {
     const totalNumberOfAnnotations = allComments.length; // This could go on the articleCard
     const shouldLoadMembers = (totalAuthorNumber !== 0 && isFeedOrDiscussionView);
 
+    if (feedDetails) {
+      feedName = {
+        fontSize: 33,
+        paddingRight: 15,
+      };
+    } else {
+      feedName = {
+        fontSize: 37,
+        paddingRight: 15,
+      };
+    }
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <Toolbar style={{ position: 'fixed', zIndex: 200, height: 90, top: 0, left: 0, width: '100%', color: white, fontFamily: 'Roboto, sans-serif', boxShadow: '0 2px 4px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.22)' }}>
           <div className={css(styles.toolbarContainer)}>
             <div className={css(styles.feedDetails)}>
               <div className={css(styles.feedTopRow)}>
-                <div className={css(styles.feedName)}>{this.props.currentFeedName || 'Notist'}</div>
+                <div style={feedName}>{this.props.currentFeedName || <a href="http://notist.io.">'Notist'</a>}</div>
                 <div style={{ paddingRight: 15 }}>{subButton}</div>
                 { shouldLoadMembers ? <PeopleIcon /> : '' }
                 <div className={css(styles.numMembers)}>{shouldLoadMembers ? (totalAuthorNumber.toString().concat(totalAuthorNumber === 1 ? ' member' : ' members')) : ''}</div>
