@@ -196,10 +196,11 @@ class TopNav extends React.Component {
     if (window.location.href.includes("feed")) {
       groupId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
     }
-    const isFeedOrDiscussionView = (window.location.href.includes('feed') || window.location.href.includes('discussion'));
+    const inFeedView = window.location.href.includes('feed');
+    const isFeedOrDiscussionView = inFeedView || window.location.href.includes('discussion');
     let allComments = [];
     if (isFeedOrDiscussionView) {
-      annotations = window.location.href.includes("feed")  ? this.props.annotationsF : this.props.annotationsD;
+      annotations = inFeedView  ? this.props.annotationsF : this.props.annotationsD;
       for (let i = 0; i < annotations.length; i += 1) {
         const order = dfsTraversal(annotations[i], () => {
 
@@ -209,6 +210,7 @@ class TopNav extends React.Component {
     }
 
     const totalAuthorNumber = getTotalAuthorNumber(allComments, groupId);
+    const totalNumberOfAnnotations = allComments.length; // This could go on the articleCard
     const shouldLoadMembers = (totalAuthorNumber !== 0 && isFeedOrDiscussionView);
 
     return (
