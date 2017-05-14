@@ -117,7 +117,7 @@ class ArticleCard extends React.Component {
         <Card style={cardStyle}>
           <div className={css(styles.articleTitleBar)}>
             <span className={css(styles.articleTitleTextStyle)}>{title || <a href="https://docs.google.com/forms/d/e/1FAIpQLScKa0F2eyB9fpUbVB9LrCGnwhnWHbiU-eJ2Ab4vPTC5LcUM9g/viewform?usp=sf_link" target="_blank" rel="noopener noreferrer"> No title gotten from article. Submit a bug report?</a>}</span>
-            <div className={css(styles.publishedTime)}>{readingTime} min read • Article originally published {publishedAgo}</div>
+            {/* <div className={css(styles.publishedTime)}>{readingTime} min read • Article originally published {publishedAgo}</div> */}
             {/* <span>
               maybe on hover of title, show article excerpt
               {this.props.excerpt}

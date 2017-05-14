@@ -232,7 +232,7 @@ class TopNav extends React.Component {
           <div className={css(styles.toolbarContainer)}>
             <div className={css(styles.feedDetails)}>
               <div className={css(styles.feedTopRow)}>
-                <div style={feedName}>{this.props.currentFeedName || <a href="http://notist.io.">Notist</a>}</div>
+                <div style={feedName}>{this.props.currentFeedName || <a style={{color: white}} href="http://notist.io.">Notist</a>}</div>
                 <div style={{ paddingRight: 15 }}>{subButton}</div>
                 { shouldLoadMembers ? <PeopleIcon /> : '' }
                 <div className={css(styles.numMembers)}>{shouldLoadMembers ? (totalAuthorNumber.toString().concat(totalAuthorNumber === 1 ? ' member' : ' members')) : ''}</div>
