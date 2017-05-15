@@ -130,13 +130,13 @@ function search(list, query) { // Will return the array in sorted order
     minMatchCharLength: 1,
     keys: [
       'info.title',
-      'info.author',
+      'info.domain',
       'annotations[0]',
     ],
   };
 
   const fuse = new Fuse(list, options);
-  const result = fuse.search(query);
+  const result = fuse.search(query.trim());
 
   return result;
 }
