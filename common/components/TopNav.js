@@ -199,17 +199,22 @@ class TopNav extends React.Component {
       */
 
     /* eslint-disable */
-
+    const isFeedView = window.location.href.includes('feed') || window.location.href === 'http://notist.io/' || window.location.href === 'http://localhost:5000/';
     let annotations = [];
     let groupId = '0';
-    if (window.location.href.includes("feed")) {
+    if (isFeedView) {
       groupId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
     }
-    const isFeedView = window.location.href.includes('feed');
+
+    if (groupId.length === 0) {
+      groupId = '0';
+    }
+    console.log(window.location.href);
+
     const isFeedOrDiscussionView = isFeedView || window.location.href.includes('discussion');
     let allComments = [];
     if (isFeedOrDiscussionView) {
-      annotations = isFeedView  ? this.props.annotationsF : this.props.annotationsD;
+      annotations = isFeedView ? this.props.annotationsF : this.props.annotationsD;
       for (let i = 0; i < annotations.length; i += 1) {
         const order = dfsTraversal(annotations[i], () => {
 
@@ -242,7 +247,7 @@ class TopNav extends React.Component {
           <div className={css(styles.toolbarContainer)}>
             <div className={css(styles.feedDetails)}>
               <div className={css(styles.feedTopRow)}>
-                <div style={feedName}>{this.props.currentFeedName || <a style={{color: white}} href="http://notist.io/">Notist</a>}</div>
+                <div style={feedName}>{this.props.currentFeedName || <a style={{ color: white }} href="http://notist.io/">Notist</a>}</div>
                 <div style={{ paddingRight: 15 }}>{subButton}</div>
                 { shouldLoadMembers ? <PeopleIcon /> : '' }
                 <div className={css(styles.numMembers)}>{shouldLoadMembers ? (totalAuthorNumber.toString().concat(totalAuthorNumber === 1 ? ' member' : ' members')) : ''}</div>
