@@ -71,7 +71,7 @@ export const saveGroup = (group) => {
 };
 
 export const fetchPublicGroups = () => {
-  return fetch(`${config.apiHost}/api/publicgroups`, {
+  return fetch(`${config.apiHost}/api/public/groups`, {
     method: 'GET',
     credentials: 'include',
     headers,
