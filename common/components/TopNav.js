@@ -123,12 +123,14 @@ function search(list, query) { // Will return the array in sorted order
     shouldSort: true,
     threshold: 0.5,
     location: 0,
-    distance: 100,
+    tokenize: true,
+    matchAllTokens: true,
+    distance: 1000,
     maxPatternLength: 32,
     minMatchCharLength: 1,
     keys: [
       'info.title',
-      'info.domain',
+      'info.author',
       'annotations[0]',
     ],
   };
