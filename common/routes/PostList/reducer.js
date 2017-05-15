@@ -4,6 +4,7 @@ const initialState = {
   data: [],
   annotations: [],
   lastFetched: null,
+  toggled: false,
   searchIsEmpty: true,
   isLoading: false,
   error: null,
@@ -37,10 +38,16 @@ export default function articles(state = initialState, action) {
         isLoading: false,
       });
     case 'EXECUTE_SEARCH':
-      return { ...state,
+      return Object.assign({}, state, {
+        ...state,
         search: action.search,
         searchIsEmpty: action.searchIsEmpty,
-      };
+      });
+    case 'TOGGLE_SHOW_GROUPS':
+      return Object.assign({}, state, {
+        ...state,
+        toggled: action.toggled,
+      });
     default:
       return state;
   }

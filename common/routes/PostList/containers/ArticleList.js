@@ -1,6 +1,8 @@
 import React, { PropTypes, Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Toggle from 'material-ui/Toggle';
 import { connect } from 'react-redux';
 import loadArticles from '../actions';
 import ArticleItem from '../components/ArticleItem';
@@ -46,6 +48,10 @@ class ArticleList extends Component {
     this.props.dispatch(loadArticles(groupId, groupId === null));
   }
 
+  handleChange = () => {
+    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled });
+  }
+
   render() {
     const data = (this.props.searchIsEmpty ? this.props.data : this.props.search);
 
@@ -53,6 +59,9 @@ class ArticleList extends Component {
       <div className={css(styles.root)}>
         <div className={css(styles.subroot)}>
           <Helmet title="Annotations" />
+          <MuiThemeProvider>
+            <Toggle id="Toggle" onToggle={this.handleChange} />
+          </MuiThemeProvider>
           {this.props.isLoading &&
             <div>
               <h2>Loading....</h2>
@@ -96,6 +105,7 @@ ArticleList.defaultProps = {
 const mapStateToProps = state => ({
   data: state.articles.data,
   annotations: state.articles.annotations,
+  toggled: state.articles.toggled,
   search: state.articles.search || [],
   searchIsEmpty: state.articles.searchIsEmpty,
   isLoading: state.articles.isLoading,
