@@ -49,15 +49,18 @@ class ArticleList extends Component {
   }
 
   fetchPublicGroups() {
-    this.props.dispatch(fetchPublicGroups());
+    return this.props.dispatch(fetchPublicGroups());
   }
 
   handleChange = () => {
-    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, allpublicgroups: this.getPublicGroups() });
+    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, publicgroups: this.getPublicGroups() });
   }
 
   render() {
-    const data = (this.props.searchIsEmpty ? this.props.data : this.props.search);
+    const dataArticles = (this.props.searchIsEmpty ? this.props.data : this.props.search);
+    const dataGroups = (this.props.searchIsEmpty ? this.props.publicgroups : this.props.search);
+
+    const data = (this.props.toggled ? dataGroups : dataArticles);
 
     return (
       <div className={css(styles.root)}>

@@ -47,6 +47,7 @@ export default function articles(state = initialState, action) {
       return Object.assign({}, state, {
         ...state,
         toggled: action.toggled,
+        publicgroups: action.publicgroups,
       });
     default:
       return state;

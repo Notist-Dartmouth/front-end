@@ -119,6 +119,19 @@ const styles = StyleSheet.create({
 });
 
 function search(list, query) { // Will return the array in sorted order
+  const keyArticles = { keys: [
+    'info.title',
+    'info.domain',
+    'annotations[0]',
+  ] };
+
+  const keyGroups = { keys: [
+    'title',
+    'description',
+  ] };
+
+  const keys = this.props.toggled ? keyGroups : keyArticles;
+
   const options = {
     shouldSort: true,
     threshold: 0.5,
@@ -126,11 +139,7 @@ function search(list, query) { // Will return the array in sorted order
     distance: 100,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-    keys: [
-      'info.title',
-      'info.domain',
-      'annotations[0]',
-    ],
+    keys,
   };
 
   const fuse = new Fuse(list, options);
@@ -158,8 +167,10 @@ class TopNav extends React.Component {
   handleChange = (event, index, value) => this.setState({ value });
 
   executeSearch = (props) => {
+    const searchData = (this.props.toggled ? this.props.publicgroups : this.props.data);
+
     const textfield = document.getElementById('Search');
-    const searchResults = search(this.props.data, textfield.value);
+    const searchResults = search(searchData, textfield.value);
     const searchIsEmpty = textfield.value.length === 0;
     this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults, searchIsEmpty });
   }
@@ -270,6 +281,8 @@ const mapStateToProps = state => ({
   data: state.articles ? state.articles.data : [],
   annotationsD: state.Discussion ? state.Discussion.annotations : [],
   annotationsF: state.articles ? state.articles.annotations : [],
+  toggled: state.articles ? state.articles.toggled : false,
+  publicgroups: state.articles ? state.articles.publicgroups : [],
 });
 
 
