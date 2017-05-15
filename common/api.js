@@ -70,6 +70,14 @@ export const saveGroup = (group) => {
   .then(res => handleResponse(res));
 };
 
+export const fetchPublicGroups = () => {
+  return fetch(`${config.apiHost}/api/publicgroups`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
 export const saveReply = (text, parent, articleURI) => {
   return fetch(`${config.apiHost}/api/annotation`, {
     method: 'POST',

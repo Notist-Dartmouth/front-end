@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Toggle from 'material-ui/Toggle';
 import { connect } from 'react-redux';
-import loadArticles from '../actions';
+import loadArticles, { fetchPublicGroups } from '../actions';
 import ArticleItem from '../components/ArticleItem';
 
 /* can uncomment out articleList to have multiple cards in one row */
@@ -48,8 +48,12 @@ class ArticleList extends Component {
     this.props.dispatch(loadArticles(groupId, groupId === null));
   }
 
+  fetchPublicGroups() {
+    this.props.dispatch(fetchPublicGroups());
+  }
+
   handleChange = () => {
-    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled });
+    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, allpublicgroups: this.getPublicGroups() });
   }
 
   render() {
