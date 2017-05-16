@@ -18,6 +18,8 @@ const handleResponse = (res) => {
   if (res.status === 401) {
     return handleUnauthorizedRequest();
   } else {
+    console.log('Result!');
+    console.log(res);
     return res.json();
   }
 };

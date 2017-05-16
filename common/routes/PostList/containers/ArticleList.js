@@ -48,13 +48,10 @@ class ArticleList extends Component {
     this.props.dispatch(loadArticles(groupId, groupId === null));
   }
 
-  fetchPublicGroups() {
-    return this.props.dispatch(fetchPublicGroups());
-  }
-
   handleChange = () => {
-    console.log(this.fetchPublicGroups());
-    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, publicgroups: this.fetchPublicGroups() });
+    console.log('Here is what I\'m getting from calling an action that just calls api.fetchPublicGroups');
+    console.log(fetchPublicGroups());
+    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, publicgroups: fetchPublicGroups() });
   }
 
   render() {

@@ -84,5 +84,7 @@ export default function loadArticles(groupId, isPublic) {
 }
 
 export function fetchPublicGroups() {
-  return api.fetchPublicGroups;
+  console.log('Here it is: ');
+  console.log(api.fetchPublicGroups());
+  return api.fetchPublicGroups();
 }
