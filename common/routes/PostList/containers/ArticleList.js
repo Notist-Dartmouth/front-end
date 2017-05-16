@@ -53,7 +53,8 @@ class ArticleList extends Component {
   }
 
   handleChange = () => {
-    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, publicgroups: this.getPublicGroups() });
+    console.log(this.fetchPublicGroups());
+    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, publicgroups: this.fetchPublicGroups() });
   }
 
   render() {
@@ -74,7 +75,7 @@ class ArticleList extends Component {
               <h2>Loading....</h2>
             </div>}
           <div className={css(styles.articleList)}>
-            {!this.props.isLoading &&
+            {!this.props.isLoading && data &&
               data.map(a =>
                 <ArticleItem
                   style={{ width: '100%' }}

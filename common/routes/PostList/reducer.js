@@ -4,6 +4,7 @@ const initialState = {
   data: [],
   annotations: [],
   lastFetched: null,
+  publicgroups: [],
   toggled: false,
   searchIsEmpty: true,
   isLoading: false,
