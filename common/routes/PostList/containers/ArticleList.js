@@ -32,26 +32,31 @@ class ArticleList extends Component {
     this.fetchArticles = this.fetchArticles.bind(this);
     this.fetchArticles(this.props.location.state ?
       this.props.location.state.groupId : null);
+    this.fetchPublicGroups = this.fetchPublicGroups.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.location.state) {
       const currGroupId = this.props.location.state ? this.props.location.state.groupId : null;
       const nextGroupdId = nextProps.location.state.groupId;
+      this.fetchPublicGroups();
       if (currGroupId !== nextGroupdId) {
         this.fetchArticles(nextGroupdId);
       }
     }
   }
 
+  fetchPublicGroups() {
+    this.props.dispatch(fetchPublicGroups());
+  }
+
   fetchArticles(groupId) {
     this.props.dispatch(loadArticles(groupId, groupId === null));
+    this.props.dispatch(fetchPublicGroups());
   }
 
   handleChange = () => {
-    console.log('Here is what I\'m getting from calling an action that just calls api.fetchPublicGroups');
-    console.log(fetchPublicGroups());
-    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, publicgroups: fetchPublicGroups() });
+    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled });
   }
 
   render() {
@@ -111,6 +116,7 @@ const mapStateToProps = state => ({
   data: state.articles.data,
   annotations: state.articles.annotations,
   toggled: state.articles.toggled,
+  publicgroups: state.articles.publicgroups,
   search: state.articles.search || [],
   searchIsEmpty: state.articles.searchIsEmpty,
   isLoading: state.articles.isLoading,

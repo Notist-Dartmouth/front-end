@@ -48,6 +48,11 @@ export default function articles(state = initialState, action) {
       return Object.assign({}, state, {
         ...state,
         toggled: action.toggled,
+      });
+    case 'FETCH_PUBLIC_GROUPS':
+      console.log('Hello, I called the reducer!!!!!!');
+      return Object.assign({}, state, {
+        ...state,
         publicgroups: action.publicgroups,
       });
     default:

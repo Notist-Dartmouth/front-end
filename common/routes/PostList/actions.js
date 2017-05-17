@@ -83,8 +83,13 @@ export default function loadArticles(groupId, isPublic) {
   };
 }
 
+function handleFetchPublicGroupsResponse(dispatch, groups) {
+  return dispatch({ type: 'FETCH_PUBLIC_GROUPS', publicgroups: groups });
+}
+
 export function fetchPublicGroups() {
-  console.log('Here it is: ');
-  console.log(api.fetchPublicGroups());
-  return api.fetchPublicGroups();
+  return (dispatch, getState) => {
+    api.fetchPublicGroups().then(groups =>
+      handleFetchPublicGroupsResponse(dispatch, groups));
+  };
 }
