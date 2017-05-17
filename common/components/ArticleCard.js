@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
+    maxHeight: '300px',
   },
   imageStyle: {
     alignSelf: 'center',
@@ -143,9 +144,7 @@ class ArticleCard extends React.Component {
                 {/* <span><MdGroup /> {numUsers} users</span> */}
                 <span><MdComment /> {this.props.numAnnotations} {this.props.numAnnotations > 1 ? 'annotations' : 'annotation'}</span>
               </div>
-              <div className={css(styles.imageStyle)}>
-                <img height={'250px'} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
-              </div>
+              <img style={{ maxWidth: '80%', alignSelf: 'center' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
             </div> }
           </div>
           <CardActions className={css(styles.cardButtons)}>

@@ -3,10 +3,11 @@
 
 import React from 'react';
 import { Card, CardActions } from 'material-ui/Card';
-import { yellow200, yellow400, red700, grey900, fullBlack, deepOrange100, indigo100, amber100, teal100 } from 'material-ui/styles/colors';
+import { yellow200, yellow400, red400, grey100, grey900, fullBlack, deepOrange100, indigo100, amber100, teal100 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleSheet, css } from 'aphrodite';
+import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { Link } from 'react-router';
 import { leaveGroup, joinGroup } from '../routes/PostList/actions';
 
@@ -17,73 +18,63 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 30,
     '@media (max-width: 1000px)': {
-      flexDirection: 'column',
+      flexDirection: 'column-reverse',
     },
-  },
-  articleTitleBar: {
-    paddingLeft: 30,
-    paddingTop: 10,
-    paddingRight: 10,
   },
   subButton: {
-    margin: 'auto',
-    float: 'left',
-    lign: 'right',
+    fontSize: 22,
+    fontWeight: 600,
   },
-  leftFlex: {
-    flex: 2,
+  buttonContainer: {
+    paddingRight: 20,
   },
-  rightFlex: {
-    flex: 1,
+  groupInfo: {
     display: 'flex',
-    flexDirection: 'column',
-  },
-  imageStyle: {
-    alignSelf: 'center',
-  },
-  usersAndAnnotations: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    '@media (max-width: 1000px)': {
-      display: 'none',
-    },
-  },
-  cardButtons: {
-    paddingTop: 40,
-    display: 'flex',
-    alignSelf: 'center',
     justifyContent: 'center',
-    '@media (max-width: 900px)': {
+    alignItems: 'center',
+    '@media (max-width: 1000px)': {
       flexDirection: 'column',
-      margin: 10,
-      alignItems: 'center',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start',
+      paddingBottom: 20,
     },
   },
-  bottomButton: {
-    '@media (max-width: 900px)': {
-      marginTop: 15,
-    },
+  groupTitle: {
+    fontSize: 30,
+    fontWeight: 600,
   },
-  annotationTextStyle: {
-    position: 'relative',
-    fontSize: 21,
-  },
-  articleTitleTextStyle: {
-    fontWeight: 700,
-    fontSize: 33,
-  },
-  articleTextStyle: {
-    fontSize: 24,
-    fontStyle: 'italic',
-    fontWeight: 100,
-    backgroundColor: yellow200,
-  },
-  domainTextStyle: {
-    fontSize: 17,
-    textDecoration: 'underline',
-  },
-  publishedTime: {
+  groupAge: {
     fontSize: 15,
+    fontWeight: 300,
+  },
+  groupDescription: {
+    fontSize: 23,
+    fontWeight: 400,
+    paddingLeft: 30,
+    paddingTop: 20,
+  },
+  memberInfo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: 15,
+  },
+  numMembers: {
+    fontSize: 15,
+    fontWeight: 600,
+    paddingLeft: 5,
+  },
+  memberIcon: {
+    paddingLeft: 15,
+    fontSize: 20,
+    marginTop: 7,
+  },
+  cardStyle: {
+    margin: 20,
+    paddingTop: 10,
+    paddingBottom: 20,
+    paddingRight: 20,
+    // width: '100%',
   },
 });
 
@@ -111,33 +102,35 @@ class GroupCard extends React.Component {
     let subButton = null;
 
     if (this.state.subscribed) { // Check if subscribed to group
-      subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} />;
+      subButton = <RaisedButton className={css(styles.subButton)} label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red400} labelColor={grey100} />;
     } else {
-      subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} />;
-    }
-
-    let cardStyle;
-    if (this.props.narrowCard) {
-      cardStyle = {
-        maxWidth: '40%',
-        margin: 30,
-      };
-    } else {
-      cardStyle = {
-        margin: 30,
-      };
+      subButton = <RaisedButton className={css(styles.subButton)} label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow200} labelColor={grey900} />;
     }
 
     return (
       <MuiThemeProvider>
-        <Card style={cardStyle}>
-          <div className={css(styles.articleTitleBar)}>
-            <p>{this.props.title}</p>
+        <Card className={css(styles.cardStyle)}>
+          <div className={css(styles.flexContainer)}>
+            <div className={css(styles.buttonContainer)}>
+              {subButton}
+            </div>
+            <div className={css(styles.groupInfo)}>
+              <div className={css(styles.groupTitle)}>
+                {this.props.title}
+              </div>
+              <div className={css(styles.memberInfo)}>
+                <div className={css(styles.memberIcon)}><PeopleIcon /></div>
+                <div className={css(styles.numMembers)}>8 members</div>
+              </div>
+              <div className={css(styles.groupAge)}>
+                {/* turn into momentjs call for timeSince and also use string template to get group creator */}
+                Group created 9 days ago by Byrne H.
+              </div>
+            </div>
           </div>
-          <div className={css(styles.subButton)}>
-            {subButton}
+          <div className={css(styles.groupDescription)}>
+            This group is dedicated to something.
           </div>
-          <div style={{ clear: 'both' }} />
         </Card>
       </MuiThemeProvider>
     );
