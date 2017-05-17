@@ -289,7 +289,7 @@ class TopNav extends React.Component {
             {isFeedView ?
               <div className={css(styles.searchBarWrapper)}>
                 <div className={css(styles.toggle)}>
-                  <Toggle id="Toggle" label={`Show Groups`} labelStyle={{marginLeft: '100px', textAlign: 'left', fontSize: '8pt', display: 'block'}} onToggle={this.handleToggle} />
+                  <Toggle id="Toggle" label={`Show Groups`} labelStyle={{marginLeft: '3px', textAlign: 'left', fontSize: '8pt', display: 'block'}} onToggle={this.handleToggle} />
                 </div>
                 <div className={css(styles.searchBar)}>
                   <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
