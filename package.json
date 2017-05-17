@@ -105,9 +105,11 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
+    "file-loader": "^0.11.1",
     "mocha": "^3.0.2",
     "nodemon": "^1.10.0",
-    "nyc": "^10.0.0"
+    "nyc": "^10.0.0",
+    "url-loader": "^0.5.8"
   },
   "standard": {
     "parser": "babel-eslint"

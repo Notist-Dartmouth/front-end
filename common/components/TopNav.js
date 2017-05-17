@@ -11,6 +11,7 @@ import { Toolbar } from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
 import { connect } from 'react-redux';
+import notistIcon from '../../public/notistIcon.png';
 import BugReport from 'material-ui/svg-icons/action/bug-report';
 import Fuse from 'fuse.js';
 // import SettingsDialog from './SettingsDialog';
@@ -91,6 +92,10 @@ const styles = StyleSheet.create({
     },
     // flex: 1,
   },
+  icon: {
+    maxWidth: '70px',
+    maxHeight: '70px',
+  },
   link: {
     maxWidth: 700,
     color: '#999',
@@ -111,6 +116,7 @@ const styles = StyleSheet.create({
   feedDescription: {
     left: 25,
     fontSize: 20,
+    paddingLeft: 10,
   },
   numMembers: {
     fontSize: 14,
@@ -219,11 +225,13 @@ class TopNav extends React.Component {
       feedName = {
         fontSize: 38,
         paddingRight: 15,
+        paddingLeft: 10,
       };
     } else {
       feedName = {
         fontSize: 33,
         paddingRight: 15,
+        paddingLeft: 10,
       };
     }
 
@@ -231,6 +239,7 @@ class TopNav extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Toolbar style={{ position: 'fixed', zIndex: 200, height: 90, top: 0, left: 0, width: '100%', color: white, fontFamily: 'Roboto, sans-serif', boxShadow: '0 2px 4px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.22)' }}>
           <div className={css(styles.toolbarContainer)}>
+            <img className={css(styles.icon)} src={notistIcon} />
             <div className={css(styles.feedDetails)}>
               <div className={css(styles.feedTopRow)}>
                 <div style={feedName}>{this.props.currentFeedName || <a style={{color: white}} href="http://notist.io/">Notist</a>}</div>
