@@ -13,6 +13,7 @@ import TextField from 'material-ui/TextField';
 import { connect } from 'react-redux';
 import BugReport from 'material-ui/svg-icons/action/bug-report';
 import Fuse from 'fuse.js';
+import Toggle from 'material-ui/Toggle';
 // import SettingsDialog from './SettingsDialog';
 // import NotificationsDialog from './NotificationsDialog';
 import config from '../../server/config';
@@ -86,11 +87,22 @@ const styles = StyleSheet.create({
     },
   },
   searchBar: {
+    paddingTop: '20px',
+    float: 'left',
+  },
+  searchBarWrapper: {
     '@media (max-width: 900px)': {
       display: 'none',
     },
-    // flex: 1,
   },
+  toggle: {
+    textAlign: 'left',
+    paddingTop: '10%',
+    paddingRight: '25px',
+    paddingLeft: '100px',
+    float: 'left',
+  },
+    // flex: 1,
   link: {
     maxWidth: 700,
     color: '#999',
@@ -173,6 +185,10 @@ class TopNav extends React.Component {
     const searchResults = search(searchData, textfield.value, this.props.toggled);
     const searchIsEmpty = textfield.value.length === 0;
     this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults, searchIsEmpty });
+  }
+
+  handleToggle = () => {
+    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled });
   }
 
   render() {
@@ -265,8 +281,14 @@ class TopNav extends React.Component {
               </div>
             </div>
             {isFeedView ?
-              <div className={css(styles.searchBar)}>
-                <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
+              <div className={css(styles.searchBarWrapper)}>
+                <div className={css(styles.toggle)}>
+                  <Toggle id="Toggle" label={`Show Groups`} labelStyle={{marginLeft: '100px', textAlign: 'left', fontSize: '8pt', display: 'block'}} onToggle={this.handleToggle} />
+                </div>
+                <div className={css(styles.searchBar)}>
+                  <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
+                </div>
+                <div style={{clear: 'both'}} />
               </div> : ''}
             <div>
               <a className={css(styles.link, styles.topLink)}
