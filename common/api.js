@@ -117,3 +117,20 @@ export const saveReply = (text, parent, articleURI) => {
   })
   .then(res => handleResponse(res));
 };
+
+export const joinGroup = (groupId) => {
+  console.log(`GroupId is: ${groupId}`);
+  return fetch(`${config.apiHost}/api/group/${groupId}/user`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
+};
+
+export const leaveGroup = (groupId) => {
+  return fetch(`${config.apiHost}/api/group/${groupId}/user`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};

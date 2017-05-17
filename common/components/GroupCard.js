@@ -8,6 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleSheet, css } from 'aphrodite';
 import { Link } from 'react-router';
+import { leaveGroup, joinGroup } from '../routes/PostList/actions';
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -93,6 +94,11 @@ class GroupCard extends React.Component {
   };
 
   handleSubscribeClick = () => {
+    if (this.state.subscribed) {
+      joinGroup(this.props.groupId);
+    } else {
+      leaveGroup(this.props.groupId);
+    }
     this.setState({ subscribed: !this.state.subscribed });
   }
 
@@ -131,11 +137,13 @@ class GroupCard extends React.Component {
 }
 
 GroupCard.propTypes = {
+  groupId: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
   subscribed: React.PropTypes.bool.isrequired,
 };
 
 GroupCard.defaultProps = {
+  groupId: '',
   title: 'Group Title',
   subscribed: true,
 };

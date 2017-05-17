@@ -93,3 +93,13 @@ export function fetchPublicGroups() {
       handleFetchPublicGroupsResponse(dispatch, groups));
   };
 }
+
+export function joinGroup(groupId) {
+  console.log(`About to join group with id: ${groupId}`);
+  api.joinGroup(groupId);
+}
+
+export function leaveGroup(groupId) {
+  console.log(`About to leave group with id: ${groupId}`);
+  api.leaveGroup(groupId);
+}
