@@ -119,7 +119,7 @@ ArticleList.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  userId: '58feaa6738babe01a6ea315b', // TODO Need to update the user information obtained from API to have userID follow you around
+  userId: '58feaa6738babe01a6ea315b',                        // TODO Need to update the user information obtained from API to have userID follow you around
   data: state.articles.data,
   annotations: state.articles.annotations,
   toggled: state.articles.toggled,

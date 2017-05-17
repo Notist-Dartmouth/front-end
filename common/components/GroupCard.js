@@ -95,9 +95,9 @@ class GroupCard extends React.Component {
 
   handleSubscribeClick = () => {
     if (this.state.subscribed) {
-      joinGroup(this.props.groupId);
-    } else {
       leaveGroup(this.props.groupId);
+    } else {
+      joinGroup(this.props.groupId);
     }
     this.setState({ subscribed: !this.state.subscribed });
   }
@@ -106,9 +106,9 @@ class GroupCard extends React.Component {
     let subButton = null;
 
     if (this.state.subscribed) { // Check if subscribed to group
-      subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} />;
-    } else {
       subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} />;
+    } else {
+      subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} />;
     }
 
     let cardStyle;
