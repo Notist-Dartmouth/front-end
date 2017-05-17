@@ -294,7 +294,7 @@ class TopNav extends React.Component {
                 <div className={css(styles.searchBar)}>
                   <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
                 </div>
-                <div style={{clear: 'both'}} />
+                <div style={{clear: 'both'}} ></div>
               </div> : ''}
             <div>
               <a className={css(styles.link, styles.topLink)}

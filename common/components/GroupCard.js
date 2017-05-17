@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingRight: 10,
   },
+  subButton: {
+    margin: 'auto',
+    float: 'left',
+    lign: 'right',
+  },
   leftFlex: {
     flex: 2,
   },
@@ -129,7 +134,10 @@ class GroupCard extends React.Component {
           <div className={css(styles.articleTitleBar)}>
             <p>{this.props.title}</p>
           </div>
-          {subButton}
+          <div className={css(styles.subButton)}>
+            {subButton}
+          </div>
+          <div style={{ clear: 'both' }} />
         </Card>
       </MuiThemeProvider>
     );
