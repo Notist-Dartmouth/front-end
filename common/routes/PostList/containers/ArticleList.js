@@ -85,6 +85,9 @@ class ArticleList extends Component {
                   <GroupCard
                     groupId={a._id}
                     title={a.name}
+                    createdDate={a.createDate}
+                    creatorId={a.creator}
+                    numMembers={a.members.length}
                     subscribed={a.members.includes(this.props.userId)}
                   />;
               })}

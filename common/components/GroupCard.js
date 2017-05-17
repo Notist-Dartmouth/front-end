@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleSheet, css } from 'aphrodite';
 import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { Link } from 'react-router';
+import moment from 'moment';
 import { leaveGroup, joinGroup } from '../routes/PostList/actions';
 
 const styles = StyleSheet.create({
@@ -101,6 +102,10 @@ class GroupCard extends React.Component {
   render() {
     let subButton = null;
 
+    console.log(this.props.createdDate);
+    const timeSince = moment(this.props.createdDate).fromNow();
+    const name = this.props.creatorId;
+
     if (this.state.subscribed) { // Check if subscribed to group
       subButton = <RaisedButton className={css(styles.subButton)} label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red400} labelColor={grey100} />;
     } else {
@@ -120,11 +125,11 @@ class GroupCard extends React.Component {
               </div>
               <div className={css(styles.memberInfo)}>
                 <div className={css(styles.memberIcon)}><PeopleIcon /></div>
-                <div className={css(styles.numMembers)}>8 members</div>
+                <div className={css(styles.numMembers)}>{this.props.numMembers === 1 ? `${this.props.numMembers} member` : `${this.props.numMembers} members`}</div>
               </div>
               <div className={css(styles.groupAge)}>
                 {/* turn into momentjs call for timeSince and also use string template to get group creator */}
-                Group created 9 days ago by Byrne H.
+                {`Group created ${timeSince} by ${name}`}
               </div>
             </div>
           </div>
@@ -140,6 +145,9 @@ class GroupCard extends React.Component {
 GroupCard.propTypes = {
   groupId: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
+  createdDate: React.PropTypes.string.isRequired,
+  creatorId: React.PropTypes.string.isRequired,
+  numMembers: React.PropTypes.number.isRequired,
   subscribed: React.PropTypes.bool.isRequired,
 };
 
