@@ -3,6 +3,7 @@ import { IndexRoute, Route, Router, browserHistory } from 'react-router';
 import App from '../components/App';
 import ArticleList from './PostList/containers/ArticleList';
 import articleReducer from './PostList/reducer';
+import Explore from './Explore';
 import Login from '../components/Login';
 import NotFound from './NotFound';
 import { injectAsyncReducer } from '../store';
@@ -31,6 +32,7 @@ export default function createRouter(store) {
           cb(null, profile);
         }}
         />
+        <Route path="explore" component={Explore} />
         <Route path="feed/:group" getComponent={(props, cb) => {
           injectAsyncReducer(store, 'articles', articleReducer);
           cb(null, ArticleList);

@@ -63,7 +63,14 @@ export default class LeftNav extends React.Component {
           <Drawer docked containerStyle={{ position: 'relative', backgroundColor: '#44808C', paddingLeft: 20, width: 320 }} className={css(styles.drawer)}>
             <List>
               <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
-              <Link to={{ pathname: '/explore' }} >
+              <Link to={{
+                  pathname: '/explore',
+                  state: {
+                    groupName: 'Explore',
+                    groupDescription: 'Discover new groups',
+                  }
+                }}
+              >
                 <ListItem
                   primaryText="Explore"
                   leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
