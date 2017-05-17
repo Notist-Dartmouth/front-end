@@ -89,6 +89,9 @@ const styles = StyleSheet.create({
   searchBar: {
     paddingTop: '20px',
     float: 'left',
+    '@media (max-width: 900px)': {
+      display: 'none',
+    },
   },
   searchBarWrapper: {
     '@media (max-width: 900px)': {
@@ -101,6 +104,9 @@ const styles = StyleSheet.create({
     paddingRight: '25px',
     paddingLeft: '100px',
     float: 'left',
+    '@media (max-width: 900px)': {
+      display: 'none',
+    },
   },
     // flex: 1,
   link: {

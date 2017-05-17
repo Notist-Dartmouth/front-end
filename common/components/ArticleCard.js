@@ -173,9 +173,9 @@ ArticleCard.propTypes = {
   domain: React.PropTypes.string.isRequired,
   subtitle: React.PropTypes.string.isRequired,
   annotationContent: React.PropTypes.string.isRequired,
-  numUsers: React.PropTypes.number.isRequired,
+  numUsers: React.PropTypes.number,
   numAnnotations: React.PropTypes.number.isRequired,
-  numReplies: React.PropTypes.number.isRequired,
+  numReplies: React.PropTypes.number,
   username: React.PropTypes.string.isRequired,
   timeSince: React.PropTypes.string.isRequired,
   image: React.PropTypes.string.isRequired,
@@ -183,4 +183,8 @@ ArticleCard.propTypes = {
   slug: React.PropTypes.string.isRequired,
 };
 
+ArticleCard.defaultProps = {
+  numUsers: 0,
+  numReplies: 0,
+};
 export default ArticleCard;

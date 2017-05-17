@@ -139,7 +139,7 @@ class GroupCard extends React.Component {
 GroupCard.propTypes = {
   groupId: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
-  subscribed: React.PropTypes.bool.isrequired,
+  subscribed: React.PropTypes.bool.isRequired,
 };
 
 GroupCard.defaultProps = {
