@@ -118,19 +118,18 @@ const styles = StyleSheet.create({
   },
 });
 
-function search(list, query) { // Will return the array in sorted order
-  const keyArticles = { keys: [
+function search(list, query, toggled) { // Will return the array in sorted order
+  const keyArticles = [
     'info.title',
     'info.domain',
     'annotations[0]',
-  ] };
+  ];
 
-  const keyGroups = { keys: [
-    'title',
-    'description',
-  ] };
+  const keyGroups = [
+    'name',
+  ];
 
-  const keys = this.props.toggled ? keyGroups : keyArticles;
+  const keys = toggled ? keyGroups : keyArticles;
 
   const options = {
     shouldSort: true,
@@ -139,8 +138,9 @@ function search(list, query) { // Will return the array in sorted order
     distance: 100,
     maxPatternLength: 32,
     minMatchCharLength: 1,
-    keys,
   };
+
+  options.keys = keys;
 
   const fuse = new Fuse(list, options);
   const result = fuse.search(query);
@@ -153,7 +153,7 @@ class TopNav extends React.Component {
     super(props);
     this.state = {
       value: 2,
-      subscribed: false,
+
     };
     this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
   }
@@ -170,7 +170,7 @@ class TopNav extends React.Component {
     const searchData = (this.props.toggled ? this.props.publicgroups : this.props.data);
 
     const textfield = document.getElementById('Search');
-    const searchResults = search(searchData, textfield.value);
+    const searchResults = search(searchData, textfield.value, this.props.toggled);
     const searchIsEmpty = textfield.value.length === 0;
     this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults, searchIsEmpty });
   }

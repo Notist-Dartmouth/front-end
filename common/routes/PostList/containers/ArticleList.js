@@ -6,7 +6,7 @@ import Toggle from 'material-ui/Toggle';
 import { connect } from 'react-redux';
 import loadArticles, { fetchPublicGroups } from '../actions';
 import ArticleItem from '../components/ArticleItem';
-
+import GroupCard from '../../../components/GroupCard';
 /* can uncomment out articleList to have multiple cards in one row */
 const styles = StyleSheet.create({
   root: {
@@ -39,7 +39,6 @@ class ArticleList extends Component {
     if (nextProps.location.state) {
       const currGroupId = this.props.location.state ? this.props.location.state.groupId : null;
       const nextGroupdId = nextProps.location.state.groupId;
-      this.fetchPublicGroups();
       if (currGroupId !== nextGroupdId) {
         this.fetchArticles(nextGroupdId);
       }
@@ -78,19 +77,25 @@ class ArticleList extends Component {
             </div>}
           <div className={css(styles.articleList)}>
             {!this.props.isLoading && data &&
-              data.map(a =>
-                <ArticleItem
-                  style={{ width: '100%' }}
-                  key={a._id}
-                  title={a.info && a.info.title ? a.info.title : ''}
-                  imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
-                  articleURI={a.uri}
-                  annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
-                  articleID={a._id}
-                  wordCount={a.word_count}
-                  datePublished={a.date_published}
-                  excerpt={a.excerpt}
-                />)}
+              data.map((a) => {
+                return !this.props.toggled ?
+                  <ArticleItem
+                    style={{ width: '100%' }}
+                    key={a._id}
+                    title={a.info && a.info.title ? a.info.title : ''}
+                    imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
+                    articleURI={a.uri}
+                    annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
+                    articleID={a._id}
+                    wordCount={a.word_count}
+                    datePublished={a.date_published}
+                    excerpt={a.excerpt}
+                  /> :
+                  <GroupCard
+                    title={a.name}
+                    subscribed
+                  />;
+              })}
           </div>
         </div>
       </div>
