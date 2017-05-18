@@ -51,26 +51,28 @@ const ExploreFeed = props => (
       <ol>
         <li className={css(styles.listItem)}>
           <span className={css(styles.helpText)}>
-            <a href="/login">Login</a> to Notist with Facebook
+            <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download Chrome Extension </a> and enable it!
+          </span>
+        </li>
+        <li className={css(styles.listItem)}>
+          <span className={css(styles.helpText)}>
+            <a href="https://www.facebook.com/">Login</a> to Facebook on chrome!
           </span>
         </li>
         <li className={css(styles.listItem)}>
           <FlatButton
             className={css(styles.exploreButton)}
-            label="Explore"
+            label="Get Started!"
             primary
             hoverColor={red300}
             backgroundColor={red700}
+            onClick={(ev) => {
+              const event = document.createEvent('Event');
+              event.initEvent('init_explore');
+              document.dispatchEvent(event);
+            }}
           />
         </li>
-        <div>
-          <h3 className={css(styles.divider)}>OR</h3>
-        </div>
-        <div>
-          <span className={css(styles.helpText)}>
-            Annotate at least five articles shared in groups
-          </span>
-        </div>
       </ol>
     </div>
   </MuiThemeProvider>
