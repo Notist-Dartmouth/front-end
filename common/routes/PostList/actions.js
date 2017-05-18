@@ -122,6 +122,7 @@ function handleToggleMembershipResponse(dispatch, res) {
     console.log('ERROR ERROR ERROR!'); // If you see this message then it's possible for it to throw errors
     return dispatch({ type: 'LOAD_ANNOTATIONS_ERROR', error: res.ERROR });
   } else {
+    dispatch(fetchPublicGroups());
     return dispatch(fetchUser());
   }
 }

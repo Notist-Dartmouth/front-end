@@ -87,15 +87,8 @@ class GroupCard extends React.Component {
     this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
   }
 
-  state = {
-    subscribed: this.props.subscribed,
-  };
-
   handleSubscribeClick = () => {
     this.props.dispatch(toggleGroupMembership(this.props.groupId));
-    if (!this.props.error) {
-      this.setState({ subscribed: !this.state.subscribed });
-    }
   }
 
   render() {
@@ -115,7 +108,7 @@ class GroupCard extends React.Component {
 
     const timeSince = moment(this.props.createdDate).fromNow();
 
-    if (this.state.subscribed) { // Check if subscribed to group
+    if (this.props.subscribed) { // Check if subscribed to group
       subButton = <RaisedButton className={css(styles.subButton)} label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red400} labelColor={grey100} />;
     } else {
       subButton = <RaisedButton className={css(styles.subButton)} label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow200} labelColor={grey900} />;
@@ -154,7 +147,6 @@ class GroupCard extends React.Component {
 GroupCard.propTypes = {
   groupId: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
-  error: React.PropTypes.string,
   description: React.PropTypes.string.isRequired,
   createdDate: React.PropTypes.string.isRequired,
   creatorName: React.PropTypes.string.isRequired,
@@ -166,12 +158,8 @@ GroupCard.propTypes = {
 GroupCard.defaultProps = {
   groupId: '',
   title: 'Group Title',
-  subscribed: true,
+  subscribed: false,
   error: '',
 };
 
-const mapStateToProps = state => ({
-  error: state.articles.error,
-});
-
-export default connect(mapStateToProps)(GroupCard);
+export default connect()(GroupCard);
