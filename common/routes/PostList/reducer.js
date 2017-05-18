@@ -49,6 +49,7 @@ export default function articles(state = initialState, action) {
       return Object.assign({}, state, {
         ...state,
         toggled: action.toggled,
+        search: action.search,
       });
     case 'FETCH_PUBLIC_GROUPS':
       return Object.assign({}, state, {
