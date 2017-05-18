@@ -18,18 +18,25 @@ export function saveGroup(group) {
     });
 }
 
-export function updateUser(groups, username) {
+export function updateUser(groups, username, _id, bio, usersFollowingMe, usersIFollow, exploreNumber, numExplorations, exploreStandardDev) {
   return {
     type: types.UPDATE_USER,
     groups,
-    username,
+    name,
+    _id,
+    bio,
+    usersFollowingMe,
+    usersIFollow,
+    exploreNumber,
+    numExplorations,
+    exploreStandardDev,
   };
 }
 
 export function fetchUser() {
   return (dispatch, getState) => {
     api.fetchUser().then((user) => {
-      dispatch(updateUser(user.groups, user.username));
+      dispatch(updateUser(user.groups, user.username, user._id, user.bio, user.usersFollowingMe, user.usersIFollow, user.exploreNumber, user.numExplorations, user.exploreStandardDev));
     });
   };
 }

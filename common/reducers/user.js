@@ -26,6 +26,14 @@ function user(state = initialState, action) {
         isFetchingUser: false,
         groups: action.groups,
         username: action.username,
+        name: action.name,
+        _id: action._id,
+        bio: action.bio,
+        usersFollowingMe: action.usersFollowingMe,
+        usersIFollow: action.usersIFollow,
+        exploreNumber: action.exploreNumber,
+        numExplorations: action.numExplorations,
+        exploreStandardDev: action.exploreStandardDev,
       });
     case types.RECEIVE_GROUP:
       return Object.assign({}, state, {
