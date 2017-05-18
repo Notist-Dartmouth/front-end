@@ -32,6 +32,7 @@ class ArticleList extends Component {
       this.props.location.state.groupId : null);
     this.fetchPublicGroups = this.fetchPublicGroups.bind(this);
     this.props.dispatch(fetchPublicGroups());
+    this.props.dispatch({ type: 'EXECUTE_SEARCH', search: [], searchIsEmpty: true });
   }
 
   componentWillReceiveProps(nextProps) {

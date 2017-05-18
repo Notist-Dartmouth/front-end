@@ -189,6 +189,10 @@ class TopNav extends React.Component {
     this.handleToggle = this.handleToggle.bind(this);
   }
 
+  componentDidMount() {
+    this.props.dispatch({ type: 'EXECUTE_SEARCH', search: [], searchIsEmpty: true });
+  }
+
   getSearchData = (isToggled) => {
     const searchData = isToggled ? this.props.publicgroups : this.props.data;
     const textfield = document.getElementById('Search');
