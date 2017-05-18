@@ -311,7 +311,7 @@ class TopNav extends React.Component {
                 </a>
               </div>
             </div>
-            {isFeedView ?
+            {/* {isFeedView ?
               <div className={css(styles.searchBarWrapper)}>
                 <div className={css(styles.toggle)}>
                   <Toggle id="Toggle" label={`Show Groups`}
@@ -327,7 +327,25 @@ class TopNav extends React.Component {
                   <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
                 </div>
                 <div style={{clear: 'both'}} ></div>
-              </div> : ''}
+              </div> : ''} */}
+              <div className={css(styles.searchBarWrapper)}>
+                <div className={css(styles.toggle)}>
+                  <Toggle id="Toggle"
+                    labelPosition='right'
+                    label={`Show Groups`}
+                    labelStyle={{marginLeft: '3px', fontSize: '8pt', display: 'block'}}
+                    onToggle={this.handleToggle}
+                    thumbStyle={styles.thumbOff}
+                    trackStyle={styles.trackOff}
+                    thumbSwitchedStyle={styles.thumbSwitched}
+                    trackSwitchedStyle={styles.trackSwitched}
+                    />
+                </div>
+                <div className={css(styles.searchBar)}>
+                  <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
+                </div>
+                <div style={{clear: 'both'}} ></div>
+              </div>
             <div>
               <a className={css(styles.link, styles.topLink)}
                 href={`${config.apiHost}/logout`}
