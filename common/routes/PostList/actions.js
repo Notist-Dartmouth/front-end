@@ -21,6 +21,29 @@ function loadAnnotationsSuccess(annotations) {
   };
 }
 
+export function updateUser(groups, username, _id, bio, usersFollowingMe, usersIFollow, exploreNumber, numExplorations, exploreStandardDev) {
+  return {
+    type: types.UPDATE_USER,
+    groups,
+    name,
+    _id,
+    bio,
+    usersFollowingMe,
+    usersIFollow,
+    exploreNumber,
+    numExplorations,
+    exploreStandardDev,
+  };
+}
+
+export function fetchUser() {
+  return (dispatch, getState) => {
+    api.fetchUser().then((user) => {
+      dispatch(updateUser(user.groups, user.username, user._id, user.bio, user.usersFollowingMe, user.usersIFollow, user.exploreNumber, user.numExplorations, user.exploreStandardDev));
+    });
+  };
+}
+
 function loadAnnotations(articleURI) {
   return (dispatch, getState) => {
     dispatch(loadAnnotationsRequest);
@@ -94,9 +117,8 @@ export function fetchPublicGroups() {
   };
 }
 
-export function joinGroup(groupId) {
-  console.log(`About to join group with id: ${groupId}`);
-  api.joinGroup(groupId);
+export function toggleGroupMembership(groupId, userId = null) {
+  api.toggleGroupMembership(groupId, userId);
 }
 
 export function leaveGroup(groupId) {

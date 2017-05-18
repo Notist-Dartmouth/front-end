@@ -10,7 +10,7 @@ import { StyleSheet, css } from 'aphrodite';
 import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { Link } from 'react-router';
 import moment from 'moment';
-import { leaveGroup, joinGroup } from '../routes/PostList/actions';
+import { toggleGroupMembership, fetchUser } from '../routes/PostList/actions';
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -91,20 +91,29 @@ class GroupCard extends React.Component {
   };
 
   handleSubscribeClick = () => {
-    if (this.state.subscribed) {
-      leaveGroup(this.props.groupId);
-    } else {
-      joinGroup(this.props.groupId);
-    }
+    toggleGroupMembership(this.props.groupId);
     this.setState({ subscribed: !this.state.subscribed });
+    console.log('Calling fetchUser!');
+    this.props.dispatch(fetchUser());
   }
 
   render() {
+    let name = 'Anonymous';
+    if (this.props.creatorName) {
+      name = this.props.creatorName;
+      const filteredName = this.props.creatorName.split(' ');
+
+      if (filteredName.length >= 2) {
+        if (filteredName[1].charAt(0)) { // If it's not null
+          name = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
+        }
+      }
+    }
+
     let subButton = null;
 
     console.log(this.props.createdDate);
     const timeSince = moment(this.props.createdDate).fromNow();
-    const name = this.props.creatorId;
 
     if (this.state.subscribed) { // Check if subscribed to group
       subButton = <RaisedButton className={css(styles.subButton)} label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red400} labelColor={grey100} />;
@@ -134,7 +143,7 @@ class GroupCard extends React.Component {
             </div>
           </div>
           <div className={css(styles.groupDescription)}>
-            This group is dedicated to something.
+            {this.props.description}
           </div>
         </Card>
       </MuiThemeProvider>
@@ -145,10 +154,12 @@ class GroupCard extends React.Component {
 GroupCard.propTypes = {
   groupId: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
+  description: React.PropTypes.string.isRequired,
   createdDate: React.PropTypes.string.isRequired,
-  creatorId: React.PropTypes.string.isRequired,
+  creatorName: React.PropTypes.string.isRequired,
   numMembers: React.PropTypes.number.isRequired,
   subscribed: React.PropTypes.bool.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
 };
 
 GroupCard.defaultProps = {

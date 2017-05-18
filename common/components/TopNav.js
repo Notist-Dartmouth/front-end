@@ -89,12 +89,12 @@ const styles = StyleSheet.create({
   searchBar: {
     paddingTop: '20px',
     float: 'left',
-    '@media (max-width: 900px)': {
+    '@media (max-width: 950px)': {
       display: 'none',
     },
   },
   searchBarWrapper: {
-    '@media (max-width: 900px)': {
+    '@media (max-width: 950px)': {
       display: 'none',
     },
   },
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     paddingRight: '25px',
     paddingLeft: '100px',
     float: 'left',
-    '@media (max-width: 900px)': {
+    '@media (max-width: 950px)': {
       display: 'none',
     },
   },
@@ -207,6 +207,7 @@ class TopNav extends React.Component {
 
   handleToggle = () => {
     this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled });
+    this.executeSearch(this.props);
   }
 
   render() {

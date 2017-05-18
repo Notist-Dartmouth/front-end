@@ -118,19 +118,11 @@ export const saveReply = (text, parent, articleURI) => {
   .then(res => handleResponse(res));
 };
 
-export const joinGroup = (groupId) => {
+export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
   console.log(`GroupId is: ${groupId}`);
-  return fetch(`${config.apiHost}/api/group/${groupId}/user`, {
+  return fetch(`${config.apiHost}/api/group/${groupId}/user?userId=${userId}`, {
     method: 'POST',
     credentials: 'include',
     headers,
   }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
-};
-
-export const leaveGroup = (groupId) => {
-  return fetch(`${config.apiHost}/api/group/${groupId}/user`, {
-    method: 'POST',
-    credentials: 'include',
-    headers,
-  }).then(res => handleResponse(res));
 };
