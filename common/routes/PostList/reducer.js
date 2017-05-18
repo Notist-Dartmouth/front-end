@@ -5,6 +5,7 @@ const initialState = {
   annotations: [],
   lastFetched: null,
   publicgroups: [],
+  search: [],
   toggled: false,
   searchIsEmpty: true,
   isLoading: false,
@@ -53,6 +54,7 @@ export default function articles(state = initialState, action) {
       return Object.assign({}, state, {
         ...state,
         publicgroups: action.publicgroups,
+        search: action.publicgroups.filter(pg => state.search.map(sg => sg._id).includes(pg._id)),
       });
     default:
       return state;
