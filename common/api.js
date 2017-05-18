@@ -119,7 +119,6 @@ export const saveReply = (text, parent, articleURI) => {
 };
 
 export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
-  console.log(`GroupId is: ${groupId}`);
   return fetch(`${config.apiHost}/api/group/${groupId}/user?userId=${userId}`, {
     method: 'POST',
     credentials: 'include',

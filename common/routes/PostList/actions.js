@@ -117,7 +117,7 @@ export function fetchPublicGroups() {
   };
 }
 
-export function toggleGroupMembership(groupId, userId = null) {
+export function toggleGroupMembership(groupId, userId = '') {
   return (dispatch) => {
     api.toggleGroupMembership(groupId, userId).then(dispatch(fetchUser()));
   };
