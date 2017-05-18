@@ -118,10 +118,7 @@ export function fetchPublicGroups() {
 }
 
 export function toggleGroupMembership(groupId, userId = null) {
-  api.toggleGroupMembership(groupId, userId);
-}
-
-export function leaveGroup(groupId) {
-  console.log(`About to leave group with id: ${groupId}`);
-  api.leaveGroup(groupId);
+  return (dispatch) => {
+    api.toggleGroupMembership(groupId, userId).then(dispatch(fetchUser()));
+  };
 }

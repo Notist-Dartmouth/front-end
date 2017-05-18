@@ -91,10 +91,8 @@ class GroupCard extends React.Component {
   };
 
   handleSubscribeClick = () => {
-    toggleGroupMembership(this.props.groupId);
+    this.props.dispatch(toggleGroupMembership(this.props.groupId));
     this.setState({ subscribed: !this.state.subscribed });
-    console.log('Calling fetchUser!');
-    this.props.dispatch(fetchUser());
   }
 
   render() {
