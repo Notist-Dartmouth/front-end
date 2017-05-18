@@ -183,15 +183,7 @@ class TopNav extends React.Component {
     super(props);
     this.state = {
       value: 2,
-
     };
-    this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
-  }
-
-  handleChange = (event, index, value) => this.setState({ value });
-
-  handleSubscribeClick() {
-    this.setState({ subscribed: !this.state.subscribed });
   }
 
   handleChange = (event, index, value) => this.setState({ value });
@@ -199,15 +191,20 @@ class TopNav extends React.Component {
   executeSearch = (props) => {
     const searchData = (this.props.toggled ? this.props.publicgroups : this.props.data);
 
+    console.log('Hey, your search data is:');
+    console.log(searchData);
+    console.log('Toggled is: ');
+    console.log(this.props.toggled);
+
     const textfield = document.getElementById('Search');
     const searchResults = search(searchData, textfield.value, this.props.toggled);
     const searchIsEmpty = textfield.value.length === 0;
     this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults, searchIsEmpty });
+    console.log('Done with executeSearch!');
   }
 
   handleToggle = () => {
-    this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled });
-    this.executeSearch(this.props);
+    Promise.resolve(this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled })).then(() => this.executeSearch(this.props));
   }
 
   render() {
