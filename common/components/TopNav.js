@@ -1,12 +1,10 @@
-/* eslint-disable */
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { red700, white, yellow400, grey900, grey300 } from 'material-ui/styles/colors';
-// deepOrange600
-import PeopleIcon from 'material-ui/svg-icons/social/people';
 import RaisedButton from 'material-ui/RaisedButton';
+import { red700, white, yellow200, red400, grey900, grey300 } from 'material-ui/styles/colors';
+import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { Toolbar } from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
@@ -18,6 +16,7 @@ import Toggle from 'material-ui/Toggle';
 // import NotificationsDialog from './NotificationsDialog';
 import config from '../../server/config';
 import dfsTraversal from '../routes/Discussion/produceCommentGraph';
+import { toggleGroupMembership } from '../routes/PostList/actions';
 
 /* eslint-enable */
 
@@ -71,12 +70,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    // alignItems: 'center',
   },
   feedTopRow: {
     display: 'flex',
     alignItems: 'center',
-    // justifyContent: 'space-between',
   },
   notificationsAndSettings: {
     display: 'flex',
@@ -120,7 +117,6 @@ const styles = StyleSheet.create({
   trackSwitched: {
     backgroundColor: 'pink',
   },
-    // flex: 1,
   link: {
     maxWidth: 700,
     color: '#999',
@@ -185,10 +181,12 @@ class TopNav extends React.Component {
     super(props);
     this.state = {
       value: 2,
+      subscribed: this.props.subscribed,
     };
     this.getSearchData = this.getSearchData.bind(this);
     this.executeSearch = this.executeSearch.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
   }
 
   componentDidMount() {
@@ -216,16 +214,24 @@ class TopNav extends React.Component {
     this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, search: this.getSearchData(!this.props.toggled) });
   }
 
-  render() {
-    const subButton = null;
+  handleSubscribeClick = () => {
+    const groupId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    if (groupId.length > 1) {
+      this.props.dispatch(toggleGroupMembership(groupId));
+      this.setState({ subscribed: !this.state.subscribed });
+    }
+  }
 
-    /* if (window.location.href.includes('feed')) {
+  render() {
+    let subButton;
+
+    if (window.location.href.includes('feed')) {
       if (this.state.subscribed) { // Check if subscribed to group
-        subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} />;
+        subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red400} />;
       } else {
-        subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} />;
+        subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow200} labelColor={grey900} />;
       }
-    }*/
+    }
 
     /*
       when not yet response from button click, use
@@ -250,7 +256,7 @@ class TopNav extends React.Component {
     if (groupId.length === 0) {
       groupId = '0';
     }
-    console.log(window.location.href);
+    // console.log(window.location.href);
 
     const isFeedOrDiscussionView = isFeedView || window.location.href.includes('discussion');
     let allComments = [];
