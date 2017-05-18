@@ -10,6 +10,7 @@ import { StyleSheet, css } from 'aphrodite';
 import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { Link } from 'react-router';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import { toggleGroupMembership, fetchUser } from '../routes/PostList/actions';
 
 const styles = StyleSheet.create({
@@ -92,7 +93,9 @@ class GroupCard extends React.Component {
 
   handleSubscribeClick = () => {
     this.props.dispatch(toggleGroupMembership(this.props.groupId));
-    this.setState({ subscribed: !this.state.subscribed });
+    if (!this.props.error) {
+      this.setState({ subscribed: !this.state.subscribed });
+    }
   }
 
   render() {
@@ -110,7 +113,6 @@ class GroupCard extends React.Component {
 
     let subButton = null;
 
-    console.log(this.props.createdDate);
     const timeSince = moment(this.props.createdDate).fromNow();
 
     if (this.state.subscribed) { // Check if subscribed to group
@@ -152,6 +154,7 @@ class GroupCard extends React.Component {
 GroupCard.propTypes = {
   groupId: React.PropTypes.string.isRequired,
   title: React.PropTypes.string.isRequired,
+  error: React.PropTypes.string,
   description: React.PropTypes.string.isRequired,
   createdDate: React.PropTypes.string.isRequired,
   creatorName: React.PropTypes.string.isRequired,
@@ -164,6 +167,11 @@ GroupCard.defaultProps = {
   groupId: '',
   title: 'Group Title',
   subscribed: true,
+  error: '',
 };
 
-export default GroupCard;
+const mapStateToProps = state => ({
+  error: state.articles.error,
+});
+
+export default connect(mapStateToProps)(GroupCard);

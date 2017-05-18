@@ -31,6 +31,7 @@ class ArticleList extends Component {
     this.fetchArticles(this.props.location.state ?
       this.props.location.state.groupId : null);
     this.fetchPublicGroups = this.fetchPublicGroups.bind(this);
+    this.props.dispatch(fetchPublicGroups());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -49,7 +50,6 @@ class ArticleList extends Component {
 
   fetchArticles(groupId) {
     this.props.dispatch(loadArticles(groupId, groupId === null));
-    this.props.dispatch(fetchPublicGroups());
   }
 
   render() {
