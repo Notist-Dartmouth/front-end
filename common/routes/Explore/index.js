@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -39,43 +39,53 @@ const styles = StyleSheet.create({
   },
 });
 
-const ExploreFeed = props => (
-  <MuiThemeProvider muiTheme={muiTheme} >
-    <div className={css(styles.container)}>
-      <Helmet title="Explore" />
-      <div>
-        <h2 className={css(styles.header)}>
-          To use this feature:
-        </h2>
-      </div>
-      <ol>
-        <li className={css(styles.listItem)}>
-          <span className={css(styles.helpText)}>
-            <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download Chrome Extension </a> and enable it!
-          </span>
-        </li>
-        <li className={css(styles.listItem)}>
-          <span className={css(styles.helpText)}>
-            <a href="https://www.facebook.com/">Login</a> to Facebook on chrome!
-          </span>
-        </li>
-        <li className={css(styles.listItem)}>
-          <FlatButton
-            className={css(styles.exploreButton)}
-            label="Get Started!"
-            primary
-            hoverColor={red300}
-            backgroundColor={red700}
-            onClick={(ev) => {
-              const event = document.createEvent('Event');
-              event.initEvent('init_explore');
-              document.dispatchEvent(event);
-            }}
-          />
-        </li>
-      </ol>
-    </div>
-  </MuiThemeProvider>
-);
+class ExploreFeed extends Component {
+
+  componentDidMount() {
+    // ADD EVENT LISTENER HERE
+    // document.addEventListener....
+  }
+
+  render() {
+    return (
+      <MuiThemeProvider muiTheme={muiTheme} >
+        <div className={css(styles.container)}>
+          <Helmet title="Explore" />
+          <div>
+            <h2 className={css(styles.header)}>
+              To use this feature:
+            </h2>
+          </div>
+          <ol>
+            <li className={css(styles.listItem)}>
+              <span className={css(styles.helpText)}>
+                <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download Chrome Extension </a> and enable it!
+                </span>
+            </li>
+            <li className={css(styles.listItem)}>
+              <span className={css(styles.helpText)}>
+                <a href="https://www.facebook.com/">Login</a> to Facebook on chrome!
+              </span>
+            </li>
+            <li className={css(styles.listItem)}>
+              <FlatButton
+                className={css(styles.exploreButton)}
+                label="Get Started!"
+                primary
+                hoverColor={red300}
+                backgroundColor={red700}
+                onClick={(ev) => {
+                  const event = document.createEvent('Event');
+                  event.initEvent('init_explore');
+                  document.dispatchEvent(event);
+                }}
+              />
+            </li>
+          </ol>
+        </div>
+      </MuiThemeProvider>
+    );
+  }
+}
 
 export default ExploreFeed;
