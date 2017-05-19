@@ -4,7 +4,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable quotes */
 
-import newrelic from 'newrelic';
+// import newrelic from 'newrelic';
 import path from 'path';
 import http from 'http';
 import express from 'express';

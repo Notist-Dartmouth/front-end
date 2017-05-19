@@ -70,6 +70,39 @@ export const saveGroup = (group) => {
   .then(res => handleResponse(res));
 };
 
+export const getGroupMembers = (groupId) => {
+  return fetch(`${config.apiHost}/api/group/${groupId}/members`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  })
+  .then(res => handleResponse(res));
+};
+
+export const fetchPublicGroups = () => {
+  return fetch(`${config.apiHost}/api/public/groups`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
+export const editAnnotation = (annotationId) => { // Where do I add the body text to this? Is it a header or... ?
+  return fetch(`${config.apiHost}/api/annotation/${annotationId}/edit`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
+export const deleteAnnotation = (annotationId) => {
+  return fetch(`${config.apiHost}/api/annotation/${annotationId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
 export const saveReply = (text, parent, articleURI) => {
   return fetch(`${config.apiHost}/api/annotation`, {
     method: 'POST',
@@ -83,4 +116,12 @@ export const saveReply = (text, parent, articleURI) => {
     }),
   })
   .then(res => handleResponse(res));
+};
+
+export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
+  return fetch(`${config.apiHost}/api/group/${groupId}/user?userId=${userId}`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
 };

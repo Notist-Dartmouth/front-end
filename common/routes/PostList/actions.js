@@ -21,6 +21,29 @@ function loadAnnotationsSuccess(annotations) {
   };
 }
 
+export function updateUser(groups, username, _id, bio, usersFollowingMe, usersIFollow, exploreNumber, numExplorations, exploreStandardDev) {
+  return {
+    type: types.UPDATE_USER,
+    groups,
+    name,
+    _id,
+    bio,
+    usersFollowingMe,
+    usersIFollow,
+    exploreNumber,
+    numExplorations,
+    exploreStandardDev,
+  };
+}
+
+export function fetchUser() {
+  return (dispatch, getState) => {
+    api.fetchUser().then((user) => {
+      dispatch(updateUser(user.groups, user.username, user._id, user.bio, user.usersFollowingMe, user.usersIFollow, user.exploreNumber, user.numExplorations, user.exploreStandardDev));
+    });
+  };
+}
+
 function loadAnnotations(articleURI) {
   return (dispatch, getState) => {
     dispatch(loadAnnotationsRequest);
@@ -80,5 +103,34 @@ export default function loadArticles(groupId, isPublic) {
     } else {
       return Promise.resolve();
     }
+  };
+}
+
+function handleFetchPublicGroupsResponse(dispatch, groups) {
+  return dispatch({ type: 'FETCH_PUBLIC_GROUPS', publicgroups: groups });
+}
+
+export function fetchPublicGroups() {
+  return (dispatch, getState) => {
+    api.fetchPublicGroups().then(groups =>
+      handleFetchPublicGroupsResponse(dispatch, groups));
+  };
+}
+
+function handleToggleMembershipResponse(dispatch, res) {
+  if (res.ERROR) {
+    console.log('ERROR ERROR ERROR!'); // If you see this message then it's possible for it to throw errors
+    return dispatch({ type: 'LOAD_ANNOTATIONS_ERROR', error: res.ERROR });
+  } else {
+    dispatch(fetchPublicGroups());
+    return dispatch(fetchUser());
+  }
+}
+
+export function toggleGroupMembership(groupId, userId = '') {
+  return (dispatch) => {
+    api.toggleGroupMembership(groupId, userId).then((res) => {
+      handleToggleMembershipResponse(dispatch, res);
+    });
   };
 }
