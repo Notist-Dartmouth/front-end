@@ -1,19 +1,5 @@
-import path from 'path';
 import * as types from '../../constants/ActionTypes';
 import * as api from '../../api';
-
-const headers = {
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
-};
-
-let apiHost;
-// @if ENVIRONMENT='production'
-apiHost = 'https://notist.herokuapp.com';
-// @endif
-// @if ENVIRONMENT='development'
-apiHost = 'http://localhost:3000';
-// @endif
 
 function loadDiscussionRequest() {
   return {
@@ -60,32 +46,37 @@ export function saveReply(text, parent, articleURI) {
   };
 }
 
-export function deleteAnnotation(annotationId) {
-  return {
-    type: types.REQUEST_DELETE_ANNOTATION,
-    annotationId,
-  };
-}
-
-export function handleDeleteAnnotationSuccess(annotationId) {
+export function handleDeleteReplySuccess(annotationId) {
   return {
     type: types.DELETE_ANNOTATION,
     annotationId,
   };
 }
 
-export function deleteAnnotationAsync(annotationId) {
+export function deleteReply(commentId) {
   return (dispatch, getState) => {
-    const deleteEndpoint = path.join(apiHost, `api/annotation/${annotationId}`);
-    return fetch(deleteEndpoint, {
-      method: 'DELETE',
-      credentials: 'include',
-      headers,
-    })
-    .then(res => res.json())
+    api.deleteAnnotation(commentId)
     .then((json) => {
       if (json.SUCCESS) {
-        dispatch(handleDeleteAnnotationSuccess(annotationId));
+        dispatch(handleDeleteReplySuccess(commentId));
+      }
+    });
+  };
+}
+
+export function handleEditReplySuccess(annotationId, text) {
+  return {
+    type: 'EDIT',
+    editText: text,
+    isEditing: false,
+  };
+}
+
+export function editReply(commentId, text) {
+  return (dispatch, getState) => {
+    api.editAnnotation(commentId, text).then((json) => {
+      if (json.SUCCESS) {
+        dispatch(handleEditReplySuccess(commentId, text));
       }
     });
   };

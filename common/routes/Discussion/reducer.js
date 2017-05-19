@@ -26,6 +26,12 @@ export default function discussionViewReducer(state = {
         isVisible: action.isVisible,
         ordering: action.ordering,
       });
+    case 'EDIT':
+      return Object.assign({}, state, {
+        ...state,
+        editText: action.editText,
+        isEditing: action.isEditing,
+      });
     case types.DELETE_ANNOTATION:
       return Object.assign({}, state, {
         parentIdx: state.parentIdx,

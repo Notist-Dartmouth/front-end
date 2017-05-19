@@ -11,7 +11,7 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
-import { saveReply } from '../actions';
+import { saveReply, deleteReply, editReply } from '../actions'; // loadDiscussion
 
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
@@ -28,6 +28,8 @@ class CommentBox extends Component {
     this.onPostReply = this.onPostReply.bind(this);
     this.getLastBeforeEnd = this.getLastBeforeEnd.bind(this);
     this.updateMarkdown = this.updateMarkdown.bind(this);
+    this.handleDeleteReply = this.handleDeleteReply.bind(this);
+    this.handleEditReply = this.handleEditReply.bind(this);
   }
 
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
@@ -69,15 +71,6 @@ class CommentBox extends Component {
     this.props.dispatch(saveReply(this.state.markdown, addedNode.parent._id, this.props.articleURI));
   }
 
-  onDeleteComment() {
-    this.props.dispatch({
-      type: 'DELETE_COMMENT',
-      currentlyOpen: '-1',
-      isVisible: false,
-      ordering: this.ordering,
-    });
-  }
-
   getLastBeforeEnd() {
     const idx = this.id;
     for (let i = idx + 1; i < this.ordering.length; i += 1) {
@@ -93,15 +86,31 @@ class CommentBox extends Component {
     return textInsideTextArea;
   }
 
+  handleDeleteReply() {
+    console.log(`Deleting: ${this.props.commentId}`);
+    // this.props.dispatch(deleteReply(this.props.commentId));
+    Promise.resolve(this.props.dispatch(deleteReply(this.props.commentId))).then(() => console.log('Finished Deleting! Now reload the comments.'));
+    // deleteReply(this.props.id);
+  }
+
+  handleEditReply() {
+    console.log(`Editing:${this.props.commentId}`);
+    this.props.dispatch(editReply(this.props.commentId, 'Hello'));
+    /* eslint-disable */
+    // this.props.dispatch({ type: 'EDIT', editText: 'Hello', isEditing: true }); // This function will open a textbox w/ post button using a dispatch and load it with the text then onPostEdit should call api
+    /* eslint-enable */
+
+    // Open a textbox on the screen with the text that was in the comment that they wish to edit
+    // If they post then it will submit an api request to edit the comment with this.props.commentId
+  }
+
   updateMarkdown(event) {
     this.setState({ markdown: event.target.value });
   }
 
   render() {
     let textarea = <span id={'Hi'} />;
-    const madeThisComment = this.props.node.author ? (this.props.username === this.props.node.author.username) : false;
-    // console.log('Precrash: ');
-    // console.log(this.ordering);
+    const madeThisComment = this.props.node.author ? (this.props.userId === this.props.node.author._id) : false;
 
     /* eslint-disable */
 
@@ -141,8 +150,8 @@ class CommentBox extends Component {
               {/*  /> */}
 
               <b>{this.props.authorName}</b>{' '}{this.props.timeSince}
-              {madeThisComment ? <EditIcon onClick={this.onToggleReply} /> : ''}
-              {madeThisComment ? <DeleteIcon onClick={this.onToggleReply} /> : ''}
+              {madeThisComment ? <EditIcon onClick={this.handleEditReply} /> : ''}
+              {madeThisComment ? <DeleteIcon onClick={this.handleDeleteReply} /> : ''}
               <br /> <br />
 
               <div style={{
@@ -178,16 +187,12 @@ CommentBox.propTypes = {
 
 /* eslint-enable */
 
-function mapStateToProps(state) {
-  const { username } = state.user;
-  const { parentIdx, isVisible, currentlyOpen } = state.Discussion;
-  return {
-    username,
-    parentIdx,
-    isVisible,
-    currentlyOpen,
-  };
-}
+const mapStateToProps = state => ({
+  userId: state.user ? state.user._id : '0',
+  parentIdx: state.Discussion.parentIdx,
+  isVisible: state.Discussion.isVisible,
+  currentlyOpen: state.Discussion.currentlyOpen,
+});
 
 export default connect(
   mapStateToProps,
