@@ -11,7 +11,9 @@ import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
+/* eslint-disable */
 import { saveReply, deleteReply, editReply } from '../actions'; // loadDiscussion
+/* eslint-enable */
 
 const COMMENTINDENTAMOUNT = 50;
 const COLORARRAY = ['Red', 'Green', 'Blue', 'Yellow', 'Purple'];
@@ -30,6 +32,7 @@ class CommentBox extends Component {
     this.updateMarkdown = this.updateMarkdown.bind(this);
     this.handleDeleteReply = this.handleDeleteReply.bind(this);
     this.handleEditReply = this.handleEditReply.bind(this);
+    this.onPostEdit = this.onPostEdit.bind(this);
   }
 
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
@@ -71,6 +74,11 @@ class CommentBox extends Component {
     this.props.dispatch(saveReply(this.state.markdown, addedNode.parent._id, this.props.articleURI));
   }
 
+  onPostEdit() {
+    console.log('You tried to edit but I forced your message to become hello :( ');
+    this.props.dispatch(editReply(this.props.commentId, 'Hello'));
+  }
+
   getLastBeforeEnd() {
     const idx = this.id;
     for (let i = idx + 1; i < this.ordering.length; i += 1) {
@@ -95,13 +103,8 @@ class CommentBox extends Component {
 
   handleEditReply() {
     console.log(`Editing:${this.props.commentId}`);
-    this.props.dispatch(editReply(this.props.commentId, 'Hello'));
-    /* eslint-disable */
-    // this.props.dispatch({ type: 'EDIT', editText: 'Hello', isEditing: true }); // This function will open a textbox w/ post button using a dispatch and load it with the text then onPostEdit should call api
-    /* eslint-enable */
-
-    // Open a textbox on the screen with the text that was in the comment that they wish to edit
-    // If they post then it will submit an api request to edit the comment with this.props.commentId
+    // this.props.dispatch(editReply(this.props.commentId, 'Hello'));
+    this.props.dispatch({ type: 'EDIT', editText: 'Hello', editId: this.props.commentId, isEditing: !this.props.isEditing });
   }
 
   updateMarkdown(event) {
@@ -162,7 +165,25 @@ class CommentBox extends Component {
               >
                 {(this.props.id === 0) ? this.props.articleText : ''}
               </div>
+              {this.props.isEditing && this.props.editId === this.props.commentId ?
+                <div>
+                  <CommentEditor
+                    preloadedText={this.props.node.text}
+                    isEditing={this.props.isEditing}
+                    markdown={this.state.markdown}
+                    onMarkdownChange={this.updateMarkdown}
+                    style={{
+                      marginLeft: COMMENTINDENTAMOUNT,
+                      borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth + 1) % 5]),
+                    }}
+                  />
+                <div>
+                  <RaisedButton label="Post" primary disabled={this.state.markdown === ''} onClick={this.onPostEdit} style={{ marginLeft: '20px' }} />
+                  <div style={{ fontSize: '8pt', opacity: '0.5', textColor: 'grey', }} dangerouslySetInnerHTML={{ __html: marked('\\*\\***bold**\\*\\*  \\__italics_\\_  \\~\\~~~strike~~\\~\\~  \\``code`\\` \\`\\`\\````preformatted```\\`\\`\\` >quote') }} />
+                </div>
+              </div>:
               <div dangerouslySetInnerHTML={{ __html: marked(this.props.node.text || '') }} />
+              }
             </CardText>
             <CardActions>
               <FlatButton label="Reply" onClick={this.onToggleReply} />
@@ -189,6 +210,8 @@ CommentBox.propTypes = {
 
 const mapStateToProps = state => ({
   userId: state.user ? state.user._id : '0',
+  isEditing: state.Discussion.isEditing,
+  editId : state.Discussion.editId,
   parentIdx: state.Discussion.parentIdx,
   isVisible: state.Discussion.isVisible,
   currentlyOpen: state.Discussion.currentlyOpen,
