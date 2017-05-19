@@ -13,6 +13,7 @@ export default function discussionViewReducer(state = {
   switch (action.type) {
     case 'TOGGLE_REPLY':
       return Object.assign({}, state, {
+        ...state,
         currentlyOpen: action.currentlyOpen,
         parentIdx: action.parentIdx,
         replyText: action.replyText,
@@ -21,6 +22,7 @@ export default function discussionViewReducer(state = {
       });
     case 'POST_REPLY':
       return Object.assign({}, state, {
+        ...state,
         parentIdx: state.parentIdx,
         replyText: action.replyText,
         isVisible: action.isVisible,
@@ -35,6 +37,7 @@ export default function discussionViewReducer(state = {
       });
     case types.DELETE_ANNOTATION:
       return Object.assign({}, state, {
+        ...state,
         parentIdx: state.parentIdx,
         replyText: action.replyText,
         isVisible: action.isVisible,
@@ -42,6 +45,7 @@ export default function discussionViewReducer(state = {
       });
     case types.REQUEST_DELETE_ANNOTATION:
       return Object.assign({}, state, {
+        ...state,
         parentIdx: state.parentIdx,
         replyText: action.replyText,
         isVisible: action.isVisible,
@@ -49,15 +53,18 @@ export default function discussionViewReducer(state = {
       });
     case types.LOAD_DISCUSSION_REQUEST:
       return Object.assign({}, state, {
+        ...state,
         isLoading: true,
       });
     case types.LOAD_DISCUSSION_FAILURE:
       return Object.assign({}, state, {
+        ...state,
         error: action.error,
         isLoading: false,
       });
     case types.LOAD_DISCUSSION_SUCCESS:
       return Object.assign({}, state, {
+        ...state,
         annotations: action.annotations,
         parentIdx: 0,
         replyText: '',

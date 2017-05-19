@@ -12,7 +12,7 @@ import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
 /* eslint-disable */
-import { saveReply, deleteReply, editReply } from '../actions'; // loadDiscussion
+import { saveReply, deleteReply, editReply, loadDiscussion } from '../actions'; // loadDiscussion
 /* eslint-enable */
 
 const COMMENTINDENTAMOUNT = 50;
@@ -75,9 +75,11 @@ class CommentBox extends Component {
   }
 
   onPostEdit() {
-    console.log('You tried to edit but I forced your message to become hello :( ');
-    console.log(`The text you entered, I think, is: ${document.getElementById('EditBox').markdown}`);
-    this.props.dispatch(editReply(this.props.commentId, this.state.markdown));
+    // this.props.dispatch(editReply(this.props.commentId, this.state.markdown));
+    // this.props.dispatch({ type: 'EDIT', isEditing: false });
+
+    Promise.resolve(this.props.dispatch(editReply(this.props.commentId, this.state.markdown))).then(() => this.props.dispatch({ type: 'EDIT', isEditing: false }));
+    this.props.dispatch(loadDiscussion(this.props.articleURI));
   }
 
   getLastBeforeEnd() {
@@ -91,15 +93,10 @@ class CommentBox extends Component {
   }
 
   handleDeleteReply() {
-    console.log(`Deleting: ${this.props.commentId}`);
-    // this.props.dispatch(deleteReply(this.props.commentId));
-    Promise.resolve(this.props.dispatch(deleteReply(this.props.commentId))).then(() => console.log('Finished Deleting! Now reload the comments.'));
-    // deleteReply(this.props.id);
+    Promise.resolve(this.props.dispatch(deleteReply(this.props.commentId))).then(() => this.props.dispatch(loadDiscussion(this.props.articleURI)));
   }
 
   handleEditReply() {
-    console.log(`Editing:${this.props.commentId}`);
-    // this.props.dispatch(editReply(this.props.commentId, 'Hello'));
     this.setState({ markdown: this.props.node.text });
     this.props.dispatch({ type: 'EDIT', editText: 'Hello', editId: this.props.commentId, isEditing: !this.props.isEditing });
   }
@@ -201,6 +198,10 @@ CommentBox.propTypes = {
   dispatch: PropTypes.func.isRequired,
   ordering: PropTypes.array.isRequired,
 };
+
+CommentBox.defaultProps = {
+  isVisible: false,
+}
 
 /* eslint-enable */
 
