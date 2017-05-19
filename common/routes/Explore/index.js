@@ -46,6 +46,11 @@ class ExploreFeed extends Component {
     // document.addEventListener....
   }
 
+  componentWillUnmount() {
+    // REMOVE EVENT LISTENER HERE
+    // document.removeEventListener....
+  }
+
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme} >
