@@ -76,7 +76,8 @@ class CommentBox extends Component {
 
   onPostEdit() {
     console.log('You tried to edit but I forced your message to become hello :( ');
-    this.props.dispatch(editReply(this.props.commentId, 'Hello'));
+    console.log(`The text you entered, I think, is: ${document.getElementById('EditBox').markdown}`);
+    this.props.dispatch(editReply(this.props.commentId, this.state.markdown));
   }
 
   getLastBeforeEnd() {
@@ -89,11 +90,6 @@ class CommentBox extends Component {
     return this.ordering.length;
   }
 
-  getTextAreaText() {
-    const textInsideTextArea = document.getElementById('textarea'.concat(this.props.id.toString())).value;
-    return textInsideTextArea;
-  }
-
   handleDeleteReply() {
     console.log(`Deleting: ${this.props.commentId}`);
     // this.props.dispatch(deleteReply(this.props.commentId));
@@ -104,6 +100,7 @@ class CommentBox extends Component {
   handleEditReply() {
     console.log(`Editing:${this.props.commentId}`);
     // this.props.dispatch(editReply(this.props.commentId, 'Hello'));
+    this.setState({ markdown: this.props.node.text });
     this.props.dispatch({ type: 'EDIT', editText: 'Hello', editId: this.props.commentId, isEditing: !this.props.isEditing });
   }
 
@@ -168,20 +165,19 @@ class CommentBox extends Component {
               {this.props.isEditing && this.props.editId === this.props.commentId ?
                 <div>
                   <CommentEditor
-                    preloadedText={this.props.node.text}
-                    isEditing={this.props.isEditing}
-                    markdown={this.props.node.text}
+                    markdown={this.state.markdown}
                     onMarkdownChange={this.updateMarkdown}
                     style={{
                       marginLeft: COMMENTINDENTAMOUNT,
                       borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth + 1) % 5]),
                     }}
                   />
-                <div>
                   <RaisedButton label="Post" primary disabled={this.state.markdown === ''} onClick={this.onPostEdit} style={{ marginLeft: '20px' }} />
-                  <div style={{ fontSize: '8pt', opacity: '0.5', textColor: 'grey', }} dangerouslySetInnerHTML={{ __html: marked('\\*\\***bold**\\*\\*  \\__italics_\\_  \\~\\~~~strike~~\\~\\~  \\``code`\\` \\`\\`\\````preformatted```\\`\\`\\` >quote') }} />
-                </div>
-              </div>:
+                  <div
+                    style={{ fontSize: '8pt', opacity: '0.5', textColor: 'grey', }}
+                    dangerouslySetInnerHTML={{ __html: marked('\\*\\***bold**\\*\\*  \\__italics_\\_  \\~\\~~~strike~~\\~\\~  \\``code`\\` \\`\\`\\````preformatted```\\`\\`\\` >quote') }}
+                  ></div>
+            </div> :
               <div dangerouslySetInnerHTML={{ __html: marked(this.props.node.text || '') }} />
               }
             </CardText>
@@ -210,6 +206,7 @@ CommentBox.propTypes = {
 
 const mapStateToProps = state => ({
   userId: state.user ? state.user._id : '0',
+  editText: state.Discussion.editText,
   isEditing: state.Discussion.isEditing,
   editId : state.Discussion.editId,
   parentIdx: state.Discussion.parentIdx,
