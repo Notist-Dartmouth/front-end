@@ -170,7 +170,7 @@ class CommentBox extends Component {
                   <CommentEditor
                     preloadedText={this.props.node.text}
                     isEditing={this.props.isEditing}
-                    markdown={this.state.markdown}
+                    markdown={this.props.node.text}
                     onMarkdownChange={this.updateMarkdown}
                     style={{
                       marginLeft: COMMENTINDENTAMOUNT,

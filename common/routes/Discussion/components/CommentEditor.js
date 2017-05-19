@@ -74,7 +74,7 @@ class CommentEditor extends React.Component {
           value={this.props.markdown}
           onChange={this.props.onMarkdownChange}
           placeholder="Enter Comment"
-        >{this.props.isEditing ? this.props.preloadedText : ''}</textarea>
+        />
         <div
           style={editorStyle}
           hidden={!this.state.isPreview}
