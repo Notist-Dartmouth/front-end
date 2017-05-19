@@ -1,96 +1,45 @@
 import React, { Component } from 'react';
-import Helmet from 'react-helmet';
-import { StyleSheet, css } from 'aphrodite';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import FlatButton from 'material-ui/FlatButton';
-// import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import { red700, red300 } from 'material-ui/styles/colors';
+import ExploreSetup from './components/ExploreSetup';
+import ExploreFeed from './components/ExploreFeed';
+import ExploreError from './components/ExploreError';
 
-const muiTheme = getMuiTheme();
+class App extends Component {
 
-const styles = StyleSheet.create({
-  container: {
-    margin: 'auto',
-    width: '75%',
-    padding: '10%',
-  },
-  header: {
-    fontSize: '40px',
-  },
-  divider: {
-    lineHeight: '110px',
-    fontSize: '36px',
-  },
-  exploreButton: {
-    marginLeft: '30px',
-    color: 'white',
-  },
-  listItem: {
-    listStylePosition: 'inside',
-    fontSize: '36px',
-    color: 'gray',
-    lineHeight: '100px',
-  },
-  helpText: {
-    fontSize: '36px',
-    paddingLeft: '20px',
-    color: 'gray',
-  },
-});
-
-class ExploreFeed extends Component {
-
-  componentDidMount() {
-    // ADD EVENT LISTENER HERE
-    // document.addEventListener....
+  constructor(props) {
+    super(props);
+    this.state = {
+      isExploreComplete: false,
+      exploreError: null,
+    };
+    this.onExploreComplete = this.onExploreComplete.bind(this);
   }
 
-  componentWillUnmount() {
-    // REMOVE EVENT LISTENER HERE
-    // document.removeEventListener....
+  onExploreComplete() {
+    this.setState({ isExploreComplete: true });
+  }
+
+  onExploreError(exploreError) {
+    this.setState({ exploreError });
   }
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={muiTheme} >
-        <div className={css(styles.container)}>
-          <Helmet title="Explore" />
-          <div>
-            <h2 className={css(styles.header)}>
-              To use this feature:
-            </h2>
-          </div>
-          <ol>
-            <li className={css(styles.listItem)}>
-              <span className={css(styles.helpText)}>
-                <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download Chrome Extension </a> and enable it!
-                </span>
-            </li>
-            <li className={css(styles.listItem)}>
-              <span className={css(styles.helpText)}>
-                <a href="https://www.facebook.com/">Login</a> to Facebook on chrome!
-              </span>
-            </li>
-            <li className={css(styles.listItem)}>
-              <FlatButton
-                className={css(styles.exploreButton)}
-                label="Get Started!"
-                primary
-                hoverColor={red300}
-                backgroundColor={red700}
-                onClick={(ev) => {
-                  const event = document.createEvent('Event');
-                  event.initEvent('init_explore');
-                  document.dispatchEvent(event);
-                }}
-              />
-            </li>
-          </ol>
-        </div>
-      </MuiThemeProvider>
+      <div>
+        { !this.state.isExploreComplete && !this.state.exploreError &&
+          <ExploreSetup
+            onExploreComplete={this.onExploreComplete}
+            onExploreError={this.onExploreError}
+          />
+        }
+        { this.state.isExploreComplete && !this.state.exploreError &&
+          <ExploreFeed />
+        }
+        { this.state.exploreError &&
+          <ExploreError />
+        }
+      </div>
     );
   }
 }
 
-export default ExploreFeed;
+export default App;
