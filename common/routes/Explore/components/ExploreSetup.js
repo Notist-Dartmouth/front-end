@@ -42,23 +42,30 @@ const styles = StyleSheet.create({
 
 class ExploreSetup extends Component {
 
+  constructor(props) {
+    super(props);
+    this.handleExploreComplete = this.handleExploreComplete.bind(this);
+    this.handleExploreError = this.handleExploreError.bind(this);
+  }
 
   componentDidMount() {
-    document.addEventListener('explore_done', () => {
-      console.log('explore finished!');
-      this.props.onExploreComplete();
-    });
-
-    document.addEventListener('explore_error', () => {
-      console.log('explore errored!');
-      this.props.onExploreError('error');
-    });
+    document.addEventListener('explore_done', this.handleExploreComplete);
+    document.addEventListener('explore_error', this.handleExploreError);
   }
 
   componentWillUnmount() {
-    // How do I remove an event listener if I defined the function inline ^^ ??
-    // document.removeEventListener('explore_done');
-    // document.removeEventListener('explore_error');
+    document.removeEventListener('explore_done', this.handleExploreComplete);
+    document.removeEventListener('explore_error', this.handleExploreError);
+  }
+
+  handleExploreComplete() {
+    console.log('explore finished!');
+    this.props.onExploreComplete();
+  }
+
+  handleExploreError() {
+    console.log('explore errored!');
+    this.props.onExploreError('error');
   }
 
   render() {
