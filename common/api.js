@@ -87,11 +87,12 @@ export const fetchPublicGroups = () => {
   }).then(res => handleResponse(res));
 };
 
-export const editAnnotation = (annotationId) => { // Where do I add the body text to this? Is it a header or... ?
+export const editAnnotation = (annotationId, text) => { // Where do I add the body text to this? Is it a header or... ?
   return fetch(`${config.apiHost}/api/annotation/${annotationId}/edit`, {
     method: 'POST',
     credentials: 'include',
     headers,
+    body: JSON.stringify({ text }),
   }).then(res => handleResponse(res));
 };
 

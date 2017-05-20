@@ -45,3 +45,40 @@ export function saveReply(text, parent, articleURI) {
     });
   };
 }
+
+export function handleDeleteReplySuccess(annotationId) {
+  return {
+    type: types.DELETE_ANNOTATION,
+    annotationId,
+    isEditing: false,
+  };
+}
+
+export function deleteReply(commentId) {
+  return (dispatch, getState) => {
+    api.deleteAnnotation(commentId)
+    .then((json) => {
+      if (json.SUCCESS) {
+        dispatch(handleDeleteReplySuccess(commentId));
+      }
+    });
+  };
+}
+
+export function handleEditReplySuccess(annotationId, text) {
+  return {
+    type: 'EDIT',
+    editText: text,
+    isEditing: false,
+  };
+}
+
+export function editReply(commentId, text) {
+  return (dispatch, getState) => {
+    api.editAnnotation(commentId, text).then((json) => {
+      if (json.SUCCESS) {
+        dispatch(handleEditReplySuccess(commentId, text));
+      }
+    });
+  };
+}
