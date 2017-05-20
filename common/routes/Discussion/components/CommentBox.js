@@ -181,7 +181,9 @@ class CommentBox extends Component {
 
     return (
       <div style={{
-        padding: 15,
+        paddingTop: 2,
+        paddingRight: 10,
+        paddingLeft: 10,
         marginLeft: COMMENTINDENTAMOUNT * this.props.node.depth,
         borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth % 5)]),
         backgroundColor: '#E0F7FA',
@@ -205,7 +207,7 @@ class CommentBox extends Component {
                 </div>
                 <div>
                   {madeThisComment ?
-                    <div>
+                    <span>
                       <IconButton onClick={this.handleOpen}><DeleteIcon hoverColor={grey500} /></IconButton>
                       <Dialog
                         title="Delete this post"
@@ -216,7 +218,7 @@ class CommentBox extends Component {
                       >
                         Are you sure you want to delete this post?
                       </Dialog>
-                    </div>
+                    </span>
                     : '' }
                 </div>
               </div>
