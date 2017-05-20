@@ -19,6 +19,7 @@ export default function discussionViewReducer(state = {
         replyText: action.replyText,
         isVisible: action.isVisible,
         ordering: action.ordering,
+        isEditing: action.isEditing,
       });
     case 'POST_REPLY':
       return Object.assign({}, state, {
@@ -27,6 +28,7 @@ export default function discussionViewReducer(state = {
         replyText: action.replyText,
         isVisible: action.isVisible,
         ordering: action.ordering,
+        isEditing: action.isEditing,
       });
     case 'EDIT':
       return Object.assign({}, state, {
@@ -38,10 +40,7 @@ export default function discussionViewReducer(state = {
     case types.DELETE_ANNOTATION:
       return Object.assign({}, state, {
         ...state,
-        parentIdx: state.parentIdx,
-        replyText: action.replyText,
-        isVisible: action.isVisible,
-        ordering: action.ordering,
+        isEditing: action.isEditing,
       });
     case types.REQUEST_DELETE_ANNOTATION:
       return Object.assign({}, state, {

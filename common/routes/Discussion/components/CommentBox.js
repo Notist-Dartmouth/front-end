@@ -6,11 +6,17 @@ import FlatButton from 'material-ui/FlatButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
 import { RaisedButton } from 'material-ui';
 import { yellow200 } from 'material-ui/styles/colors';
-import DeleteIcon from 'material-ui/svg-icons/action/delete';
-import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+// import DeleteIcon from 'material-ui/svg-icons/action/delete';
+// import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
+
+
 /* eslint-disable */
 import { saveReply, deleteReply, editReply, loadDiscussion } from '../actions'; // loadDiscussion
 /* eslint-enable */
@@ -38,6 +44,10 @@ class CommentBox extends Component {
   //  style={courses.length > 0 ? 'display: '' : 'display:none'}>
 
   onToggleReply() {
+    this.state = {
+      markdown: '',
+    };
+
     let visible = true;
     if (this.props.commentId !== this.props.currentlyOpen) {
       visible = true;
@@ -52,6 +62,7 @@ class CommentBox extends Component {
       replyText: 'hello',
       isVisible: visible,
       ordering: this.ordering,
+      isEditing: false,
     });
   }
 
@@ -63,6 +74,7 @@ class CommentBox extends Component {
       replyText: 'hello',
       isVisible: false,
       ordering: this.ordering,
+      isEditing: false,
     });
 
     // const arrayIndex = this.getLastBeforeEnd();   //  this.getLastBeforeEnd(); //  This is where commentBox should be inserted in the array
@@ -147,8 +159,16 @@ class CommentBox extends Component {
               {/*  /> */}
 
               <b>{this.props.authorName}</b>{' '}{this.props.timeSince}
-              {madeThisComment ? <EditIcon onClick={this.handleEditReply} /> : ''}
-              {madeThisComment ? <DeleteIcon onClick={this.handleDeleteReply} /> : ''}
+              {madeThisComment ?
+                <IconMenu
+                  style={{ marginLeft: '96%', marginRight: '25px' }}
+                  iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                  anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                >
+                  <MenuItem primaryText="Edit" onClick={this.handleEditReply}/>
+                  <MenuItem primaryText="Delete" onClick={this.handleDeleteReply} />
+                </IconMenu> : ''}
               <br /> <br />
 
               <div style={{

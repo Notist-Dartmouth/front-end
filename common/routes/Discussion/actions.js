@@ -50,6 +50,7 @@ export function handleDeleteReplySuccess(annotationId) {
   return {
     type: types.DELETE_ANNOTATION,
     annotationId,
+    isEditing: false,
   };
 }
 
