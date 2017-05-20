@@ -2,19 +2,33 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import marked from 'marked';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardActions, CardText } from 'material-ui/Card';
-import { RaisedButton } from 'material-ui';
-import { yellow200 } from 'material-ui/styles/colors';
-// import DeleteIcon from 'material-ui/svg-icons/action/delete';
+import { yellow200, grey500 } from 'material-ui/styles/colors';
 // import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
+// import IconMenu from 'material-ui/IconMenu';
+// import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Dialog from 'material-ui/Dialog';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
+// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import { StyleSheet, css } from 'aphrodite';
 import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
 import { Node } from '../produceCommentGraph';
+
+const styles = StyleSheet.create({
+  authorLine: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  authorAndTime: {
+    display: 'flex',
+  },
+  authorName: {
+    paddingRight: 10,
+  },
+});
 
 
 /* eslint-disable */
@@ -29,6 +43,7 @@ class CommentBox extends Component {
     super(props);
     this.state = {
       markdown: '',
+      open: false,
     };
     this.ordering = this.props.ordering;
     this.id = props.id;
@@ -104,6 +119,14 @@ class CommentBox extends Component {
     return this.ordering.length;
   }
 
+  handleOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
   handleDeleteReply() {
     Promise.resolve(this.props.dispatch(deleteReply(this.props.commentId))).then(() => this.props.dispatch(loadDiscussion(this.props.articleURI)));
   }
@@ -118,6 +141,20 @@ class CommentBox extends Component {
   }
 
   render() {
+    const actions = [
+      <RaisedButton
+        label="Cancel"
+        onTouchTap={this.handleClose}
+        style={{ marginRight: 15 }}
+      />,
+      <RaisedButton
+        label="Delete"
+        primary
+        keyboardFocused
+        onTouchTap={this.handleDeleteReply}
+      />,
+    ];
+
     let textarea = <span id={'Hi'} />;
     const madeThisComment = this.props.node.author ? (this.props.userId === this.props.node.author._id) : false;
 
@@ -125,7 +162,7 @@ class CommentBox extends Component {
 
     if (this.props.isVisible && this.props.commentId === this.props.currentlyOpen) {
       textarea = (
-        <div>
+        <div style={{ paddingTop: 15 }}>
           <CommentEditor
             markdown={this.state.markdown}
             onMarkdownChange={this.updateMarkdown}
@@ -144,9 +181,10 @@ class CommentBox extends Component {
 
     return (
       <div style={{
+        padding: 15,
         marginLeft: COMMENTINDENTAMOUNT * this.props.node.depth,
         borderLeft: '3px solid '.concat(COLORARRAY[(this.props.node.depth % 5)]),
-        backgroundColor: 'white',
+        backgroundColor: '#E0F7FA',
       }}
       >
         <MuiThemeProvider muiTheme={muiTheme}>
@@ -158,8 +196,31 @@ class CommentBox extends Component {
               {/*    size={35} */}
               {/*  /> */}
 
-              <b>{this.props.authorName}</b>{' '}{this.props.timeSince}
-              {madeThisComment ?
+              <div className={css(styles.authorLine)}>
+                <div className={css(styles.authorAndTime)}>
+                  <div className={css(styles.authorName)}>
+                    <b>{this.props.authorName}</b>
+                  </div>
+                  {this.props.timeSince}
+                </div>
+                <div>
+                  {madeThisComment ?
+                    <div>
+                      <IconButton onClick={this.handleOpen}><DeleteIcon hoverColor={grey500} /></IconButton>
+                      <Dialog
+                        title="Delete this post"
+                        actions={actions}
+                        modal={false}
+                        open={this.state.open}
+                        onRequestClose={this.handleClose}
+                      >
+                        Are you sure you want to delete this post?
+                      </Dialog>
+                    </div>
+                    : '' }
+                </div>
+              </div>
+              {/* {madeThisComment ?
                 <IconMenu
                   style={{ marginLeft: '96%', marginRight: '25px' }}
                   iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
@@ -169,7 +230,7 @@ class CommentBox extends Component {
                   <MenuItem primaryText="Edit" onClick={this.handleEditReply}/>
                   <MenuItem primaryText="Delete" onClick={this.handleDeleteReply} />
                 </IconMenu> : ''}
-              <br /> <br />
+              <br /> <br /> */}
 
               <div style={{
                 display: 'inline',
@@ -199,7 +260,8 @@ class CommentBox extends Component {
               }
             </CardText>
             <CardActions>
-              <FlatButton label="Reply" onClick={this.onToggleReply} />
+              <RaisedButton label="Reply" onClick={this.onToggleReply} />
+              {madeThisComment ? <RaisedButton primary label="Edit" onClick={this.handleEditReply} /> : ''}
             </CardActions>
           </Card>
         </MuiThemeProvider>
