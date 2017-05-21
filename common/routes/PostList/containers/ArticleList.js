@@ -2,9 +2,9 @@ import React, { PropTypes, Component } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import loadArticles from '../actions';
+import loadArticles, { fetchPublicGroups } from '../actions';
 import ArticleItem from '../components/ArticleItem';
-
+import GroupCard from '../../../components/GroupCard';
 /* can uncomment out articleList to have multiple cards in one row */
 const styles = StyleSheet.create({
   root: {
@@ -30,6 +30,9 @@ class ArticleList extends Component {
     this.fetchArticles = this.fetchArticles.bind(this);
     this.fetchArticles(this.props.location.state ?
       this.props.location.state.groupId : null);
+    this.fetchPublicGroups = this.fetchPublicGroups.bind(this);
+    this.props.dispatch(fetchPublicGroups());
+    this.props.dispatch({ type: 'EXECUTE_SEARCH', search: [], searchIsEmpty: true });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,12 +45,19 @@ class ArticleList extends Component {
     }
   }
 
+  fetchPublicGroups() {
+    this.props.dispatch(fetchPublicGroups());
+  }
+
   fetchArticles(groupId) {
     this.props.dispatch(loadArticles(groupId, groupId === null));
   }
 
   render() {
-    const data = (this.props.searchIsEmpty ? this.props.data : this.props.search);
+    const dataArticles = (this.props.searchIsEmpty ? this.props.data : this.props.search);
+    const dataGroups = (this.props.searchIsEmpty ? this.props.publicgroups : this.props.search);
+
+    const data = (this.props.toggled ? dataGroups : dataArticles);
 
     return (
       <div className={css(styles.root)}>
@@ -58,20 +68,32 @@ class ArticleList extends Component {
               <h2>Loading....</h2>
             </div>}
           <div className={css(styles.articleList)}>
-            {!this.props.isLoading &&
-              data.map(a =>
-                <ArticleItem
-                  style={{ width: '100%' }}
-                  key={a._id}
-                  title={a.info && a.info.title ? a.info.title : ''}
-                  imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
-                  articleURI={a.uri}
-                  annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
-                  articleID={a._id}
-                  wordCount={a.word_count}
-                  datePublished={a.date_published}
-                  excerpt={a.excerpt}
-                />)}
+            {!this.props.isLoading && data &&
+              data.map((a) => {
+                return !this.props.toggled ?
+                  <ArticleItem
+                    style={{ width: '100%' }}
+                    key={a._id}
+                    title={a.info && a.info.title ? a.info.title : ''}
+                    imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
+                    articleURI={a.uri}
+                    annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
+                    articleID={a._id}
+                    wordCount={a.word_count}
+                    datePublished={a.date_published}
+                    excerpt={a.excerpt}
+                  /> :
+                  <GroupCard
+                    groupId={a._id}
+                    title={a.name}
+                    description={a.description}
+                    createdDate={a.createDate}
+                    creatorName={a.creator.name}
+                    numMembers={a.members.length}
+                    subscribed={a.members.includes(this.props.userId)}
+                    dispatch={this.props.dispatch}
+                  />;
+              })}
           </div>
         </div>
       </div>
@@ -94,8 +116,11 @@ ArticleList.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  userId: state.user._id,                        // TODO Need to update the user information obtained from API to have userID follow you around
   data: state.articles.data,
   annotations: state.articles.annotations,
+  toggled: state.articles.toggled,
+  publicgroups: state.articles.publicgroups,
   search: state.articles.search || [],
   searchIsEmpty: state.articles.searchIsEmpty,
   isLoading: state.articles.isLoading,

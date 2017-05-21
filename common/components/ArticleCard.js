@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
+    maxHeight: '300px',
   },
   imageStyle: {
     alignSelf: 'center',
@@ -143,9 +144,7 @@ class ArticleCard extends React.Component {
                 {/* <span><MdGroup /> {numUsers} users</span> */}
                 <span><MdComment /> {this.props.numAnnotations} {this.props.numAnnotations > 1 ? 'annotations' : 'annotation'}</span>
               </div>
-              <div className={css(styles.imageStyle)}>
-                <img height={'250px'} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
-              </div>
+              <img style={{ maxWidth: '80%', alignSelf: 'center' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
             </div> }
           </div>
           <CardActions className={css(styles.cardButtons)}>
@@ -173,9 +172,9 @@ ArticleCard.propTypes = {
   domain: React.PropTypes.string.isRequired,
   subtitle: React.PropTypes.string.isRequired,
   annotationContent: React.PropTypes.string.isRequired,
-  numUsers: React.PropTypes.number.isRequired,
+  numUsers: React.PropTypes.number,
   numAnnotations: React.PropTypes.number.isRequired,
-  numReplies: React.PropTypes.number.isRequired,
+  numReplies: React.PropTypes.number,
   username: React.PropTypes.string.isRequired,
   timeSince: React.PropTypes.string.isRequired,
   image: React.PropTypes.string.isRequired,
@@ -183,4 +182,8 @@ ArticleCard.propTypes = {
   slug: React.PropTypes.string.isRequired,
 };
 
+ArticleCard.defaultProps = {
+  numUsers: 0,
+  numReplies: 0,
+};
 export default ArticleCard;

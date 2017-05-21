@@ -105,7 +105,7 @@ class CreateGroupDialog extends React.Component {
   }
 }
 
-CreateGroupDialog.propTypes = {
+CreateGroupDialog.PropTypes = {
   validName: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,

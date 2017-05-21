@@ -4,9 +4,11 @@
 /* eslint-disable consistent-return */
 /* eslint-disable quotes */
 
-import newrelic from 'newrelic';
+// import newrelic from 'newrelic';
 import path from 'path';
+import https from 'https';
 import http from 'http';
+import httpsRedirect from 'express-https-redirect';
 import express from 'express';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
@@ -159,8 +161,12 @@ export const createServer = (config) => {
     `);
   });
 
+  app.use('/', httpsRedirect(true));
+
   const server = http.createServer(app);
 
+  // comment out line 166 and un comment line 169 if running locally
+  // const server = http.createServer(app);
 
   // Heroku dynos automatically timeout after 30s. Set our
   // own timeout here to force sockets to close before that.

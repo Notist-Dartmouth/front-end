@@ -1,16 +1,14 @@
- /* eslint-disable */
 import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import { deepOrange600, red700, cyan500, white, blue500 } from 'material-ui/styles/colors';
+import { deepOrange600, red700, white } from 'material-ui/styles/colors';
 import Drawer from 'material-ui/Drawer';
 import { List, ListItem } from 'material-ui/List';
-import ActionInfo from 'material-ui/svg-icons/action/info';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router';
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import HourglassIcon from 'material-ui/svg-icons/action/hourglass-empty';
 import GroupDialog from '../containers/GroupDialog';
 
@@ -53,10 +51,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class LeftNav extends React.Component {
+class LeftNav extends React.Component {
 
   render() {
-    const { profilePicture, groups, userName, userPoints, personalList, exploreList, followingList } = this.props;
+    // const { profilePicture, groups, userName, userPoints, personalList, exploreList, followingList } = this.props;
+    const { groups } = this.props;
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={css(styles.drawerContainer)}>
@@ -78,6 +77,7 @@ export default class LeftNav extends React.Component {
               </Link>
               {groups.map(g => (
                 <Link
+                  onClick={() => this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: false, search: [] })}
                   to={{
                     pathname: `/feed/${g._id}`,
                     state: {
@@ -103,6 +103,12 @@ export default class LeftNav extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  toggled: state.articles ? state.articles.toggled : false,
+});
+
+export default connect(mapStateToProps)(LeftNav);
 
 /* eslint-enable */
 
