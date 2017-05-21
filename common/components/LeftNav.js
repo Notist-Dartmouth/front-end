@@ -9,6 +9,7 @@ import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router';
+import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import HourglassIcon from 'material-ui/svg-icons/action/hourglass-empty';
 import GroupDialog from '../containers/GroupDialog';
 
@@ -63,12 +64,12 @@ class LeftNav extends React.Component {
             <List>
               <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
               <Link to={{
-                  pathname: '/explore',
-                  state: {
-                    groupName: 'Explore',
-                    groupDescription: 'Discover new groups',
-                  }
-                }}
+                pathname: '/explore',
+                state: {
+                  groupName: 'Explore',
+                  groupDescription: 'Discover new groups',
+                },
+              }}
               >
                 <ListItem
                   primaryText="Explore"

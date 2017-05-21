@@ -12,6 +12,7 @@ class App extends Component {
       exploreError: null,
     };
     this.onExploreComplete = this.onExploreComplete.bind(this);
+    this.onExploreError = this.onExploreError.bind(this);
   }
 
   onExploreComplete() {
