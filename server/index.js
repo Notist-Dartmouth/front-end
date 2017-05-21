@@ -163,7 +163,7 @@ export const createServer = (config) => {
 
   app.use('/', httpsRedirect(true));
 
-  const server = https.createServer(app);
+  const server = http.createServer(app);
 
   // comment out line 166 and un comment line 169 if running locally
   // const server = http.createServer(app);
