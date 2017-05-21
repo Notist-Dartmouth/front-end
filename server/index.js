@@ -6,8 +6,8 @@
 
 // import newrelic from 'newrelic';
 import path from 'path';
-import https from 'https';
 import http from 'http';
+import httpsRedirect from 'express-https-redirect';
 import express from 'express';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
@@ -160,32 +160,9 @@ export const createServer = (config) => {
     `);
   });
 
-  let server;
+  app.use('/', httpsRedirect(true));
 
-  if (config.nodeEnv === 'production') {
-    server = https.createServer(app);
-  } else {
-    server = http.createServer(app);
-  }
-
-  if (config.nodeEnv === 'production') {
-    app.enable('trust proxy');
-
-    // Add a handler to inspect the req.secure flag (see
-    // http://expressjs.com/api#req.secure). This allows us
-    // to know whether the request was via http or https.
-
-    app.use((req, res, next) => {
-      if (req.secure) {
-      // request was via https, so do no special handling
-        next();
-      } else {
-      // request was via http, so redirect to https
-        res.redirect(`https://$notist.io${req.url}`);
-      }
-    });
-  }
-
+  const server = http.createServer(app);
 
   // Heroku dynos automatically timeout after 30s. Set our
   // own timeout here to force sockets to close before that.
