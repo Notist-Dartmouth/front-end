@@ -163,6 +163,12 @@ export const createServer = (config) => {
   let server;
 
   if (config.nodeEnv === 'production') {
+    server = https.createServer(app);
+  } else {
+    server = http.createServer(app);
+  }
+
+  if (config.nodeEnv === 'production') {
     app.enable('trust proxy');
 
     // Add a handler to inspect the req.secure flag (see
@@ -175,12 +181,9 @@ export const createServer = (config) => {
         next();
       } else {
       // request was via http, so redirect to https
-        res.redirect(`https://${req.headers.host}${req.url}`);
+        res.redirect(`https://$notist.io${req.url}`);
       }
     });
-    server = https.createServer(app);
-  } else {
-    server = http.createServer(app);
   }
 
 
