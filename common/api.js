@@ -34,6 +34,14 @@ export const fetchArticleAnnotations = (articleURI) => {
   .then(res => handleResponse(res));
 };
 
+export const fetchExploreArticles = () => {
+  return fetch(`${config.apiHost}/api/explore`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
 export const fetchUser = () => {
   return fetch(`${config.apiHost}/api/user`, {
     method: 'GET',
