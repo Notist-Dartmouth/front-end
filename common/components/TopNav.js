@@ -246,7 +246,7 @@ class TopNav extends React.Component {
       */
 
     /* eslint-disable */
-    const isFeedView = window.location.href.includes('feed') || window.location.href === 'http://notist.io/' || window.location.href === 'http://localhost:5000/';
+    const isFeedView = window.location.href.includes('feed') || window.location.href === 'https://notist.io/' || window.location.href === 'http://localhost:5000/';
     let annotations = [];
     let groupId = '0';
     if (isFeedView) {
@@ -294,7 +294,7 @@ class TopNav extends React.Component {
           <div className={css(styles.toolbarContainer)}>
             <div className={css(styles.feedDetails)}>
               <div className={css(styles.feedTopRow)}>
-                <div style={feedName}>{this.props.currentFeedName || <a style={{ color: white }} href="http://notist.io/">Notist</a>}</div>
+                <div style={feedName}>{this.props.currentFeedName || <a style={{ color: white }} href="https://notist.io/">Notist</a>}</div>
                 <div style={{ paddingRight: 15 }}>{subButton}</div>
                 { shouldLoadMembers ? <PeopleIcon /> : '' }
                 <div className={css(styles.numMembers)}>{shouldLoadMembers ? (totalAuthorNumber.toString().concat(totalAuthorNumber === 1 ? ' member' : ' members')) : ''}</div>
