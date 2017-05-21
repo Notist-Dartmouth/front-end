@@ -6,6 +6,7 @@
 
 // import newrelic from 'newrelic';
 import path from 'path';
+import https from 'https';
 import http from 'http';
 import express from 'express';
 import helmet from 'helmet';
@@ -159,7 +160,28 @@ export const createServer = (config) => {
     `);
   });
 
-  const server = http.createServer(app);
+  let server;
+
+  if (config.nodeEnv === 'production') {
+    app.enable('trust proxy');
+
+    // Add a handler to inspect the req.secure flag (see
+    // http://expressjs.com/api#req.secure). This allows us
+    // to know whether the request was via http or https.
+
+    app.use((req, res, next) => {
+      if (req.secure) {
+      // request was via https, so do no special handling
+        next();
+      } else {
+      // request was via http, so redirect to https
+        res.redirect(`https://${req.headers.host}${req.url}`);
+      }
+    });
+    server = https.createServer(app);
+  } else {
+    server = http.createServer(app);
+  }
 
 
   // Heroku dynos automatically timeout after 30s. Set our
