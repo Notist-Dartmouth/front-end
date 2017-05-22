@@ -97,6 +97,7 @@ class ArticleCard extends React.Component {
       points,
       currentVotes,
       image,
+      excerpt,
       slug,
     } = this.props;
     const timeSince = moment(this.props.timeSince).fromNow();
@@ -139,6 +140,11 @@ class ArticleCard extends React.Component {
                 <span style={{ paddingLeft: 12 }}>{timeSince}</span>
                 <div className={css(styles.annotationTextStyle)} dangerouslySetInnerHTML={{ __html: marked(this.props.annotationContent || '') }} />
               </div>}
+              {this.props.numAnnotations === 0 && excerpt &&
+                <div style={{ marginTop: 8 }} className={css(styles.annotationTextStylee)}>
+                  <span>{excerpt}</span>
+                </div>
+              }
             </div>
             {this.props.narrowCard ? '' :
             <div className={css(styles.rightFlex)}>
