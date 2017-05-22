@@ -106,6 +106,28 @@ export default function loadArticles(groupId, isPublic) {
   };
 }
 
+function handleFetchNotifications(dispatch, notifications) {
+  return dispatch({ type: 'NOTIFICATIONS', notifications });
+}
+
+function handleNumUnreadNotifications(dispatch, numUnreadNotifications) {
+  return dispatch({ type: 'UPDATE_UNREAD_NOTIFICATIONS', numUnreadNotifications });
+}
+
+export function fetchNumUnreadNotifications() {
+  return (dispatch, getState) => {
+    api.fetchNumUnreadNotifications().then(numUnreadNotifications =>
+      handleNumUnreadNotifications(dispatch, numUnreadNotifications));
+  };
+}
+
+export function fetchNotifications() {
+  return (dispatch) => {
+    api.fetchNotifications().then(notifications =>
+      handleFetchNotifications(dispatch, notifications));
+  };
+}
+
 function handleFetchPublicGroupsResponse(dispatch, groups) {
   return dispatch({ type: 'FETCH_PUBLIC_GROUPS', publicgroups: groups });
 }

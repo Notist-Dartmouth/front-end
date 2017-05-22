@@ -87,6 +87,22 @@ export const fetchPublicGroups = () => {
   }).then(res => handleResponse(res));
 };
 
+export const fetchNotifications = () => {
+  return fetch(`${config.apiHost}/api/user/notifications`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
+export const fetchNumUnreadNotifications = () => {
+  return fetch(`${config.apiHost}/api/user/numUnreadNotifications`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
 export const editAnnotation = (annotationId, text) => { // Where do I add the body text to this? Is it a header or... ?
   return fetch(`${config.apiHost}/api/annotation/${annotationId}/edit`, {
     method: 'POST',
