@@ -105,7 +105,7 @@ class NotificationsDialog extends React.Component {
               }
             }
             const timeSince = moment(notification.createDate).fromNow();
-            return <a href={notification.href}>{`${name} replied to your comment ${timeSince} ago\n`}</a>;
+            return <a href={notification.href}>{`${name} replied to your comment ${timeSince} \n`}</a>;
           }) : ''
         }
           <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
