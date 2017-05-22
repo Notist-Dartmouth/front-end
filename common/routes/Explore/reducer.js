@@ -16,11 +16,13 @@ export default function explore(state = initialState, action) {
     case types.LOAD_EXPLORE_REQUEST:
       return Object.assign({}, state, {
         isLoading: true,
+        error: null,
       });
     case types.LOAD_EXPLORE_SUCCESS:
       return Object.assign({}, state, {
         articles: action.articles,
         isLoading: false,
+        error: null,
       });
     default:
       return state;

@@ -13,6 +13,7 @@ class App extends Component {
     };
     this.onExploreComplete = this.onExploreComplete.bind(this);
     this.onExploreError = this.onExploreError.bind(this);
+    this.onErrorRetry = this.onErrorRetry.bind(this);
   }
 
   onExploreComplete() {
@@ -21,6 +22,10 @@ class App extends Component {
 
   onExploreError(exploreError) {
     this.setState({ exploreError });
+  }
+
+  onErrorRetry() {
+    this.setState({ exploreError: null });
   }
 
   render() {
@@ -36,7 +41,7 @@ class App extends Component {
           <ExploreFeed />
         }
         { this.state.exploreError &&
-          <ExploreError />
+          <ExploreError handleRetry={this.onErrorRetry} />
         }
       </div>
     );

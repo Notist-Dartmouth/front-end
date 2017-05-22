@@ -67,7 +67,7 @@ class LeftNav extends React.Component {
                 pathname: '/explore',
                 state: {
                   groupName: 'Explore',
-                  groupDescription: 'Discover new groups',
+                  groupDescription: 'Discover new articles',
                 },
               }}
               >

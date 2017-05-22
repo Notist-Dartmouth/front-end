@@ -4,7 +4,6 @@ import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import FlatButton from 'material-ui/FlatButton';
-// import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import { red700, red300 } from 'material-ui/styles/colors';
 
 const muiTheme = getMuiTheme();
@@ -44,8 +43,12 @@ class ExploreSetup extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      isLoading: false,
+    };
     this.handleExploreComplete = this.handleExploreComplete.bind(this);
     this.handleExploreError = this.handleExploreError.bind(this);
+    this.startExplore = this.startExplore.bind(this);
   }
 
   componentDidMount() {
@@ -59,13 +62,22 @@ class ExploreSetup extends Component {
   }
 
   handleExploreComplete() {
+    this.setState({ isLoading: false });
     console.log('explore finished!');
     this.props.onExploreComplete();
   }
 
   handleExploreError() {
+    this.setState({ isLoading: false });
     console.log('explore errored!');
     this.props.onExploreError('error');
+  }
+
+  startExplore() {
+    this.setState({ isLoading: true });
+    const event = document.createEvent('Event');
+    event.initEvent('init_explore');
+    document.dispatchEvent(event);
   }
 
   render() {
@@ -73,37 +85,38 @@ class ExploreSetup extends Component {
       <MuiThemeProvider muiTheme={muiTheme} >
         <div className={css(styles.container)}>
           <Helmet title="Explore" />
-          <div>
+          { !this.state.isLoading && <div>
             <h2 className={css(styles.header)}>
               To use this feature:
             </h2>
-          </div>
-          <ol>
-            <li className={css(styles.listItem)}>
-              <span className={css(styles.helpText)}>
-                <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download Chrome Extension </a> and enable it!
+          </div> }
+          { this.state.isLoading ?
+            <div>
+              <h2>Finding articles for you...</h2>
+              <h3>This may take a minute</h3>
+            </div> :
+            <ol>
+              <li className={css(styles.listItem)}>
+                <span className={css(styles.helpText)}>
+                  <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download Chrome Extension </a> and enable it!
+                  </span>
+              </li>
+              <li className={css(styles.listItem)}>
+                <span className={css(styles.helpText)}>
+                  <a href="https://www.facebook.com/">Login</a> to Facebook on chrome!
                 </span>
-            </li>
-            <li className={css(styles.listItem)}>
-              <span className={css(styles.helpText)}>
-                <a href="https://www.facebook.com/">Login</a> to Facebook on chrome!
-              </span>
-            </li>
-            <li className={css(styles.listItem)}>
-              <FlatButton
-                className={css(styles.exploreButton)}
-                label="Get Started!"
-                primary
-                hoverColor={red300}
-                backgroundColor={red700}
-                onClick={(ev) => {
-                  const event = document.createEvent('Event');
-                  event.initEvent('init_explore');
-                  document.dispatchEvent(event);
-                }}
-              />
-            </li>
-          </ol>
+              </li>
+              <li className={css(styles.listItem)}>
+                <FlatButton
+                  className={css(styles.exploreButton)}
+                  label="Get Started!"
+                  primary
+                  hoverColor={red300}
+                  backgroundColor={red700}
+                  onClick={this.startExplore}
+                />
+              </li>
+            </ol> }
         </div>
       </MuiThemeProvider>
     );
