@@ -135,6 +135,14 @@ export const saveReply = (text, parent, articleURI) => {
   .then(res => handleResponse(res));
 };
 
+export const fetchArticleInformation = (articleId) => {
+  return fetch(`${config.apiHost}/api/articleById/${articleId}`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
 export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
   return fetch(`${config.apiHost}/api/group/${groupId}/user?userId=${userId}`, {
     method: 'POST',

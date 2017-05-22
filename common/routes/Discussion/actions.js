@@ -34,6 +34,18 @@ export function loadDiscussion(articleURI) {
   };
 }
 
+function handleArticleInformation(dispatch, articleInformation) {
+  dispatch({ type: 'FETCH_ARTICLE_INFORMATION', articleInformation });
+}
+
+export function fetchArticleInformation(articleId) {
+  return (dispatch) => {
+    return api.fetchArticleInformation(articleId).then((articleInformation) => {
+      return handleArticleInformation(dispatch, articleInformation);
+    });
+  };
+}
+
 export function saveReply(text, parent, articleURI) {
   return (dispatch, getState) => {
     return api.saveReply(text, parent, articleURI).then((reply) => {
