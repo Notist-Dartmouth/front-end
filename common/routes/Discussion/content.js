@@ -12,6 +12,7 @@ class App extends Component {
 
   componentDidMount() {
     const articleId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    console.log(articleId);
     Promise.resolve(this.props.dispatch(fetchArticleInformation(articleId))).then((articleInfo) => {
       this.props.dispatch(loadDiscussion(this.props.articleInformation.uri));
       console.log('Hi');
@@ -26,7 +27,7 @@ class App extends Component {
             {this.props.isLoading &&
               <h2>Loading...</h2>
             }
-            {this.props.annotations.filter(a => a.article === this.props.location.state.articleId)
+            {this.props.annotations.filter(a => a.article === this.props.articleInformation._id)
               .map(a =>
                 <div key={a._id} >
                   <Comments
