@@ -26,7 +26,7 @@ export default function createRouter(store) {
           cb(null, discussion);
         }}
         />
-        <Route path="profile" getComponent={(props, cb) => {
+        <Route path="profile/:userId" getComponent={(props, cb) => {
           injectAsyncReducer(store, 'Profile', profileReducer);
           cb(null, profile);
         }}
