@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ExploreSetup from './components/ExploreSetup';
 import ExploreFeed from './components/ExploreFeed';
 import ExploreError from './components/ExploreError';
+
+const muiTheme = getMuiTheme();
 
 class App extends Component {
 
@@ -30,20 +34,22 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        { !this.state.isExploreComplete && !this.state.exploreError &&
-          <ExploreSetup
-            onExploreComplete={this.onExploreComplete}
-            onExploreError={this.onExploreError}
-          />
-        }
-        { this.state.isExploreComplete && !this.state.exploreError &&
-          <ExploreFeed />
-        }
-        { this.state.exploreError &&
-          <ExploreError handleRetry={this.onErrorRetry} />
-        }
-      </div>
+      <MuiThemeProvider muiTheme={muiTheme} >
+        <div>
+          { !this.state.isExploreComplete && !this.state.exploreError &&
+            <ExploreSetup
+              onExploreComplete={this.onExploreComplete}
+              onExploreError={this.onExploreError}
+            />
+          }
+          { this.state.isExploreComplete && !this.state.exploreError &&
+            <ExploreFeed />
+          }
+          { this.state.exploreError &&
+            <ExploreError handleRetry={this.onErrorRetry} />
+          }
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

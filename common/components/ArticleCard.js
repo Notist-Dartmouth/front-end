@@ -129,14 +129,16 @@ class ArticleCard extends React.Component {
               <div className={css(styles.domainTextStyle)}>
                 <a style={{ color: fullBlack }} href={domain} target="_blank" rel="noopener noreferrer">{domain}</a>
               </div>
+              {this.props.numAnnotations > 0 &&
               <div style={{ marginTop: 8 }}>
                 <span className={css(styles.articleTextStyle)}>&quot;{this.props.subtitle}&quot;</span>
-              </div>
+              </div>}
+              {this.props.numAnnotations > 0 &&
               <div style={{ marginTop: 8 }}>
                 <span style={{ fontWeight: 900 }}>{username}</span>
                 <span style={{ paddingLeft: 12 }}>{timeSince}</span>
                 <div className={css(styles.annotationTextStyle)} dangerouslySetInnerHTML={{ __html: marked(this.props.annotationContent || '') }} />
-              </div>
+              </div>}
             </div>
             {this.props.narrowCard ? '' :
             <div className={css(styles.rightFlex)}>

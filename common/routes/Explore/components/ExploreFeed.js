@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
+import FlatButton from 'material-ui/FlatButton';
+import { red700, red300 } from 'material-ui/styles/colors';
 import { connect } from 'react-redux';
-// import ArticleCard from '../../../components/ArticleCard';
+import ArticleItem from '../../PostList/components/ArticleItem';
 import loadArticles from '../actions';
 
 class ExploreFeed extends Component {
@@ -18,6 +20,35 @@ class ExploreFeed extends Component {
           <div>
             <h2>Loading...</h2>
           </div>}
+        {this.props.error &&
+          <div>
+            <h2>Unable to load articles at this time</h2>
+            <br />
+            <FlatButton
+              label="Try again"
+              primary
+              style={{ color: 'white' }}
+              hoverColor={red300}
+              backgroundColor={red700}
+              onClick={this.props.fetchExploreArticles}
+            />
+          </div>}
+        <div>
+          {this.props.articles.map(a =>
+            <ArticleItem
+              style={{ width: '100%' }}
+              key={a._id}
+              title={a.info && a.info.title ? a.info.title : ''}
+              imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
+              articleURI={a.uri}
+              annotations={a.annotations}
+              articleID={a._id}
+              wordCount={a.word_count}
+              datePublished={a.info && a.info.date_published}
+              excerpt={a.info && a.info.excerpt}
+            />,
+          )}
+        </div>
       </div>
     );
   }
