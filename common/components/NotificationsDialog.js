@@ -12,6 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import Badge from 'material-ui/Badge';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Card, CardText } from 'material-ui/Card';
 import { fetchNotifications, fetchNumUnreadNotifications } from '../routes/PostList/actions';
 
 
@@ -84,6 +85,7 @@ class NotificationsDialog extends React.Component {
           </IconButton>
         </Badge>
         <Dialog
+          bodyStyle={{ backgroundColor: grey300 }}
           titleStyle={{ color: fullBlack }}
           title="Notifications"
           actions={actions}
@@ -105,12 +107,15 @@ class NotificationsDialog extends React.Component {
               }
             }
             const timeSince = moment(notification.createDate).fromNow();
-            return <a href={notification.href}>{`${name} replied to your comment ${timeSince} \n`}</a>;
+            return (
+              <Card style={{ marginTop: '10px' }}>
+                <CardText>
+                  <a href={notification.href}>{`${name} replied to your comment ${timeSince} \n`}</a>
+                </CardText>
+              </Card>
+            );
           }) : ''
         }
-          <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
-            {radios}
-          </RadioButtonGroup>
         </Dialog>
       </div>
     );
