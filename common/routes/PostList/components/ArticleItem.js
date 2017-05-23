@@ -18,8 +18,8 @@ const ArticleItem = props => (
   <ArticleCard
     title={props.title}
     domain={props.articleURI}
-    subtitle={props.annotations.length > 0 ? props.annotations[0].articleText : 'article text'}
-    annotationContent={props.annotations.length > 0 ? props.annotations[0].text : 'text'}
+    subtitle={props.annotations.length > 0 ? props.annotations[0].articleText : ''}
+    annotationContent={props.annotations.length > 0 ? props.annotations[0].text : ''}
     image={props.imageURL}
     username={props.annotations[0] && props.annotations[0].author ? convertName(props.annotations[0].author.name) : 'Anonymous'}
     timeSince={props.annotations[0] ? props.annotations[0].createDate : String(Date.now())}
