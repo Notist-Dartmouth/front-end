@@ -5,7 +5,6 @@ import React, { PropTypes } from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
-import { RadioButton } from 'material-ui/RadioButton';
 import { StyleSheet, css } from 'aphrodite';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 import { grey300, white, fullBlack } from 'material-ui/styles/colors';
@@ -13,6 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import AddCircle from 'material-ui/svg-icons/content/add-circle-outline';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 
 const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
@@ -27,7 +27,12 @@ const muiTheme = getMuiTheme({
 const styles = StyleSheet.create({
   radioButton: {
     textColor: fullBlack,
-    marginTop: 16,
+    width: '25%',
+    display: 'inline-block',
+  },
+  radioContainer: {
+    marginTop: 15,
+    textAlign: 'center',
   },
   groupInput: {
     display: 'block',
@@ -98,6 +103,23 @@ class CreateGroupDialog extends React.Component {
                 onChange={this.props.onChange}
               />
             </div>
+            <RadioButtonGroup
+              name="groupType"
+              className={css(styles.radioContainer)}
+              defaultSelected="public"
+              onChange={this.props.onRadioToggle}
+            >
+              <RadioButton
+                className={css(styles.radioButton)}
+                value="public"
+                label="Public"
+              />
+              <RadioButton
+                className={css(styles.radioButton)}
+                value="personal"
+                label="Personal"
+              />
+            </RadioButtonGroup>
           </Dialog>
         </span>
       </MuiThemeProvider>
@@ -107,6 +129,7 @@ class CreateGroupDialog extends React.Component {
 
 CreateGroupDialog.PropTypes = {
   validName: PropTypes.bool.isRequired,
+  onRadioToggle: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
