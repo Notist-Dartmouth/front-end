@@ -34,6 +34,14 @@ export const fetchArticleAnnotations = (articleURI) => {
   .then(res => handleResponse(res));
 };
 
+export const fetchExploreArticles = () => {
+  return fetch(`${config.apiHost}/api/explore`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
 export const fetchUser = () => {
   return fetch(`${config.apiHost}/api/user`, {
     method: 'GET',
@@ -87,6 +95,22 @@ export const fetchPublicGroups = () => {
   }).then(res => handleResponse(res));
 };
 
+export const fetchNotifications = () => {
+  return fetch(`${config.apiHost}/api/user/notifications`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
+export const fetchNumUnreadNotifications = () => {
+  return fetch(`${config.apiHost}/api/user/numUnreadNotifications`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
 export const editAnnotation = (annotationId, text) => { // Where do I add the body text to this? Is it a header or... ?
   return fetch(`${config.apiHost}/api/annotation/${annotationId}/edit`, {
     method: 'POST',
@@ -122,6 +146,14 @@ export const saveReply = (text, parent, articleURI) => {
 export const getRecentUserAnnotations = (userId) => {
   console.log(`${config.apiHost}/api/user/${userId}/annotations`);
   return fetch(`${config.apiHost}/api/user/592240051904e8b5012c0700/annotations`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
+export const fetchArticleInformation = (articleId) => {
+  return fetch(`${config.apiHost}/api/articleById/${articleId}`, {
     method: 'GET',
     credentials: 'include',
     headers,

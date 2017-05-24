@@ -57,6 +57,16 @@ export default function articles(state = initialState, action) {
         publicgroups: action.publicgroups,
         search: action.publicgroups.filter(pg => state.search.map(sg => sg._id).includes(pg._id)),
       });
+    case 'UPDATE_UNREAD_NOTIFICATIONS':
+      return Object.assign({}, state, {
+        ...state,
+        numUnreadNotifications: action.numUnreadNotifications,
+      });
+    case 'NOTIFICATIONS':
+      return Object.assign({}, state, {
+        ...state,
+        notifications: action.notifications,
+      });
     default:
       return state;
   }

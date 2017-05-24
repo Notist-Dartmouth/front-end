@@ -30,6 +30,11 @@ export default function discussionViewReducer(state = {
         ordering: action.ordering,
         isEditing: action.isEditing,
       });
+    case 'FETCH_ARTICLE_INFORMATION':
+      return Object.assign({}, state, {
+        ...state,
+        articleInformation: action.articleInformation,
+      });
     case 'EDIT':
       return Object.assign({}, state, {
         ...state,

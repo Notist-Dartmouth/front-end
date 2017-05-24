@@ -3,6 +3,8 @@ import { IndexRoute, Route, Router, browserHistory } from 'react-router';
 import App from '../components/App';
 import ArticleList from './PostList/containers/ArticleList';
 import articleReducer from './PostList/reducer';
+import Explore from './Explore';
+import exploreReducer from './Explore/reducer';
 import Login from '../components/Login';
 import NotFound from './NotFound';
 import { injectAsyncReducer } from '../store';
@@ -29,6 +31,11 @@ export default function createRouter(store) {
         <Route path="profile/:userId" getComponent={(props, cb) => {
           injectAsyncReducer(store, 'Profile', profileReducer);
           cb(null, profile);
+        }}
+        />
+        <Route path="explore" getComponent={(props, cb) => {
+          injectAsyncReducer(store, 'explore', exploreReducer);
+          cb(null, Explore);
         }}
         />
         <Route path="feed/:group" getComponent={(props, cb) => {

@@ -10,6 +10,11 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import { grey300, white, fullBlack } from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import Badge from 'material-ui/Badge';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { Card, CardText } from 'material-ui/Card';
+import { fetchNotifications, fetchNumUnreadNotifications } from '../routes/PostList/actions';
+
 
 const styles = StyleSheet.create({
   radioButton: {
@@ -20,18 +25,22 @@ const styles = StyleSheet.create({
 /**
  * Dialog content can be scrollable.
  */
-export default class NotificationsDialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.numNotifications = props.numNotifications;
-  }
+class NotificationsDialog extends React.Component {
 
   state = {
     open: false,
+    notifications: [],
   };
 
-  handleOpen = () => {
-    this.setState({ open: true });
+  handleClick = () => {
+    Promise.resolve(this.props.dispatch(fetchNotifications())).then((notifications) => {
+      this.props.dispatch(fetchNumUnreadNotifications);
+      this.handleOpen(notifications);
+    });
+  }
+
+  handleOpen = (notifications) => {
+    this.setState({ open: true, notifications });
   };
 
   handleClose = () => {
@@ -67,15 +76,16 @@ export default class NotificationsDialog extends React.Component {
     return (
       <div>
         <Badge
-          badgeContent={this.numNotifications}
+          badgeContent={this.props.numUnreadNotifications}
           secondary
           badgeStyle={{ top: 12, right: 12 }}
         >
-          <IconButton tooltip="Notifications" onTouchTap={this.handleOpen}>
+          <IconButton tooltip="Notifications" onTouchTap={this.handleClick}>
             <NotificationsIcon color={white} hoverColor={grey300} />
           </IconButton>
         </Badge>
         <Dialog
+          bodyStyle={{ backgroundColor: grey300 }}
           titleStyle={{ color: fullBlack }}
           title="Notifications"
           actions={actions}
@@ -84,13 +94,38 @@ export default class NotificationsDialog extends React.Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent
         >
-          <p style={{ color: fullBlack }}>You have {this.numNotifications} new notifications</p>
-          <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
-            {radios}
-          </RadioButtonGroup>
+          {this.props.notifications ? this.props.notifications.map((notification, i) => {
+            let name = 'Anonymous';
+            if (notification.sender && notification.sender.name) {
+              name = notification.sender.name;
+              const filteredName = notification.sender.name.split(' ');
 
+              if (filteredName.length >= 2) {
+                if (filteredName[1].charAt(0)) { // If it's not null
+                  name = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
+                }
+              }
+            }
+            const timeSince = moment(notification.createDate).fromNow();
+            return (
+              <Card style={{ marginTop: '10px' }}>
+                <CardText>
+                  <a href={notification.href}>{`${name} replied to your comment ${timeSince} \n`}</a>
+                </CardText>
+              </Card>
+            );
+          }) : ''
+        }
         </Dialog>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  numUnreadNotifications: state.articles ? state.articles.numUnreadNotifications : 0,
+  notifications: state.articles ? state.articles.notifications : [],
+});
+
+
+export default connect(mapStateToProps)(NotificationsDialog);

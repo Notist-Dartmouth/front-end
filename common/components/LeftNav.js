@@ -9,6 +9,7 @@ import { List, ListItem } from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router';
+import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import HourglassIcon from 'material-ui/svg-icons/action/hourglass-empty';
 import GroupDialog from '../containers/GroupDialog';
 
@@ -62,6 +63,19 @@ class LeftNav extends React.Component {
           <Drawer docked containerStyle={{ position: 'relative', backgroundColor: '#44808C', paddingLeft: 20, width: 320 }} className={css(styles.drawer)}>
             <List>
               <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
+              <Link to={{
+                pathname: '/explore',
+                state: {
+                  groupName: 'Explore',
+                  groupDescription: 'Discover new articles',
+                },
+              }}
+              >
+                <ListItem
+                  primaryText="Explore"
+                  leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
+                />
+              </Link>
               {groups.map(g => (
                 <Link
                   onClick={() => this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: false, search: [] })}
