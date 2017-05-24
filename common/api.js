@@ -145,7 +145,7 @@ export const saveReply = (text, parent, articleURI) => {
 
 export const getRecentUserAnnotations = (userId) => {
   console.log(`${config.apiHost}/api/user/${userId}/annotations`);
-  return fetch(`${config.apiHost}/api/user/592240051904e8b5012c0700/annotations`, {
+  return fetch(`${config.apiHost}/api/user/58feaa6738babe01a6ea315b/annotations`, {
     method: 'GET',
     credentials: 'include',
     headers,
