@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   groupInput: {
     display: 'block',
     width: '75%',
-    margin: '0 auto',
+    margin: '10px auto',
   },
 });
 

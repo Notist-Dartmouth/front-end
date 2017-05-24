@@ -45,7 +45,9 @@ class GroupDialog extends React.Component {
       description: this.state.description,
       isPublic: this.state.isPublic,
     };
+
     this.props.dispatch(saveGroup(newGroup));
+    this.setState({ isPublic: true });
   }
 
   render() {
