@@ -119,9 +119,10 @@ export const saveReply = (text, parent, articleURI) => {
   .then(res => handleResponse(res));
 };
 
-export const getUserAnnotations = (userId) => {
-  return fetch(`${config.apiHost}/api/user/${userId}/annotations`, {
-    method: 'DELETE',
+export const getRecentUserAnnotations = (userId) => {
+  console.log(`${config.apiHost}/api/user/${userId}/annotations`);
+  return fetch(`${config.apiHost}/api/user/592240051904e8b5012c0700/annotations`, {
+    method: 'GET',
     credentials: 'include',
     headers,
   }).then(res => handleResponse(res));

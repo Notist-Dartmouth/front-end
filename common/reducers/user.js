@@ -48,6 +48,11 @@ function user(state = initialState, action) {
         isFetchingUser: false,
         isAuthenticated: action.isAuthenticated,
       });
+    case 'GET_RECENT_ANNOTATIONS':
+      return Object.assign({}, state, {
+        ...state,
+        recentAnnotations: action.recentAnnotations,
+      });
     default:
       return state;
   }

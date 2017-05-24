@@ -41,6 +41,22 @@ export function fetchUser() {
   };
 }
 
+function handleRecentAnnotations(recentAnnotations) {
+  return {
+    type: 'GET_RECENT_ANNOTATIONS',
+    recentAnnotations,
+  };
+}
+
+export function getRecentUserAnnotations(userId) {
+  console.log(`userId inside getRecent is${userId}`);
+  return (dispatch) => {
+    api.getRecentUserAnnotations(userId).then((recentAnnotations) => {
+      dispatch(handleRecentAnnotations(recentAnnotations));
+    });
+  };
+}
+
 export function updateAuthStatus(isAuthenticated) {
   return {
     type: types.UPDATE_AUTH_STATUS,
