@@ -1,5 +1,6 @@
 import * as types from '../constants/ActionTypes';
 import * as api from '../api';
+import { fetchPublicGroups } from '../routes/PostList/actions';
 
 function handleSaveGroupSuccess(group) {
   return {
@@ -14,6 +15,9 @@ export function saveGroup(group) {
     .then((savedGroup) => {
       if (savedGroup.SUCCESS) {
         dispatch(handleSaveGroupSuccess(savedGroup.SUCCESS));
+        if (savedGroup.SUCCESS.isPublic) {
+          dispatch(fetchPublicGroups());
+        }
       } // TODO handle error
     });
 }
