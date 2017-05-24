@@ -123,8 +123,12 @@ export function fetchNumUnreadNotifications() {
 
 export function fetchNotifications() {
   return (dispatch) => {
-    api.fetchNotifications().then(notifications =>
-      handleFetchNotifications(dispatch, notifications));
+    api.fetchNotifications().then((notifications) => {
+      api.fetchNumUnreadNotifications().then((numUnreadNotifications) => {
+        handleNumUnreadNotifications(dispatch, numUnreadNotifications);
+        handleFetchNotifications(dispatch, notifications);
+      });
+    });
   };
 }
 

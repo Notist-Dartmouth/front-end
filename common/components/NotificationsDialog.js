@@ -33,14 +33,13 @@ class NotificationsDialog extends React.Component {
   };
 
   handleClick = () => {
-    Promise.resolve(this.props.dispatch(fetchNotifications())).then((notifications) => {
-      this.props.dispatch(fetchNumUnreadNotifications);
-      this.handleOpen(notifications);
+    Promise.resolve(this.props.dispatch(fetchNotifications())).then(() => {
+      this.handleOpen();
     });
   }
 
-  handleOpen = (notifications) => {
-    this.setState({ open: true, notifications });
+  handleOpen = () => {
+    this.setState({ open: true });
   };
 
   handleClose = () => {
@@ -62,28 +61,22 @@ class NotificationsDialog extends React.Component {
       />,
     ];
 
-    const radios = [];
-    for (let i = 0; i < 20; i += 1) {
-      radios.push(
-        <RadioButton
-          key={i}
-          value={`value${i + 1}`}
-          label={`Option ${i + 1}`}
-        />,
-      );
-    }
-
     return (
       <div>
-        <Badge
-          badgeContent={this.props.numUnreadNotifications}
-          secondary
-          badgeStyle={{ top: 12, right: 12 }}
-        >
+        {this.props.numUnreadNotifications !== 0 ?
+          <Badge
+            badgeContent={this.props.numUnreadNotifications}
+            secondary
+            badgeStyle={{ top: 12, right: 12 }}
+          >
+            <IconButton tooltip="Notifications" onTouchTap={this.handleClick}>
+              <NotificationsIcon color={white} hoverColor={grey300} />
+            </IconButton>
+          </Badge> :
           <IconButton tooltip="Notifications" onTouchTap={this.handleClick}>
             <NotificationsIcon color={white} hoverColor={grey300} />
           </IconButton>
-        </Badge>
+      }
         <Dialog
           bodyStyle={{ backgroundColor: grey300 }}
           titleStyle={{ color: fullBlack }}
@@ -110,7 +103,7 @@ class NotificationsDialog extends React.Component {
             return (
               <Card style={{ marginTop: '10px' }}>
                 <CardText>
-                  <a href={notification.href}>{`${name} replied to your comment ${timeSince} \n`}</a>
+                  <a href={notification.href}>{`${name} replied to your comment ${timeSince}`}</a>
                 </CardText>
               </Card>
             );
@@ -121,6 +114,10 @@ class NotificationsDialog extends React.Component {
     );
   }
 }
+
+NotificationsDialog.defaultProps = {
+  numUnreadNotifications: 0,
+};
 
 const mapStateToProps = state => ({
   numUnreadNotifications: state.articles ? state.articles.numUnreadNotifications : 0,
