@@ -10,10 +10,18 @@ class GroupDialog extends React.Component {
     this.state = {
       name: '',
       description: '',
+      isPublic: true,
       validName: true,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRadioToggle = this.handleRadioToggle.bind(this);
+  }
+
+  handleRadioToggle(e, newValue) {
+    this.setState({
+      isPublic: newValue === 'public',
+    });
   }
 
   handleChange(e, newValue) {
@@ -35,14 +43,18 @@ class GroupDialog extends React.Component {
     const newGroup = {
       name: this.state.name,
       description: this.state.description,
+      isPublic: this.state.isPublic,
     };
+
     this.props.dispatch(saveGroup(newGroup));
+    this.setState({ isPublic: true });
   }
 
   render() {
     return (
       <CreateGroupDialog
         validName={this.state.validName}
+        onRadioToggle={this.handleRadioToggle}
         onChange={this.handleChange}
         onSubmit={this.handleSubmit}
       />
