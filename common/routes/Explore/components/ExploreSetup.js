@@ -41,18 +41,22 @@ class ExploreSetup extends Component {
     super(props);
     this.state = {
       isLoading: false,
+      progress: 0,
     };
     this.handleExploreComplete = this.handleExploreComplete.bind(this);
     this.handleExploreError = this.handleExploreError.bind(this);
+    this.handleExploreProgress = this.handleExploreProgress.bind(this);
     this.startExplore = this.startExplore.bind(this);
   }
 
   componentDidMount() {
+    document.addEventListener('explore_progress', this.handleExploreProgress);
     document.addEventListener('explore_done', this.handleExploreComplete);
     document.addEventListener('explore_error', this.handleExploreError);
   }
 
   componentWillUnmount() {
+    document.removeEventListener('explore_progress', this.handleExploreProgress);
     document.removeEventListener('explore_done', this.handleExploreComplete);
     document.removeEventListener('explore_error', this.handleExploreError);
   }
@@ -67,6 +71,11 @@ class ExploreSetup extends Component {
     this.setState({ isLoading: false });
     console.log('explore errored!');
     this.props.onExploreError('error');
+  }
+
+  handleExploreProgress(progressEvent) {
+    console.log(progressEvent.detail);
+    this.setState({ progress: null });
   }
 
   startExplore() {
