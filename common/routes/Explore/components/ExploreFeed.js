@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import FlatButton from 'material-ui/FlatButton';
 import { red700, red300 } from 'material-ui/styles/colors';
 import { connect } from 'react-redux';
-import ArticleItem from '../../PostList/components/ArticleItem';
+import ExploreItem from './ExploreItem';
 import loadArticles from '../actions';
 
 class ExploreFeed extends Component {
@@ -35,16 +35,15 @@ class ExploreFeed extends Component {
           </div>}
         <div>
           { !this.props.isLoading && !this.props.error && this.props.articles.map(a =>
-            <ArticleItem
+            <ExploreItem
               style={{ width: '100%' }}
               key={a._id}
               title={a.info && a.info.title ? a.info.title : ''}
               imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
               articleURI={a.uri}
-              annotations={a.annotations}
               articleID={a._id}
-              wordCount={a.word_count}
-              datePublished={a.info && a.info.date_published}
+              wordCount={a.info.word_count}
+              datePublished={a.info.date_published}
               excerpt={a.info && a.info.excerpt}
             />,
           )}
