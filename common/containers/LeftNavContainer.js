@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import LeftNav from '../components/LeftNav';
-import { fetchUser, getRecentUserAnnotations } from '../actions/groups';
+import { fetchUser } from '../actions/groups';
 
 const personalList = [
   {
@@ -45,9 +45,7 @@ const followingList = [
 class LeftNavContainer extends Component {
 
   componentDidMount() {
-    Promise.resolve(this.props.dispatch(fetchUser())).then(() => {
-      this.props.dispatch(getRecentUserAnnotations(this.props._id));
-    });
+    this.props.dispatch(fetchUser());
   }
 
   render() {
@@ -82,7 +80,6 @@ LeftNavContainer.defaultProps = {
 
 function mapStateToProps(state, ownProps) {
   const { groups, _id } = state.user;
-  console.log(`Id is: ${_id}`);
   return { groups, _id };
 }
 

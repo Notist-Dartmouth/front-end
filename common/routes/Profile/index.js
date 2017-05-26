@@ -1,32 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ProfileCard from './components/profileCard';
-import RecentAnnotations from './components/recentAnnotations';
+import Annotation from './components/annotation';
+import getRecentUserAnnotations from './actions';
 
-const Profile = props => (
-  <div>
-    <ProfileCard />
-    <RecentAnnotations />
-  </div>
-);
+class Profile extends Component {
 
-// CommentBox.propTypes = {
-//   parentIdx: PropTypes.number.isRequired,
-//   isVisible: PropTypes.bool.isRequired,
-//   dispatch: PropTypes.func.isRequired,
-//   ordering: PropTypes.array.isRequired,
-// };
+  componentDidMount() {
+    Promise.resolve(this.props.dispatch(getRecentUserAnnotations('58feaa6738babe01a6ea315b'))).then(() => {
+      this.forceUpdate();
+    });
+  }
+
+  /* eslint-disable */
+
+  render() {
+    console.log(`Recent user annotations: ${this.props.recentAnnotations}`);
+    return (
+      <div>
+        <ProfileCard />
+        {this.props.recentAnnotations !== [] ? this.props.recentAnnotations.map((annotation, i) => {
+          return <Annotation key={i} annotation={annotation} />;
+        }) : 'Fuck'}
+      </div>
+    );
+  }
 
 /* eslint-enable */
 
-// function mapStateToProps(state) {
-//   const { parentIdx, isVisible, ordering } = state.Discussion;
-//   return {
-//     parentIdx,
-//     isVisible,
-//     ordering,
-//   };
-// }
+}
 
-// export default connect(mapStateToProps)(Profile);
+Profile.defaultProps = {
+  recentAnnotations: [],
+};
 
-export default Profile;
+const mapStateToProps = state => ({
+  recentAnnotations: state.Profile ? state.Profile.recentAnnotations : [],
+});
+
+
+export default connect(mapStateToProps)(Profile);

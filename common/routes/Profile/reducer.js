@@ -21,6 +21,10 @@ export default function posts(state = initialState, action) {
     case types.LOAD_POSTS_FAILURE:
       return { ...state,
         error: action.payload };
+    case 'GET_RECENT_ANNOTATIONS':
+      return { ...state,
+        recentAnnotations: action.recentAnnotations,
+      };
     default:
       return state;
   }
