@@ -34,7 +34,7 @@ class ExploreFeed extends Component {
             />
           </div>}
         <div>
-          {this.props.articles.map(a =>
+          { !this.props.isLoading && !this.props.error && this.props.articles.map(a =>
             <ArticleItem
               style={{ width: '100%' }}
               key={a._id}
@@ -57,6 +57,7 @@ class ExploreFeed extends Component {
 const mapStateToProps = state => ({
   articles: state.explore.articles,
   isLoading: state.explore.isLoading,
+  error: state.explore.error,
 });
 
 const mapDispatchToProps = dispatch => ({
