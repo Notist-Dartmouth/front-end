@@ -8,30 +8,33 @@ class ExploreItem extends Component {
     super(props);
     this.state = {
       annotations: [],
-      isMounted: false,
     };
     this.updateAnnotations = this.updateAnnotations.bind(this);
     this.loadAnnotations = this.loadAnnotations.bind(this);
   }
 
   componentDidMount() {
+    document.addEventListener(this.props.articleID, this.updateAnnotations);
     this.loadAnnotations();
   }
 
   componentWillUnmount() {
-    this.setState({ isMounted: false });
+    document.removeEventListener(this.props.articleID, this.updateAnnotations);
   }
 
   loadAnnotations() {
-    this.setState({ isMounted: true });
     fetchArticleAnnotations(this.props.articleURI).then((res) => {
-      this.updateAnnotations(res);
+      const annotationsEvent = new CustomEvent(this.props.articleID, {
+        detail: res,
+      });
+      document.dispatchEvent(annotationsEvent);
     });
   }
 
-  updateAnnotations(res) {
-    if (!res.ERROR && this.state.isMounted) {
-      this.setState({ annotations: res });
+  updateAnnotations(annotationsEvent) {
+    const annotations = annotationsEvent.detail;
+    if (!annotations.ERROR) {
+      this.setState({ annotations });
     }
   }
 
