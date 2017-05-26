@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { StyleSheet, css } from 'aphrodite';
+import CircularProgress from 'material-ui/CircularProgress';
 import FlatButton from 'material-ui/FlatButton';
 import { red700, red300 } from 'material-ui/styles/colors';
 
@@ -20,6 +21,9 @@ const styles = StyleSheet.create({
   exploreButton: {
     marginLeft: '30px',
     color: 'white',
+  },
+  progressContainer: {
+    marginTop: '25px',
   },
   listItem: {
     listStylePosition: 'inside',
@@ -41,7 +45,7 @@ class ExploreSetup extends Component {
     super(props);
     this.state = {
       isLoading: false,
-      progress: 0,
+      progress: [0, 282],
     };
     this.handleExploreComplete = this.handleExploreComplete.bind(this);
     this.handleExploreError = this.handleExploreError.bind(this);
@@ -74,8 +78,8 @@ class ExploreSetup extends Component {
   }
 
   handleExploreProgress(progressEvent) {
-    console.log(progressEvent.detail);
-    this.setState({ progress: null });
+    const { progress } = progressEvent.detail;
+    this.setState({ progress });
   }
 
   startExplore() {
@@ -97,18 +101,26 @@ class ExploreSetup extends Component {
         { this.state.isLoading ?
           <div style={{ textAlign: 'center' }}>
             <h1>Finding articles for you...</h1>
-            <br />
-            <h2>This may take a minute</h2>
+            <div className={css(styles.progressContainer)}>
+              <CircularProgress
+                mode="determinate"
+                value={this.state.progress[0]}
+                size={150}
+                color={red700}
+                thickness={10}
+                max={this.state.progress[1]}
+              />
+            </div>
           </div> :
           <ol>
             <li className={css(styles.listItem)}>
               <span className={css(styles.helpText)}>
-                <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download Chrome Extension </a> and enable it!
-                  </span>
+                <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download the Notist chrome extension </a>
+              </span>
             </li>
             <li className={css(styles.listItem)}>
               <span className={css(styles.helpText)}>
-                <a href="https://www.facebook.com/">Login</a> to Facebook on chrome!
+                <a href="https://www.facebook.com/">Login</a> to Facebook on chrome
                 </span>
             </li>
             <li className={css(styles.listItem)}>
