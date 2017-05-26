@@ -22,8 +22,8 @@ class Annotation extends Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <Card>
           <CardHeader style={styles.cardHeader}
-            title={this.props.annotation.articleText}
-            subtitle={this.props.annotation.text}
+            title={this.props.annotation.parent === null ? this.props.annotation.articleText : ''}
+            subtitle={<a href={`http://localhost:5000/discussion/${this.props.annotation.article}`}>{this.props.annotation.text}</a>}
           />
           <CardActions>
             <FlatButton label="Action1" />
