@@ -3,23 +3,23 @@ import { connect } from 'react-redux';
 import ProfileCard from './components/profileCard';
 import Annotation from './components/annotation';
 import getRecentUserAnnotations from './actions';
+import { fetchUser } from '../../actions/groups';
 
 class Profile extends Component {
 
-  componentDidMount() {
-    Promise.resolve(this.props.dispatch(getRecentUserAnnotations('58feaa6738babe01a6ea315b'))).then(() => {
-      this.forceUpdate();
+  componentDidMount = () => {
+    Promise.resolve(this.props.dispatch(fetchUser())).then(() => {
+      this.props.dispatch(getRecentUserAnnotations(this.props.userId));
     });
   }
 
   /* eslint-disable */
 
   render() {
-    console.log(`Recent user annotations: ${this.props.recentAnnotations}`);
     return (
       <div>
         <ProfileCard />
-        {this.props.recentAnnotations !== [] ? this.props.recentAnnotations.map((annotation, i) => {
+        {this.props.recentAnnotations !== [] || this.props.recentAnnotations !== null ? this.props.recentAnnotations.map((annotation, i) => {
           return <Annotation key={i} annotation={annotation} />;
         }) : 'Fuck'}
       </div>
@@ -35,6 +35,7 @@ Profile.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  userId: state.user ? state.user._id : '',
   recentAnnotations: state.Profile ? state.Profile.recentAnnotations : [],
 });
 

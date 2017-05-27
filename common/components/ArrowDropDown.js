@@ -9,15 +9,15 @@ function handleLogout() {
   window.location = `${config.apiHost}/logout`;
 }
 
-function handleProfileClick() {
-  window.location = `${config.host}/profile/1`; // ${this.props.userId}`;
-}
-
 export default class ArrowDropDown extends Component {
 
   constructor(props) {
     super(props);
     this.state = { value: 1 };
+  }
+
+  handleProfileClick = () => {
+    window.location = `${config.host}/profile/${this.props.userId}`;
   }
 
   render() {
@@ -30,13 +30,17 @@ export default class ArrowDropDown extends Component {
           listStyle={{ color: 'black !important' }}
           menuStyle={{ backgroundColor: 'red', color: 'black !important' }}
         >
-          <MenuItem primaryText="Profile" onClick={handleProfileClick} />
+          <MenuItem primaryText="Profile" onClick={this.handleProfileClick} />
           <MenuItem primaryText="Logout" onClick={handleLogout} />
         </IconMenu>
       </div>
     );
   }
 }
+
+ArrowDropDown.defaultProps = {
+  userId: '1',
+};
 
 // <MenuItem primaryText="Profile" onClick={handleProfileClick} />
 // <MenuItem primaryText="Logout" onClick={handleLogout} />
