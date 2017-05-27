@@ -318,7 +318,7 @@ class TopNav extends React.Component {
                 <div style={{clear: 'both'}} ></div>
               </div> : ''}
             <div>
-              <ArrowDropDown />
+              <ArrowDropDown userId={this.props.userId} />
             </div>
           </div>
         </Toolbar>
@@ -330,6 +330,7 @@ class TopNav extends React.Component {
 /* eslint-enable */
 
 const mapStateToProps = state => ({
+  userId: state.user ? state.user._id : '',
   notifications: state.articles ? state.articles.notifications : [],
   numUnreadNotifications: state.articles ? state.articles.numUnreadNotifications : 0,
   data: state.articles ? state.articles.data : [],

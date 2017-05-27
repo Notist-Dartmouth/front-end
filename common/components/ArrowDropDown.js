@@ -3,6 +3,15 @@ import ArrowDropDownIcon from 'material-ui/svg-icons/navigation/arrow-drop-down'
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
+import config from '../../server/config';
+
+function handleLogout() {
+  window.location = `${config.apiHost}/logout`;
+}
+
+function handleProfileClick() {
+  window.location = `${config.host}/profile/1`; // ${this.props.userId}`;
+}
 
 export default class ArrowDropDown extends Component {
 
@@ -11,26 +20,23 @@ export default class ArrowDropDown extends Component {
     this.state = { value: 1 };
   }
 
-  handleProfileClick() {
-    console.log('Profile!');
-    this.state.value = 5;
-  }
-
-  handleLogout() {
-    console.log('Logout!');
-    this.state.value = 5;
-  }
-
   render() {
     return (
-      <IconMenu
-        iconButtonElement={<IconButton><ArrowDropDownIcon /></IconButton>}
-        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-      >
-        <MenuItem primaryText="Profile" onClick={this.handleProfileClick} />
-        <MenuItem primaryText="Logout" onClick={this.handleLogout} />
-      </IconMenu>
+      <div>
+        <IconMenu
+          iconButtonElement={<IconButton><ArrowDropDownIcon /></IconButton>}
+          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+          listStyle={{ color: 'black !important' }}
+          menuStyle={{ backgroundColor: 'red', color: 'black !important' }}
+        >
+          <MenuItem primaryText="Profile" onClick={handleProfileClick} />
+          <MenuItem primaryText="Logout" onClick={handleLogout} />
+        </IconMenu>
+      </div>
     );
   }
 }
+
+// <MenuItem primaryText="Profile" onClick={handleProfileClick} />
+// <MenuItem primaryText="Logout" onClick={handleLogout} />
