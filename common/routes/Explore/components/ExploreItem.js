@@ -4,38 +4,41 @@ import { fetchArticleAnnotations } from '../../../api';
 
 class ExploreItem extends Component {
 
+  // Based on the cancelable promise method shown here: https://github.com/facebook/react/issues/5465#issuecomment-157888325
+  // modified to check for an error from the API and return a new promise
+  // Makes a cancelable promise for fetching annotations (need a cancelable promise
+  // so that the callback doesn't occur after the component unmounts)
+  static makeAnnotationsListener(articleURI) {
+    let _canceled = false;
+
+    const listener = fetchArticleAnnotations(articleURI).then((annotations) => {
+      if (annotations.ERROR || _canceled) {
+        return Promise.reject(annotations.ERROR || 'listener canceled');
+      }
+      return Promise.resolve(annotations);
+    });
+
+    return {
+      start: listener,
+      cancel: () => { _canceled = true; },
+    };
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       annotations: [],
     };
-    this.updateAnnotations = this.updateAnnotations.bind(this);
-    this.loadAnnotations = this.loadAnnotations.bind(this);
   }
 
   componentDidMount() {
-    document.addEventListener(this.props.articleID, this.updateAnnotations);
-    this.loadAnnotations();
+    const updateAnnotations = annotations => this.setState({ annotations });
+    this.listener = ExploreItem.makeAnnotationsListener(this.props.articleURI);
+    this.listener.start.then(updateAnnotations).catch(error => console.log(error));
   }
 
   componentWillUnmount() {
-    document.removeEventListener(this.props.articleID, this.updateAnnotations);
-  }
-
-  loadAnnotations() {
-    fetchArticleAnnotations(this.props.articleURI).then((res) => {
-      const annotationsEvent = new CustomEvent(this.props.articleID, {
-        detail: res,
-      });
-      document.dispatchEvent(annotationsEvent);
-    });
-  }
-
-  updateAnnotations(annotationsEvent) {
-    const annotations = annotationsEvent.detail;
-    if (!annotations.ERROR) {
-      this.setState({ annotations });
-    }
+    this.listener.cancel();
   }
 
   render() {
