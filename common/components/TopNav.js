@@ -19,7 +19,7 @@ import NotificationsDialog from './NotificationsDialog';
 import config from '../../server/config';
 import dfsTraversal from '../routes/Discussion/produceCommentGraph';
 import { fetchNotifications, fetchNumUnreadNotifications } from '../routes/PostList/actions';
-
+import ArrowDropDown from './ArrowDropDown';
 /* eslint-enable */
 
 function getTotalAuthorNumber(annotations, groupId = '0') {
@@ -220,27 +220,15 @@ class TopNav extends React.Component {
   }
 
   render() {
-    const subButton = null;
+    let subButton = null;
 
-    /* if (window.location.href.includes('feed')) {
+    if (window.location.href.includes('feed')) {
       if (this.state.subscribed) { // Check if subscribed to group
         subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} />;
       } else {
         subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} />;
       }
-    }*/
-
-    /*
-      when not yet response from button click, use
-      import RefreshIndicator from 'material-ui/lib/refresh-indicator';
-    <RefreshIndicator
-     size={40}
-     left={10}
-     top={0}
-     status="loading"
-     style={style.refresh}
-   />
-      */
+    }
 
     /* eslint-disable */
     const isFeedView = window.location.href.includes('feed') || window.location.href === 'https://notist.io/' || window.location.href === 'http://localhost:5000/';
@@ -330,9 +318,7 @@ class TopNav extends React.Component {
                 <div style={{clear: 'both'}} ></div>
               </div> : ''}
             <div>
-              <a className={css(styles.link, styles.topLink)}
-                href={`${config.apiHost}/logout`}
-              >Logout</a>
+              <ArrowDropDown />
             </div>
           </div>
         </Toolbar>

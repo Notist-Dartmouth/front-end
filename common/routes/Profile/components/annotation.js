@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import FlatButton from 'material-ui/FlatButton';
-import { Card, CardActions, CardHeader } from 'material-ui/Card';
+import { Card, CardHeader } from 'material-ui/Card';
 import { styles, muiTheme } from '../../Discussion/styles/styles';
 
 // Pass an annotation prop in here with fields title, subtitle, and expandableText
@@ -25,10 +24,6 @@ class Annotation extends Component {
             title={this.props.annotation.parent === null ? this.props.annotation.articleText : ''}
             subtitle={<a href={`http://localhost:5000/discussion/${this.props.annotation.article}`}>{this.props.annotation.text}</a>}
           />
-          <CardActions>
-            <FlatButton label="Action1" />
-            <FlatButton label="Action2" />
-          </CardActions>
         </Card>
       </MuiThemeProvider>
     );
