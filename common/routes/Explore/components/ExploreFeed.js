@@ -17,7 +17,12 @@ class ExploreFeed extends Component {
       <div>
         <Helmet title="Explore" />
         {this.props.isLoading &&
-          <div style={{ textAlign: 'center', margin: '0 auto', width: '100%' }}>
+          <div style={{
+            textAlign: 'center',
+            margin: '40px auto',
+            width: '100%',
+          }}
+          >
             <h1>Loading...</h1>
           </div>}
         {this.props.error &&
