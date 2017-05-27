@@ -3,14 +3,18 @@ import { connect } from 'react-redux';
 import ProfileCard from './components/profileCard';
 import Annotation from './components/annotation';
 import getRecentUserAnnotations from './actions';
-import { fetchUser } from '../../actions/groups';
+
+let hasBeenExecuted = false;
 
 class Profile extends Component {
 
-  componentDidMount = () => {
-    Promise.resolve(this.props.dispatch(fetchUser())).then(() => {
-      this.props.dispatch(getRecentUserAnnotations(this.props.userId));
-    });
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.userId && !hasBeenExecuted
+    ) {
+      this.props.dispatch(getRecentUserAnnotations(nextProps.userId));
+      hasBeenExecuted = true;
+    }
   }
 
   /* eslint-disable */
@@ -21,7 +25,7 @@ class Profile extends Component {
         <ProfileCard />
         {this.props.recentAnnotations !== [] || this.props.recentAnnotations !== null ? this.props.recentAnnotations.map((annotation, i) => {
           return <Annotation key={i} annotation={annotation} />;
-        }) : 'Fuck'}
+        }) : ''}
       </div>
     );
   }
