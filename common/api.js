@@ -144,7 +144,6 @@ export const saveReply = (text, parent, articleURI) => {
 };
 
 export const getRecentUserAnnotations = (userId) => {
-  console.log(`${config.apiHost}/api/user/${userId}/annotations`);
   return fetch(`${config.apiHost}/api/user/${userId}/annotations`, {
     method: 'GET',
     credentials: 'include',
@@ -161,6 +160,14 @@ export const fetchArticleInformation = (articleId) => {
 };
 
 export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
+  return fetch(`${config.apiHost}/api/group/${groupId}/user?userId=${userId}`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
+};
+
+export const toggleFollowUser = (groupId, userId) => { // ?userId=USERB.id
   return fetch(`${config.apiHost}/api/group/${groupId}/user?userId=${userId}`, {
     method: 'POST',
     credentials: 'include',

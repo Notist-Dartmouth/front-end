@@ -1,9 +1,26 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Card, CardHeader } from 'material-ui/Card';
-import { styles, muiTheme } from '../../Discussion/styles/styles';
+import { StyleSheet, css } from 'aphrodite';
+import { yellow200 } from 'material-ui/styles/colors';
+import { Card, CardText } from 'material-ui/Card';
+import moment from 'moment';
+import { muiTheme } from '../../Discussion/styles/styles';
+import config from '../../../../server/config';
 
 // Pass an annotation prop in here with fields title, subtitle, and expandableText
+
+const styles = StyleSheet.create({
+  authorLine: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  authorAndTime: {
+    display: 'flex',
+  },
+  authorName: {
+    paddingRight: 10,
+  },
+});
 
 class Annotation extends Component {
 
@@ -13,19 +30,40 @@ class Annotation extends Component {
   }
 
   render() {
-    console.log('EXECUTING RENDER OF AN ANNOTATION');
-    console.log(`Hi, the value inside annotation is: ${this.annotation}`);
+    console.log('Annotation: ');
     console.log(this.props.annotation);
-    return (
 
-      <MuiThemeProvider muiTheme={muiTheme}>
-        <Card>
-          <CardHeader style={styles.cardHeader}
-            title={this.props.annotation.parent === null ? this.props.annotation.articleText : ''}
-            subtitle={<a href={`http://localhost:5000/discussion/${this.props.annotation.article}`}>{this.props.annotation.text}</a>}
-          />
-        </Card>
-      </MuiThemeProvider>
+    return (
+      <div style={{
+        paddingTop: 2,
+        paddingRight: 10,
+        paddingLeft: 10,
+      }}
+      >
+        <MuiThemeProvider muiTheme={muiTheme}>
+          <Card>
+            <CardText expandable={false}>
+              <div className={css(styles.authorLine)}>
+                <div className={css(styles.authorAndTime)}>
+                  <div className={css(styles.authorName)}>
+                    <b>{this.props.annotation.creatorName}</b>
+                  </div>
+                  {moment(this.props.annotation.createDate).fromNow()}
+                </div>
+              </div>
+              <div style={{
+                display: 'inline',
+                fontStyle: 'italic',
+                backgroundColor: yellow200,
+              }}
+              >
+                {this.props.annotation.articleText} <br /><br />
+              </div>
+              <a href={`${config.host}/discussion/${this.props.annotation.article}`}>{this.props.annotation.text}</a>
+            </CardText>
+          </Card>
+        </MuiThemeProvider>
+      </div>
     );
   }
 }
