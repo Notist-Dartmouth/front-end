@@ -60,7 +60,7 @@ class LeftNav extends React.Component {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={css(styles.drawerContainer)}>
-          <Drawer docked containerStyle={{ position: 'relative', backgroundColor: '#44808C', paddingLeft: 20, width: 320 }} className={css(styles.drawer)}>
+          <Drawer docked containerStyle={{ position: 'relative', backgroundColor: '#44808C', paddingLeft: 20, width: 320, overflow: 'scrollable' }} className={css(styles.drawer)}>
             <List>
               <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
               <Link to={{

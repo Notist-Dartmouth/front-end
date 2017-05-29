@@ -20,9 +20,21 @@ class Profile extends Component {
   /* eslint-disable */
 
   render() {
+    let name = 'Anonymous';
+    if (this.props.name) {
+      name = this.props.name;
+      const filteredName = name.split(' ');
+
+      if (filteredName.length >= 2) {
+        if (filteredName[1].charAt(0)) { // If it's not null
+          name = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
+        }
+      }
+    }
+
     return (
       <div>
-        <ProfileCard />
+        <ProfileCard name={name} blurb={this.props.blurb} />
         {this.props.recentAnnotations !== [] || this.props.recentAnnotations !== null ? this.props.recentAnnotations.map((annotation, i) => {
           return <Annotation key={i} annotation={annotation} />;
         }) : ''}
@@ -39,6 +51,8 @@ Profile.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  name: state.user ? state.user.name : '',
+  blurb: 'Hello, this is the default text',
   userId: state.user ? state.user._id : '',
   recentAnnotations: state.Profile ? state.Profile.recentAnnotations : [],
 });
