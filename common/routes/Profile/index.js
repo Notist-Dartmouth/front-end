@@ -7,6 +7,7 @@ import getRecentUserAnnotations from './actions';
 // const hasBeenExecuted = false;
 const profileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
 
+
 class Profile extends Component {
 
   componentDidMount() {
@@ -25,6 +26,9 @@ class Profile extends Component {
   /* eslint-disable */
 
   render() {
+
+    const showFollowButton = profileId !== this.props.userId;
+
     let name = 'Anonymous';
     if (this.props.name) {
       name = this.props.name;
@@ -37,9 +41,12 @@ class Profile extends Component {
       }
     }
 
+    console.log('Name: ');
+    console.log(name);
+
     return (
       <div>
-        <ProfileCard name={name} blurb={this.props.blurb} />
+        <ProfileCard name={name} blurb={this.props.blurb} showFollowButton={showFollowButton} />
         {this.props.recentAnnotations !== [] || this.props.recentAnnotations !== null ? this.props.recentAnnotations.map((annotation, i) => {
           return <Annotation key={i} annotation={annotation} />;
         }) : ''}

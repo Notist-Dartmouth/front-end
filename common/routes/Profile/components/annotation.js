@@ -57,7 +57,7 @@ class Annotation extends Component {
                 backgroundColor: yellow200,
               }}
               >
-                {this.props.annotation.articleText}
+                {this.props.annotation.articleText} <br /><br />
               </div>
               <a href={`${config.host}/discussion/${this.props.annotation.article}`}>{this.props.annotation.text}</a>
             </CardText>

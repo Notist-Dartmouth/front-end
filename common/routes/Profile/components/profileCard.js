@@ -76,6 +76,8 @@ const styles = StyleSheet.create({
   },
 });
 
+const isFollowing = false;
+
 class ProfileCard extends Component {
 
   constructor(props) {
@@ -88,21 +90,13 @@ class ProfileCard extends Component {
   }
 
   render() {
-    let name = 'Anonymous';
-    if (this.props.name) {
-      name = this.props.name;
-      const filteredName = this.props.name.split(' ');
-
-      if (filteredName.length >= 2) {
-        if (filteredName[1].charAt(0)) { // If it's not null
-          name = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
-        }
-      }
-    }
+    console.log('showFollowButton');
+    console.log(this.props.showFollowButton);
+    console.log(this.props.name);
 
     let followButton = null;
 
-    if (this.props.subscribed) { // Check if subscribed to group
+    if (isFollowing) { // Check if subscribed to group
       followButton = <RaisedButton className={css(styles.subButton)} label="Unfollow" onClick={this.handleFollowClick} backgroundColor={red400} labelColor={grey100} />;
     } else {
       followButton = <RaisedButton className={css(styles.subButton)} label="Follow" onClick={this.handleFollowClick} backgroundColor={yellow200} labelColor={grey900} />;
@@ -115,14 +109,14 @@ class ProfileCard extends Component {
             <Avatar src="https://i.imgur.com/4h5V7Jp.jpg" />
             <div className={css(styles.groupInfo)}>
               <div className={css(styles.groupTitle)}>
-                {name}
+                {this.props.name}
               </div>
               <div className={css(styles.memberInfo)}>
                 <div className={css(styles.memberIcon)}><PeopleIcon /></div>
                 <div className={css(styles.numMembers)}>{this.props.numMembers === 1 ? `${this.props.numMembers} follower` : `${this.props.numMembers} followers`}</div>
               </div>
               <div className={css(styles.buttonContainer)}>
-                {followButton}
+                {this.props.showFollowButton ? followButton : ''}
               </div>
             </div>
           </div>
@@ -138,7 +132,6 @@ class ProfileCard extends Component {
 ProfileCard.propTypes = {
   groupId: React.PropTypes.string.isRequired,
   numMembers: React.PropTypes.number.isRequired,
-  subscribed: React.PropTypes.bool.isRequired,
   dispatch: React.PropTypes.func.isRequired,
 };
 
@@ -146,6 +139,7 @@ ProfileCard.defaultProps = {
   groupId: '',
   title: 'Group Title',
   subscribed: false,
+  showFollowButton: false,
   error: '',
 };
 
