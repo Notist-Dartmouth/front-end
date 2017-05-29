@@ -56,7 +56,7 @@ class LeftNavContainer extends Component {
         exploreList={exploreList}
         followingList={followingList}
         profilePicture="https://i.imgur.com/9zgiD0u.jpg"
-        userName="ethan"
+        name="ethan"
         userPoints={994}
       />
     );

@@ -21,7 +21,7 @@ const ArticleItem = props => (
     subtitle={props.annotations.length > 0 ? props.annotations[0].articleText : ''}
     annotationContent={props.annotations.length > 0 ? props.annotations[0].text : ''}
     image={props.imageURL}
-    username={props.annotations[0] && props.annotations[0].author ? convertName(props.annotations[0].author.name) : 'Anonymous'}
+    name={props.annotations[0] && props.annotations[0].author ? convertName(props.annotations[0].author.name) : 'Anonymous'}
     timeSince={props.annotations[0] ? props.annotations[0].createDate : String(Date.now())}
     numAnnotations={props.annotations.length}
     currentVotes={1}

@@ -16,7 +16,7 @@ const initialState = {
   isFetchingUser: false,
   isAuthenticated: false,
   groups: [],
-  username: '',
+  name: '',
 };
 
 function user(state = initialState, action) {
@@ -25,7 +25,6 @@ function user(state = initialState, action) {
       return Object.assign({}, state, {
         isFetchingUser: false,
         groups: action.groups,
-        username: action.username,
         name: action.name,
         _id: action._id,
         bio: action.bio,

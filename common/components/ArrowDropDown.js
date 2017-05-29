@@ -3,11 +3,22 @@ import ArrowDropDownIcon from 'material-ui/svg-icons/navigation/arrow-drop-down'
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { black } from 'material-ui/styles/colors';
 import config from '../../server/config';
 
 function handleLogout() {
   window.location = `${config.apiHost}/logout`;
 }
+
+const muiTheme = getMuiTheme({
+  fontFamily: 'Roboto, sans-serif',
+  palette: {
+    textColor: black,
+  },
+  userAgent: (typeof navigator !== 'undefined' && navigator.userAgent) || 'all',
+});
 
 export default class ArrowDropDown extends Component {
 
@@ -22,18 +33,19 @@ export default class ArrowDropDown extends Component {
 
   render() {
     return (
-      <div>
-        <IconMenu
-          iconButtonElement={<IconButton><ArrowDropDownIcon /></IconButton>}
-          anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-          targetOrigin={{ horizontal: 'right', vertical: 'top' }}
-          listStyle={{ color: 'black !important' }}
-          menuStyle={{ backgroundColor: 'red', color: 'black !important' }}
-        >
-          <MenuItem primaryText="Profile" onClick={this.handleProfileClick} />
-          <MenuItem primaryText="Logout" onClick={handleLogout} />
-        </IconMenu>
-      </div>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div>
+          <IconMenu
+            menuStyle={{ backgroundColor: '#f2a051' }}
+            iconButtonElement={<IconButton><ArrowDropDownIcon /></IconButton>}
+            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+            targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+          >
+            <MenuItem primaryText="Profile" onClick={this.handleProfileClick} />
+            <MenuItem primaryText="Logout" onClick={handleLogout} />
+          </IconMenu>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

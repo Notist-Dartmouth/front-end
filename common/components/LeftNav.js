@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 class LeftNav extends React.Component {
 
   render() {
-    // const { profilePicture, groups, userName, userPoints, personalList, exploreList, followingList } = this.props;
+    // const { profilePicture, groups, name, userPoints, personalList, exploreList, followingList } = this.props;
     const { groups } = this.props;
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
@@ -118,7 +118,7 @@ export default connect(mapStateToProps)(LeftNav);
 //     src={profilePicture}
 //     size={50}
 //   />
-//   <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{userName}</span>
+//   <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{name}</span>
 //   <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{userPoints}</span>
 // </Link>
 

@@ -147,6 +147,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textDecoration: 'underline',
   },
+  arrowTextColor: {
+    color: grey300,
+  },
 });
 
 function search(list, query, toggled) { // Will return the array in sorted order
@@ -317,7 +320,7 @@ class TopNav extends React.Component {
                 </div>
                 <div style={{clear: 'both'}} ></div>
               </div> : ''}
-            <div>
+            <div className={css(styles.arrowTextColor)}>
               <ArrowDropDown userId={this.props.userId} />
             </div>
           </div>
