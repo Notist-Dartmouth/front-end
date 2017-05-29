@@ -10,7 +10,7 @@ import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import HourglassIcon from 'material-ui/svg-icons/action/hourglass-empty';
+import SocialGroup from 'material-ui/svg-icons/social/group';
 import GroupDialog from '../containers/GroupDialog';
 
 
@@ -54,6 +54,34 @@ const styles = StyleSheet.create({
 
 class LeftNav extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.groupsList = this.groupsList.bind(this);
+  }
+
+  groupsList(groups) {
+    return groups.map(g =>
+      <Link
+        key={g._id}
+        onClick={() => this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: false, search: [] })}
+        to={{
+          pathname: `/feed/${g._id}`,
+          state: {
+            groupId: g._id,
+            groupName: g.name,
+            groupDescription: g.description,
+          },
+        }}
+      >
+        <ListItem
+          key={g._id}
+          leftAvatar={<Avatar icon={<SocialGroup />} />}
+          primaryText={g.name}
+        />
+      </Link>,
+    );
+  }
+
   render() {
     // const { profilePicture, groups, userName, userPoints, personalList, exploreList, followingList } = this.props;
     const { groups } = this.props;
@@ -61,43 +89,31 @@ class LeftNav extends React.Component {
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={css(styles.drawerContainer)}>
           <Drawer docked containerStyle={{ position: 'relative', backgroundColor: '#44808C', paddingLeft: 20, width: 320 }} className={css(styles.drawer)}>
-            <List>
-              <Subheader className={css(styles.subheader)}>Groups &ensp; <GroupDialog /> </Subheader>
-              <Link to={{
+            <Link
+              className={css(styles.subheader)}
+              to={{
                 pathname: '/explore',
                 state: {
                   groupName: 'Explore',
                   groupDescription: 'Discover new articles',
                 },
               }}
-              >
-                <ListItem
-                  primaryText="Explore"
-                  leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
-                />
-              </Link>
-              {groups.map(g => (
-                <Link
-                  onClick={() => this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: false, search: [] })}
-                  to={{
-                    pathname: `/feed/${g._id}`,
-                    state: {
-                      groupId: g._id,
-                      groupName: g.name,
-                      groupDescription: g.description,
-                    },
-                  }}
-                >
-                  <ListItem
-                    key={g._id}
-                    leftAvatar={<Avatar icon={<HourglassIcon />} />}
-                    primaryText={g.name}
-                  />
-                </Link>
-              ))}
+            >
+              <ListItem
+                className={css(styles.subheader)}
+                primaryText="Explore"
+                leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
+              />
+            </Link>
+            <List>
+              <Subheader className={css(styles.subheader)}>Public Groups &ensp; <GroupDialog /> </Subheader>
+              {this.groupsList(groups.filter(g => g.isPublic))}
             </List>
             {/* <Divider */}
-
+            <List>
+              <Subheader className={css(styles.subheader)}>Personal Groups &ensp; <GroupDialog /> </Subheader>
+              {this.groupsList(groups.filter(g => !g.isPublic))}
+            </List>
           </Drawer>
         </div>
       </MuiThemeProvider>
