@@ -166,3 +166,11 @@ export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
     headers,
   }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
 };
+
+export const toggleFollowUser = (groupId, userId) => { // ?userId=USERB.id
+  return fetch(`${config.apiHost}/api/group/${groupId}/user?userId=${userId}`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
+};
