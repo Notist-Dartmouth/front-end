@@ -11,6 +11,7 @@ import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import SocialGroup from 'material-ui/svg-icons/social/group';
+import ActionHome from 'material-ui/svg-icons/action/home';
 import GroupDialog from '../containers/GroupDialog';
 
 
@@ -47,6 +48,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     color: white,
     fontSize: 33,
+  },
+  groupsSubheader: {
+    fontSize: 28,
   },
   user: {
   },
@@ -92,6 +96,18 @@ class LeftNav extends React.Component {
             <Link
               className={css(styles.subheader)}
               to={{
+                pathname: '/',
+              }}
+            >
+              <ListItem
+                className={css(styles.subheader)}
+                primaryText="Home"
+                leftAvatar={<Avatar icon={<ActionHome />} backgroundColor={'rgb(18, 98, 226)'} />}
+              />
+            </Link>
+            <Link
+              className={css(styles.subheader)}
+              to={{
                 pathname: '/explore',
                 state: {
                   groupName: 'Explore',
@@ -106,12 +122,12 @@ class LeftNav extends React.Component {
               />
             </Link>
             <List>
-              <Subheader className={css(styles.subheader)}>Public Groups &ensp; <GroupDialog /> </Subheader>
+              <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Public Groups &ensp; <GroupDialog /> </Subheader>
               {this.groupsList(groups.filter(g => g.isPublic))}
             </List>
             {/* <Divider */}
             <List>
-              <Subheader className={css(styles.subheader)}>Personal Groups &ensp; <GroupDialog /> </Subheader>
+              <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Personal Groups &ensp; <GroupDialog /> </Subheader>
               {this.groupsList(groups.filter(g => !g.isPublic))}
             </List>
           </Drawer>
