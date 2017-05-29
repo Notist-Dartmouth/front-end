@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { black } from 'material-ui/styles/colors';
+import { white } from 'material-ui/styles/colors';
 import config from '../../server/config';
 
 function handleLogout() {
@@ -15,7 +15,7 @@ function handleLogout() {
 const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    textColor: black,
+    textColor: white,
   },
   userAgent: (typeof navigator !== 'undefined' && navigator.userAgent) || 'all',
 });
@@ -53,6 +53,3 @@ export default class ArrowDropDown extends Component {
 ArrowDropDown.defaultProps = {
   userId: '1',
 };
-
-// <MenuItem primaryText="Profile" onClick={handleProfileClick} />
-// <MenuItem primaryText="Logout" onClick={handleLogout} />

@@ -4,9 +4,9 @@ import { yellow200, red400, grey100, grey900 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleSheet, css } from 'aphrodite';
-import PeopleIcon from 'material-ui/svg-icons/social/people';
+// import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { connect } from 'react-redux';
-import Avatar from 'material-ui/Avatar';
+// import Avatar from 'material-ui/Avatar';
 import { toggleFollowUser } from '../actions';
 
 const styles = StyleSheet.create({
@@ -106,14 +106,14 @@ class ProfileCard extends Component {
       <MuiThemeProvider>
         <Card className={css(styles.cardStyle)}>
           <div className={css(styles.flexContainer)}>
-            <Avatar src="https://i.imgur.com/4h5V7Jp.jpg" />
+            {/* <Avatar src="https://i.imgur.com/4h5V7Jp.jpg" /> */}
             <div className={css(styles.groupInfo)}>
               <div className={css(styles.groupTitle)}>
                 {this.props.name}
               </div>
               <div className={css(styles.memberInfo)}>
-                <div className={css(styles.memberIcon)}><PeopleIcon /></div>
-                <div className={css(styles.numMembers)}>{this.props.numMembers === 1 ? `${this.props.numMembers} follower` : `${this.props.numMembers} followers`}</div>
+                {/* <div className={css(styles.memberIcon)}><PeopleIcon /></div> */}
+                {/* <div className={css(styles.numMembers)}>{this.props.numMembers === 1 ? `${this.props.numMembers} follower` : `${this.props.numMembers} followers`}</div> */}
               </div>
               <div className={css(styles.buttonContainer)}>
                 {this.props.showFollowButton ? followButton : ''}
@@ -121,7 +121,7 @@ class ProfileCard extends Component {
             </div>
           </div>
           <div className={css(styles.groupDescription)}>
-            {this.props.blurb}
+            {/*  {this.props.blurb} */}
           </div>
         </Card>
       </MuiThemeProvider>
@@ -131,7 +131,6 @@ class ProfileCard extends Component {
 
 ProfileCard.propTypes = {
   groupId: React.PropTypes.string.isRequired,
-  numMembers: React.PropTypes.number.isRequired,
   dispatch: React.PropTypes.func.isRequired,
 };
 
