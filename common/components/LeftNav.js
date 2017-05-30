@@ -88,27 +88,22 @@ class LeftNav extends React.Component {
 
   /* eslint-disable */
 
-  // profileList(following) {
-  //   return following.map(f =>
-  //     <Link
-  //       key={f._id}
-  //       to={{
-  //         pathname: `/profile/${f._id}`,
-  //         state: {
-  //           groupId: f._id,
-  //           groupName: f.name,
-  //           groupDescription: f.description,
-  //         },
-  //       }}
-  //     >
-  //       <ListItem
-  //         key={f._id}
-  //         leftAvatar={<Avatar href={f.photoSrc} icon={<SocialGroup />} />}
-  //         primaryText={f.name}
-  //       />
-  //     </Link>,
-  //   );
-  // }
+  profileList(following) {
+    return following.map(f =>
+      <Link
+        key={f}
+        to={{
+          pathname: `/profile/${f}`,
+        }}
+      >
+        <ListItem
+          key={f}
+          leftAvatar={<Avatar href="https://i.imgur.com/4h5V7Jp.jpg" />}
+           primaryText={f}
+        />
+      </Link>,
+    );
+  }
 
   /* eslint-enable */
 
@@ -160,6 +155,10 @@ class LeftNav extends React.Component {
               <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Personal Groups &ensp; <GroupDialog /> </Subheader>
               {this.groupsList(groups.filter(g => !g.isPublic))}
             </List>
+            <List>
+              <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Following &ensp; </Subheader>
+              {this.props.followingList ? this.profileList(this.props.followingList) : ''}
+            </List>
           </Drawer>
         </div>
       </MuiThemeProvider>
@@ -167,62 +166,12 @@ class LeftNav extends React.Component {
   }
 }
 
-// <List>
-//   <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Following &ensp; </Subheader>
-//   {this.props.followingList}
-// </List>
 
 const mapStateToProps = state => ({
-  followingList: state.user ? state.user.isFollowing : '',
+  followingList: state.user ? state.user.usersIFollow : [],
   toggled: state.articles ? state.articles.toggled : false,
 });
 
 export default connect(mapStateToProps)(LeftNav);
 
 /* eslint-enable */
-
-// <Link to={'/profile'} style={{ textDecoration: 'none', position: 'relative', top: 10, paddingLeft: 20, color: white }}>
-//   <Avatar
-//     src={profilePicture}
-//     size={50}
-//   />
-//   <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{name}</span>
-//   <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{userPoints}</span>
-// </Link>
-
-// <List>
-//   {/* removed inset */}
-//   <Subheader className={css(styles.subheader)}>Personal</Subheader>
-//   {personalList.map(d => (
-//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-//       <ListItem
-//         leftAvatar={<Avatar icon={<HourglassIcon />} backgroundColor={blue500} />}
-//         primaryText={d.groupName}
-//       />
-//     </Link>
-//   ))}
-// </List>
-
-// <List>
-//   <Subheader className={css(styles.subheader)}>Explore</Subheader>
-//   {exploreList.map(d => (
-//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-//       <ListItem
-//         leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
-//         primaryText={d.groupName}
-//       />
-//     </Link>
-//     ))}
-// </List>
-
-// <List>
-//   <Subheader className={css(styles.subheader)}>People</Subheader>
-//   {followingList.map(d => (
-//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-//       <ListItem
-//         leftAvatar={<Avatar icon={<ActionInfo />} backgroundColor={cyan500} />}
-//         primaryText={d.groupName}
-//       />
-//     </Link>
-//     ))}
-// </List>
