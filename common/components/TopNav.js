@@ -232,16 +232,16 @@ class TopNav extends React.Component {
   render() {
     let subButton;
 
-    if (window.location.href.includes('feed')) {
-      if (this.state.subscribed) { // Check if subscribed to group
-        subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red400} />;
-      } else {
-        subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow200} labelColor={grey900} />;
-      }
-    }
+    // if (window.location.href.includes('feed') && false) {
+    //   if (this.state.subscribed) { // Check if subscribed to group
+    //     subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red400} />;
+    //   } else {
+    //     subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow200} labelColor={grey900} />;
+    //   }
+    // }
 
     /* eslint-disable */
-    const isFeedView = window.location.href.includes('feed') || window.location.href === 'https://notist.io/' || window.location.href === 'http://localhost:5000/';
+    const isFeedView = window.location.href.includes('feed') || window.location.href.includes('explore') ||window.location.href === 'https://notist.io/' || window.location.href === 'https://notist.io/#_=_/' || window.location.href === 'https://notist.io/\#/' || window.location.href === 'http://localhost:5000/';
     let annotations = [];
     let groupId = '0';
     if (isFeedView) {
@@ -305,7 +305,7 @@ class TopNav extends React.Component {
                 </a>
               </div>
             </div>
-            {isFeedView || true ?
+            {isFeedView ?
               <div className={css(styles.searchBarWrapper)}>
                 <div className={css(styles.toggle)}>
                   <Toggle id="Toggle" label={`Show Groups`}
