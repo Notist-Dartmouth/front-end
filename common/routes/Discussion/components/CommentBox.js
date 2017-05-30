@@ -12,6 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import Dialog from 'material-ui/Dialog';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 // import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Avatar from 'material-ui/Avatar';
 import { StyleSheet, css } from 'aphrodite';
 import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
@@ -200,8 +201,9 @@ class CommentBox extends Component {
 
               <div className={css(styles.authorLine)}>
                 <div className={css(styles.authorAndTime)}>
+                  <Avatar src={this.props.photoSrc} size={35} />
                   <div className={css(styles.authorName)}>
-                    <b>{this.props.authorName}</b>
+                    <b>{' ' + this.props.authorName}</b>
                   </div>
                   {this.props.timeSince}
                 </div>

@@ -17,6 +17,8 @@ class Comments extends Component {
     return (
       <div>
         {order.map((node, i) => {
+          console.log('Node is: ');
+          console.log(node);
           let name = 'Anonymous';
           if (node.author && node.author.name) {
             name = node.author.name;
@@ -34,7 +36,7 @@ class Comments extends Component {
               articleURI={this.props.articleURI}
               articleText={this.props.replies.articleText}
               authorName={name}
-              profilePicture={name}
+              photoSrc={node.author.photoSrc}
               timeSince={moment(node.createDate).fromNow()}
               ordering={order}
               node={node}

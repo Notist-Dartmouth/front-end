@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleSheet, css } from 'aphrodite';
 // import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { connect } from 'react-redux';
-// import Avatar from 'material-ui/Avatar';
+import Avatar from 'material-ui/Avatar';
 import { toggleFollowUser } from '../actions';
 
 const styles = StyleSheet.create({
@@ -86,7 +86,7 @@ class ProfileCard extends Component {
   }
 
   handleFollowClick = () => {
-    this.props.dispatch(toggleFollowUser(this.props.groupId));
+    toggleFollowUser(this.props.profileId); // Will also fetch current user again and update groups
   }
 
   render() {
@@ -106,7 +106,7 @@ class ProfileCard extends Component {
       <MuiThemeProvider>
         <Card className={css(styles.cardStyle)}>
           <div className={css(styles.flexContainer)}>
-            {/* <Avatar src="https://i.imgur.com/4h5V7Jp.jpg" /> */}
+            <Avatar src={this.props.photoSrc} />
             <div className={css(styles.groupInfo)}>
               <div className={css(styles.groupTitle)}>
                 {this.props.name}
@@ -129,14 +129,7 @@ class ProfileCard extends Component {
   }
 }
 
-ProfileCard.propTypes = {
-  groupId: React.PropTypes.string.isRequired,
-  dispatch: React.PropTypes.func.isRequired,
-};
-
 ProfileCard.defaultProps = {
-  groupId: '',
-  title: 'Group Title',
   subscribed: false,
   showFollowButton: false,
   error: '',

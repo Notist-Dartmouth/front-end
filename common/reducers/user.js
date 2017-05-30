@@ -28,6 +28,8 @@ function user(state = initialState, action) {
         name: action.name,
         _id: action._id,
         bio: action.bio,
+        photoSrc: action.photoSrc,
+        isAdmin: action.isAdmin,
         usersFollowingMe: action.usersFollowingMe,
         usersIFollow: action.usersIFollow,
         exploreNumber: action.exploreNumber,

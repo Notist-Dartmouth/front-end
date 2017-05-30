@@ -46,7 +46,7 @@ class Profile extends Component {
 
     return (
       <div>
-        <ProfileCard name={name} blurb={this.props.blurb} showFollowButton={showFollowButton} />
+        <ProfileCard name={name} blurb={this.props.blurb} showFollowButton={showFollowButton} profileId={profileId} photoSrc={this.props.photoSrc} />
         {this.props.recentAnnotations !== [] || this.props.recentAnnotations !== null ? this.props.recentAnnotations.map((annotation, i) => {
           return <Annotation key={i} annotation={annotation} />;
         }) : ''}
@@ -65,6 +65,7 @@ Profile.defaultProps = {
 const mapStateToProps = state => ({
   name: state.user ? state.user.name : '',
   blurb: 'Hello, this is the default text',
+  photoSrc: state.user ? state.user.photoSrc : '',
   userId: state.user ? state.user._id : '',
   recentAnnotations: state.Profile ? state.Profile.recentAnnotations : [],
 });
