@@ -106,7 +106,6 @@ class ProfileCard extends Component {
   }
 
   handleFollowClick = () => {
-    console.log('HandleFollowClick!');
     this.props.dispatch(followUser(this.props.profileId)); // Will also fetch current user again and update groups
   }
 
@@ -123,8 +122,6 @@ class ProfileCard extends Component {
   }
 
   render() {
-    console.log('Here is the info!');
-    console.log(this.props.info);
     let followButton = null;
 
     if (!this.props.isUsersProfile) {

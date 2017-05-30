@@ -33,7 +33,6 @@ export function unfollowUser(userId) {
 }
 
 export function followUser(userId) {
-  console.log(`Attempting to follow user with Id: ${userId}`);
   return (dispatch) => {
     api.followUser(userId).then(() => {
       dispatch(fetchUser());
@@ -65,7 +64,6 @@ export function editBio(userId, editText) {
 }
 
 export default function getRecentUserAnnotations(userId) {
-  console.log(`userId inside getRecent is ${userId}`);
   return (dispatch) => {
     api.getRecentUserAnnotations(userId).then((recentAnnotations) => {
       dispatch(handleRecentAnnotations(recentAnnotations));

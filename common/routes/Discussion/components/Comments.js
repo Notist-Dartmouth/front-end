@@ -16,8 +16,6 @@ class Comments extends Component {
     return (
       <div>
         {order.map((node, i) => {
-          console.log('Node is: ');
-          console.log(node);
           let name = 'Anonymous';
           if (node.author && node.author.name) {
             name = node.author.name;

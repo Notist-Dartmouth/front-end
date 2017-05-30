@@ -15,8 +15,6 @@ const handleUnauthorizedRequest = () => {
 };
 
 const handleResponse = (res) => {
-  console.log('RESPONSE!');
-  console.log(res);
   if (res.status === 401) {
     return handleUnauthorizedRequest();
   } else {
@@ -201,8 +199,6 @@ export const unfollowUser = (userId) => { // ?userId=USERB.id
 };
 
 export const followUser = (userId) => { // ?userId=USERB.id
-  console.log('HERE IS THE  ROUTE: ');
-  console.log(`${config.apiHost}/api/user/${userId}/follow`);
   return fetch(`${config.apiHost}/api/user/${userId}/follow`, {
     method: 'POST',
     credentials: 'include',

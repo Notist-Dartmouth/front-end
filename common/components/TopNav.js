@@ -215,7 +215,6 @@ class TopNav extends React.Component {
     const searchResults = this.getSearchData(this.props.toggled);
     const searchIsEmpty = textfield.value.length === 0;
     this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults, searchIsEmpty });
-    console.log('Done with executeSearch!');
   }
 
   handleToggle = () => {
@@ -244,7 +243,6 @@ class TopNav extends React.Component {
     if (groupId.length === 0) {
       groupId = '0';
     }
-    console.log(window.location.href);
 
     const isFeedOrDiscussionView = isFeedView || window.location.href.includes('discussion');
     let allComments = [];

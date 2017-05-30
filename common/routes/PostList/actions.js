@@ -151,7 +151,6 @@ export function fetchPublicGroups() {
 
 function handleToggleMembershipResponse(dispatch, res) {
   if (res.ERROR) {
-    console.log('ERROR ERROR ERROR!'); // If you see this message then it's possible for it to throw errors
     return dispatch({ type: 'LOAD_ANNOTATIONS_ERROR', error: res.ERROR });
   } else {
     dispatch(fetchPublicGroups());

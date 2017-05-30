@@ -30,9 +30,6 @@ class Annotation extends Component {
   }
 
   render() {
-    console.log('Annotation: ');
-    console.log(this.props.annotation);
-
     return (
       <div style={{
         paddingTop: 2,

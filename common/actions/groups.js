@@ -59,7 +59,6 @@ function handleRecentAnnotations(recentAnnotations) {
 }
 
 export function getRecentUserAnnotations(userId) {
-  console.log(`userId inside getRecent is${userId}`);
   return (dispatch) => {
     api.getRecentUserAnnotations(userId).then((recentAnnotations) => {
       dispatch(handleRecentAnnotations(recentAnnotations));
