@@ -78,6 +78,15 @@ const styles = StyleSheet.create({
   },
 });
 
+function checkExistenceOfId(usersIFollow, profileId) {
+  for (let i = 0; i < usersIFollow.length; i += 1) {
+    if (usersIFollow[i]._id === profileId) {
+      return true;
+    }
+  }
+  return false;
+}
+
 class ProfileCard extends Component {
 
   constructor(props) {
@@ -119,7 +128,7 @@ class ProfileCard extends Component {
     let followButton = null;
 
     if (!this.props.isUsersProfile) {
-      const isFollowing = this.props.usersIFollow ? this.props.usersIFollow.includes(this.props.profileId) : false;
+      const isFollowing = this.props.usersIFollow ? checkExistenceOfId(this.props.usersIFollow, this.props.profileId) : false;
       if (isFollowing) { // Check if subscribed to group
         followButton = <RaisedButton className={css(styles.subButton)} label="Unfollow" onClick={this.handleUnfollowClick} backgroundColor={red400} labelColor={grey100} />;
       } else {
