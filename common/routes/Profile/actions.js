@@ -1,5 +1,5 @@
 import * as api from '../../api';
-// import { fetchUser } from '../../actions/groups';
+import { fetchUser } from '../../actions/groups';
 
 function handleRecentAnnotations(recentAnnotations) {
   return {
@@ -9,12 +9,46 @@ function handleRecentAnnotations(recentAnnotations) {
 }
 
 export function toggleFollowUser(userId) {
-  console.log(userId);
-  // return (dispatch) => {
-  //   api.toggleFollowUser(userId).then(() => {
-  //     dispatch(fetchUser()); // Update isFollowing accordingly
-  //   });
-  // };
+  return (dispatch) => {
+    api.followUser(userId).then(() => {
+      dispatch(fetchUser()); // Update isFollowing accordingly
+    });
+  };
+}
+
+export function handleEditBioSuccess(annotationId, text) {
+  return {
+    type: 'EDIT_BIO',
+    editText: text,
+    isEditing: false,
+  };
+}
+
+function handleUserProfileInfo(info) {
+  return {
+    type: 'PROFILE_INFO_UPDATE',
+    info,
+  };
+}
+
+export function fetchUserProfileInfo(userId) {
+  return (dispatch) => {
+    api.fetchUserProfileInfo(userId).then((json) => {
+      if (json.SUCCESS) {
+        dispatch(handleUserProfileInfo(userId));
+      }
+    });
+  };
+}
+
+export function editBio(userId, editText) {
+  return (dispatch) => {
+    api.editBio(userId, editText).then((json) => {
+      if (json.SUCCESS) {
+        dispatch(handleEditBioSuccess(userId, editText));
+      }
+    });
+  };
 }
 
 export default function getRecentUserAnnotations(userId) {

@@ -4,10 +4,12 @@ import { yellow200, red400, grey100, grey900 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleSheet, css } from 'aphrodite';
-// import PeopleIcon from 'material-ui/svg-icons/social/people';
+import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { connect } from 'react-redux';
 import Avatar from 'material-ui/Avatar';
-import { toggleFollowUser } from '../actions';
+import IconButton from 'material-ui/IconButton';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
+import { editBio, toggleFollowUser } from '../actions';
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -82,24 +84,40 @@ class ProfileCard extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      markdown: '',
+    };
     this.handleFollowClick = this.handleFollowClick.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleEditPost = this.handleEditPost.bind(this);
+    this.updateMarkdown = this.updateMarkdown.bind(this);
   }
 
   handleFollowClick = () => {
     toggleFollowUser(this.props.profileId); // Will also fetch current user again and update groups
   }
 
-  render() {
-    console.log('showFollowButton');
-    console.log(this.props.showFollowButton);
-    console.log(this.props.name);
+  handleEditClick = () => {
+    this.props.dispatch({ type: 'TOGGLE_EDIT', isEditing: this.props.isEditing });
+  }
 
+  handleEditPost = (editText) => {
+    this.props.dispatch(editBio(this.props.userId, this.state.markdown));
+  }
+
+  updateMarkdown(event) {
+    this.setState({ markdown: event.target.value });
+  }
+
+  render() {
     let followButton = null;
 
-    if (isFollowing) { // Check if subscribed to group
-      followButton = <RaisedButton className={css(styles.subButton)} label="Unfollow" onClick={this.handleFollowClick} backgroundColor={red400} labelColor={grey100} />;
-    } else {
-      followButton = <RaisedButton className={css(styles.subButton)} label="Follow" onClick={this.handleFollowClick} backgroundColor={yellow200} labelColor={grey900} />;
+    if (this.props.isUsersProfile) {
+      if (isFollowing) { // Check if subscribed to group
+        followButton = <RaisedButton className={css(styles.subButton)} label="Unfollow" onClick={this.handleFollowClick} backgroundColor={red400} labelColor={grey100} />;
+      } else {
+        followButton = <RaisedButton className={css(styles.subButton)} label="Follow" onClick={this.handleFollowClick} backgroundColor={yellow200} labelColor={grey900} />;
+      }
     }
 
     return (
@@ -112,17 +130,27 @@ class ProfileCard extends Component {
                 {this.props.name}
               </div>
               <div className={css(styles.memberInfo)}>
-                {/* <div className={css(styles.memberIcon)}><PeopleIcon /></div> */}
-                {/* <div className={css(styles.numMembers)}>{this.props.numMembers === 1 ? `${this.props.numMembers} follower` : `${this.props.numMembers} followers`}</div> */}
+                <div className={css(styles.memberIcon)}><PeopleIcon /></div>
+                <div className={css(styles.numMembers)}>{this.props.numMembers === 1 ? `${this.props.numMembers} follower` : `${this.props.numMembers} followers`}</div>
               </div>
               <div className={css(styles.buttonContainer)}>
-                {this.props.showFollowButton ? followButton : ''}
+                {this.props.isUsersProfile ? '' : followButton}
               </div>
             </div>
           </div>
           <div className={css(styles.groupDescription)}>
-            {/*  {this.props.blurb} */}
+            {this.props.isEditing ?
+              <div>
+                <textarea onChange={this.updateMarkdown}>
+                  {this.props.blurb}
+                </textarea>
+                <RaisedButton onClick={this.handleEditPost} label="Post" />
+              </div> : this.props.blurb}
+            <div>
+              {this.props.isUsersProfile ? <IconButton tooltip="Edit" onClick={this.handleEditClick} ><EditIcon /></IconButton> : ''}
+            </div>
           </div>
+
         </Card>
       </MuiThemeProvider>
     );
@@ -131,8 +159,12 @@ class ProfileCard extends Component {
 
 ProfileCard.defaultProps = {
   subscribed: false,
-  showFollowButton: false,
+  isUsersProfile: false,
   error: '',
 };
 
-export default connect()(ProfileCard);
+const mapStateToProps = state => ({
+  isEditing: state.Profile ? state.Profile.isEditing : false,
+});
+
+export default connect(mapStateToProps)(ProfileCard);

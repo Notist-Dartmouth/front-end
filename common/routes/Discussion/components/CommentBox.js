@@ -208,7 +208,7 @@ class CommentBox extends Component {
                   {this.props.timeSince}
                 </div>
                 <div>
-                  {madeThisComment ?
+                  {madeThisComment || this.props.isAdmin ?
                     <span>
                       <IconButton onClick={this.handleOpen}><DeleteIcon hoverColor={grey500} /></IconButton>
                       <Dialog
@@ -287,12 +287,14 @@ CommentBox.propTypes = {
 
 CommentBox.defaultProps = {
   isVisible: false,
+  isAdmin: false,
 }
 
 /* eslint-enable */
 
 const mapStateToProps = state => ({
   userId: state.user ? state.user._id : '0',
+  isAdmin: state.user ? state.user.isAdmin : false,
   editText: state.Discussion.editText,
   isEditing: state.Discussion.isEditing,
   editId : state.Discussion.editId,

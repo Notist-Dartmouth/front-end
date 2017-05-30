@@ -167,8 +167,33 @@ export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
   }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
 };
 
-export const toggleFollowUser = (groupId, userId) => { // ?userId=USERB.id
-  return fetch(`${config.apiHost}/api/group/${groupId}/user?userId=${userId}`, {
+export const editBio = (userId, editText) => { // Where do I add the body text to this? Is it a header or... ?
+  return fetch(`${config.apiHost}/api/annotation/${userId}/edit`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+    body: JSON.stringify({ editText }),
+  }).then(res => handleResponse(res));
+};
+
+export const fetchUserProfileInfo = (userId) => {
+  return fetch(`${config.apiHost}/api/user/info/${userId}`, {
+    method: 'GET',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));
+};
+
+export const unfollowUser = (userId) => { // ?userId=USERB.id
+  return fetch(`${config.apiHost}/api/user/${userId}/unfollow`, {
+    method: 'POST',
+    credentials: 'include',
+    headers,
+  }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
+};
+
+export const followUser = (userId) => { // ?userId=USERB.id
+  return fetch(`${config.apiHost}/api/user/${userId}/follow`, {
     method: 'POST',
     credentials: 'include',
     headers,

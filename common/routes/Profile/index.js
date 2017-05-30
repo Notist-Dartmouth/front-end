@@ -1,8 +1,12 @@
+/* eslint-disable */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ProfileCard from './components/profileCard';
 import Annotation from './components/annotation';
 import getRecentUserAnnotations from './actions';
+
+/* eslint-ensable */
 
 // const hasBeenExecuted = false;
 const profileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
@@ -27,7 +31,7 @@ class Profile extends Component {
 
   render() {
 
-    const showFollowButton = profileId !== this.props.userId;
+    const isUsersProfile = profileId === this.props.userId;
 
     let name = 'Anonymous';
     if (this.props.name) {
@@ -46,7 +50,7 @@ class Profile extends Component {
 
     return (
       <div>
-        <ProfileCard name={name} blurb={this.props.blurb} showFollowButton={showFollowButton} profileId={profileId} photoSrc={this.props.photoSrc} />
+        <ProfileCard name={name} blurb={this.props.blurb} userId={this.props.userId} isUsersProfile={isUsersProfile} profileId={profileId} photoSrc={this.props.photoSrc} />
         {this.props.recentAnnotations !== [] || this.props.recentAnnotations !== null ? this.props.recentAnnotations.map((annotation, i) => {
           return <Annotation key={i} annotation={annotation} />;
         }) : ''}
