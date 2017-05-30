@@ -1,10 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
-import CommentBox from './CommentBox';
-/* eslint-disable */
-import traverseDF from '../produceCommentGraph';
 import moment from 'moment';
-/* eslint-enable */
+import CommentBox from './CommentBox';
+import traverseDF from '../produceCommentGraph';
+import config from '../../../../server/config';
 
 class Comments extends Component {
 
@@ -37,6 +36,7 @@ class Comments extends Component {
               articleText={this.props.replies.articleText}
               authorName={name}
               photoSrc={node.author.photoSrc}
+              profileHref={`${config.host}/profile/${node.author._id}`}
               timeSince={moment(node.createDate).fromNow()}
               ordering={order}
               node={node}

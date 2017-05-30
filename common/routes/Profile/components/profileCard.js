@@ -112,7 +112,7 @@ class ProfileCard extends Component {
   render() {
     let followButton = null;
 
-    if (this.props.isUsersProfile) {
+    if (!this.props.isUsersProfile) {
       if (isFollowing) { // Check if subscribed to group
         followButton = <RaisedButton className={css(styles.subButton)} label="Unfollow" onClick={this.handleFollowClick} backgroundColor={red400} labelColor={grey100} />;
       } else {

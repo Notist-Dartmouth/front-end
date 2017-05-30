@@ -203,7 +203,7 @@ class CommentBox extends Component {
                 <div className={css(styles.authorAndTime)}>
                   <Avatar src={this.props.photoSrc} size={35} />
                   <div className={css(styles.authorName)}>
-                    <b>{' ' + this.props.authorName}</b>
+                    <b><a href={this.props.profileHref}>{' ' + this.props.authorName}</a></b>
                   </div>
                   {this.props.timeSince}
                 </div>
