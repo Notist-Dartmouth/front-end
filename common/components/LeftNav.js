@@ -56,6 +56,21 @@ const styles = StyleSheet.create({
   },
 });
 
+function processName(name) {
+  let userName = 'Anonymous';
+  if (userName) {
+    userName = name;
+    const filteredName = userName.split(' ');
+
+    if (filteredName.length >= 2) {
+      if (filteredName[1].charAt(0)) { // If it's not null
+        userName = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
+      }
+    }
+  }
+  return userName;
+}
+
 class LeftNav extends React.Component {
 
   constructor(props) {
@@ -90,19 +105,20 @@ class LeftNav extends React.Component {
 
   profileList(following) {
     return following.map(f =>
-      <Link
-        key={f}
-        to={{
-          pathname: `/profile/${f}`,
-        }}
-      >
-        <ListItem
-          key={f}
-          leftAvatar={<Avatar href="https://i.imgur.com/4h5V7Jp.jpg" />}
-           primaryText={f}
-        />
-      </Link>,
-    );
+
+        <Link
+          key={f._id}
+          to={{
+            pathname: `/profile/${f._id}`,
+          }}
+        >
+          <ListItem
+            key={f._id}
+            leftAvatar={<Avatar src={f.photoSrc} />}
+             primaryText={processName(f.name)}
+          />
+        </Link>,
+      );
   }
 
   /* eslint-enable */
