@@ -79,20 +79,20 @@ class ArticleList extends Component {
                     articleURI={a.uri}
                     annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
                     articleID={a._id}
-                    // wordCount={a.word_count}
-                    datePublished={a.date_published}
-                    excerpt={a.excerpt}
+                    wordCount={a.word_count ? a.word_count : ''}
+                    datePublished={a.date_published ? a.date_published : ''}
+                    excerpt={a.excerpt ? a.excerpt : ''}
                   /> :
-                  <GroupCard
-                    groupId={a._id}
-                    title={a.name}
-                    description={a.description}
-                    createdDate={a.createDate}
-                    creatorName={a.creator ? a.creator.name : ''}
-                    numMembers={a.members.length}
-                    subscribed={a.members.includes(this.props.userId)}
-                    dispatch={this.props.dispatch}
-                  />;
+                    <GroupCard
+                      groupId={a._id}
+                      title={a.name}
+                      description={a.description}
+                      createdDate={a.createDate}
+                      creatorName={a.creator ? a.creator.name : ''}
+                      numMembers={a.members.length}
+                      subscribed={a.members.includes(this.props.userId)}
+                      dispatch={this.props.dispatch}
+                    />;
               })}
           </div>
         </div>
