@@ -21,13 +21,15 @@ function loadAnnotationsSuccess(annotations) {
   };
 }
 
-export function updateUser(groups, username, _id, bio, usersFollowingMe, usersIFollow, exploreNumber, numExplorations, exploreStandardDev) {
+export function updateUser(groups, name, _id, bio, photoSrc, isAdmin, usersFollowingMe, usersIFollow, exploreNumber, numExplorations, exploreStandardDev) {
   return {
     type: types.UPDATE_USER,
     groups,
     name,
     _id,
     bio,
+    photoSrc,
+    isAdmin,
     usersFollowingMe,
     usersIFollow,
     exploreNumber,
@@ -36,13 +38,17 @@ export function updateUser(groups, username, _id, bio, usersFollowingMe, usersIF
   };
 }
 
+/* eslint-disable */
+
 export function fetchUser() {
   return (dispatch, getState) => {
     api.fetchUser().then((user) => {
-      dispatch(updateUser(user.groups, user.username, user._id, user.bio, user.usersFollowingMe, user.usersIFollow, user.exploreNumber, user.numExplorations, user.exploreStandardDev));
+      dispatch(updateUser(user.groups, user.name, user._id, user.bio, user.photoSrc, user.isAdmin, user.usersFollowingMe, user.usersIFollow, user.exploreNumber, user.numExplorations, user.exploreStandardDev));
     });
   };
 }
+
+/* eslint-enable */
 
 function loadAnnotations(articleURI) {
   return (dispatch, getState) => {
@@ -145,7 +151,6 @@ export function fetchPublicGroups() {
 
 function handleToggleMembershipResponse(dispatch, res) {
   if (res.ERROR) {
-    console.log('ERROR ERROR ERROR!'); // If you see this message then it's possible for it to throw errors
     return dispatch({ type: 'LOAD_ANNOTATIONS_ERROR', error: res.ERROR });
   } else {
     dispatch(fetchPublicGroups());

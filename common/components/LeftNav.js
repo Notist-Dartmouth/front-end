@@ -56,6 +56,21 @@ const styles = StyleSheet.create({
   },
 });
 
+function processName(name) {
+  let userName = 'Anonymous';
+  if (userName) {
+    userName = name;
+    const filteredName = userName.split(' ');
+
+    if (filteredName.length >= 2) {
+      if (filteredName[1].charAt(0)) { // If it's not null
+        userName = `${`${filteredName[0]} ${filteredName[1][0]}`}.`;
+      }
+    }
+  }
+  return userName;
+}
+
 class LeftNav extends React.Component {
 
   constructor(props) {
@@ -86,12 +101,35 @@ class LeftNav extends React.Component {
     );
   }
 
+  /* eslint-disable */
+
+  profileList(following) {
+    return following.map(f =>
+
+        <Link
+          key={f._id}
+          to={{
+            pathname: `/profile/${f._id}`,
+          }}
+        >
+          <ListItem
+            key={f._id}
+            leftAvatar={<Avatar src={f.photoSrc} />}
+             primaryText={processName(f.name)}
+          />
+        </Link>,
+      );
+  }
+
+  /* eslint-enable */
+
   render() {
-    // const { profilePicture, groups, userName, userPoints, personalList, exploreList, followingList } = this.props;
+    // const { profilePicture, groups, name, userPoints, personalList, exploreList, followingList } = this.props;
     const { groups } = this.props;
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         <div className={css(styles.drawerContainer)}>
+
           <Drawer docked containerStyle={{ position: 'relative', backgroundColor: '#44808C', paddingLeft: 20, width: 320, overflowY: 'scroll' }} className={css(styles.drawer)}>
             <Link
               className={css(styles.subheader)}
@@ -133,6 +171,10 @@ class LeftNav extends React.Component {
               <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Personal Groups </Subheader>
               {this.groupsList(groups.filter(g => !g.isPublic))}
             </List>
+            <List>
+              <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Following &ensp; </Subheader>
+              {this.props.followingList ? this.profileList(this.props.followingList) : ''}
+            </List>
           </Drawer>
         </div>
       </MuiThemeProvider>
@@ -140,56 +182,12 @@ class LeftNav extends React.Component {
   }
 }
 
+
 const mapStateToProps = state => ({
+  followingList: state.user ? state.user.usersIFollow : [],
   toggled: state.articles ? state.articles.toggled : false,
 });
 
 export default connect(mapStateToProps)(LeftNav);
 
 /* eslint-enable */
-
-// <Link to={'/profile'} style={{ textDecoration: 'none', position: 'relative', top: 10, paddingLeft: 20, color: white }}>
-//   <Avatar
-//     src={profilePicture}
-//     size={50}
-//   />
-//   <span style={{ paddingLeft: 20, position: 'relative', top: -15 }}>{userName}</span>
-//   <span style={{ fontWeight: 800, paddingLeft: 10, position: 'relative', top: -15 }}>{userPoints}</span>
-// </Link>
-
-// <List>
-//   {/* removed inset */}
-//   <Subheader className={css(styles.subheader)}>Personal</Subheader>
-//   {personalList.map(d => (
-//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-//       <ListItem
-//         leftAvatar={<Avatar icon={<HourglassIcon />} backgroundColor={blue500} />}
-//         primaryText={d.groupName}
-//       />
-//     </Link>
-//   ))}
-// </List>
-
-// <List>
-//   <Subheader className={css(styles.subheader)}>Explore</Subheader>
-//   {exploreList.map(d => (
-//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-//       <ListItem
-//         leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={red700} />}
-//         primaryText={d.groupName}
-//       />
-//     </Link>
-//     ))}
-// </List>
-
-// <List>
-//   <Subheader className={css(styles.subheader)}>People</Subheader>
-//   {followingList.map(d => (
-//     <Link to={d.groupLink} style={{ textDecoration: 'none' }}>
-//       <ListItem
-//         leftAvatar={<Avatar icon={<ActionInfo />} backgroundColor={cyan500} />}
-//         primaryText={d.groupName}
-//       />
-//     </Link>
-//     ))}
-// </List>

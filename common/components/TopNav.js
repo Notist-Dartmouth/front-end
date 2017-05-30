@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
@@ -13,9 +15,11 @@ import BugReport from 'material-ui/svg-icons/action/bug-report';
 import Fuse from 'fuse.js';
 import Toggle from 'material-ui/Toggle';
 // import SettingsDialog from './SettingsDialog';
-// import NotificationsDialog from './NotificationsDialog';
+import NotificationsDialog from './NotificationsDialog';
 import config from '../../server/config';
 import dfsTraversal from '../routes/Discussion/produceCommentGraph';
+import { fetchNotifications, fetchNumUnreadNotifications } from '../routes/PostList/actions';
+import ArrowDropDown from './ArrowDropDown';
 import { toggleGroupMembership } from '../routes/PostList/actions';
 
 /* eslint-enable */
@@ -143,6 +147,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textDecoration: 'underline',
   },
+  arrowTextColor: {
+    color: grey300,
+  },
 });
 
 function search(list, query, toggled) { // Will return the array in sorted order
@@ -208,7 +215,6 @@ class TopNav extends React.Component {
     const searchResults = this.getSearchData(this.props.toggled);
     const searchIsEmpty = textfield.value.length === 0;
     this.props.dispatch({ type: 'EXECUTE_SEARCH', search: searchResults, searchIsEmpty });
-    console.log('Done with executeSearch!');
   }
 
   handleToggle = () => {
@@ -234,18 +240,6 @@ class TopNav extends React.Component {
       }
     }
 
-    /*
-      when not yet response from button click, use
-      import RefreshIndicator from 'material-ui/lib/refresh-indicator';
-    <RefreshIndicator
-     size={40}
-     left={10}
-     top={0}
-     status="loading"
-     style={style.refresh}
-   />
-      */
-
     /* eslint-disable */
     const isFeedView = window.location.href.includes('feed') || window.location.href === 'https://notist.io/' || window.location.href === 'http://localhost:5000/';
     let annotations = [];
@@ -257,7 +251,6 @@ class TopNav extends React.Component {
     if (groupId.length === 0) {
       groupId = '0';
     }
-    // console.log(window.location.href);
 
     const isFeedOrDiscussionView = isFeedView || window.location.href.includes('discussion');
     let allComments = [];
@@ -312,7 +305,7 @@ class TopNav extends React.Component {
                 </a>
               </div>
             </div>
-            {/* {isFeedView ?
+            {isFeedView || true ?
               <div className={css(styles.searchBarWrapper)}>
                 <div className={css(styles.toggle)}>
                   <Toggle id="Toggle" label={`Show Groups`}
@@ -328,29 +321,13 @@ class TopNav extends React.Component {
                   <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
                 </div>
                 <div style={{clear: 'both'}} ></div>
-              </div> : ''} */}
-              <div className={css(styles.searchBarWrapper)}>
-                <div className={css(styles.toggle)}>
-                  <Toggle id="Toggle"
-                    labelPosition='right'
-                    label={`Show Groups`}
-                    labelStyle={{marginLeft: '3px', fontSize: '8pt', display: 'block'}}
-                    onToggle={this.handleToggle}
-                    thumbStyle={styles.thumbOff}
-                    trackStyle={styles.trackOff}
-                    thumbSwitchedStyle={styles.thumbSwitched}
-                    trackSwitchedStyle={styles.trackSwitched}
-                    />
-                </div>
-                <div className={css(styles.searchBar)}>
-                  <TextField id="Search" floatingLabelText="Search" onChange={this.executeSearch} />
-                </div>
-                <div style={{clear: 'both'}} ></div>
-              </div>
+              </div> : ''}
+
             <div>
-              <a className={css(styles.link, styles.topLink)}
-                href={`${config.apiHost}/logout`}
-              >Logout</a>
+              <NotificationsDialog />
+            </div>
+            <div className={css(styles.arrowTextColor)}>
+              <ArrowDropDown userId={this.props.userId} />
             </div>
           </div>
         </Toolbar>
@@ -362,6 +339,9 @@ class TopNav extends React.Component {
 /* eslint-enable */
 
 const mapStateToProps = state => ({
+  userId: state.user ? state.user._id : '',
+  notifications: state.articles ? state.articles.notifications : [],
+  numUnreadNotifications: state.articles ? state.articles.numUnreadNotifications : 0,
   data: state.articles ? state.articles.data : [],
   annotationsD: state.Discussion ? state.Discussion.annotations : [],
   annotationsF: state.articles ? state.articles.annotations : [],

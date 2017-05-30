@@ -12,10 +12,8 @@ class App extends Component {
 
   componentDidMount() {
     const articleId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-    console.log(articleId);
     Promise.resolve(this.props.dispatch(fetchArticleInformation(articleId))).then((articleInfo) => {
       this.props.dispatch(loadDiscussion(this.props.articleInformation.uri));
-      console.log('Hi');
     });
   }
 

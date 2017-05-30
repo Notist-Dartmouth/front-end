@@ -93,7 +93,7 @@ class ArticleCard extends React.Component {
       domain,
       numUsers,
       numReplies,
-      username,
+      name,
       points,
       currentVotes,
       image,
@@ -137,7 +137,7 @@ class ArticleCard extends React.Component {
               </div>}
               {this.props.numAnnotations > 0 &&
               <div style={{ marginTop: 8 }}>
-                <span style={{ fontWeight: 900 }}>{username}</span>
+                <span style={{ fontWeight: 900 }}>{name}</span>
                 <span style={{ paddingLeft: 12 }}>{timeSince}</span>
                 <div className={css(styles.annotationTextStyle)} dangerouslySetInnerHTML={{ __html: marked(this.props.annotationContent || '') }} />
               </div>}
@@ -184,7 +184,7 @@ ArticleCard.propTypes = {
   numUsers: React.PropTypes.number,
   numAnnotations: React.PropTypes.number.isRequired,
   numReplies: React.PropTypes.number,
-  username: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
   timeSince: React.PropTypes.string.isRequired,
   image: React.PropTypes.string.isRequired,
   currentVotes: React.PropTypes.number.isRequired,
