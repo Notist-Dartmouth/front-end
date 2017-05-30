@@ -79,7 +79,7 @@ class ArticleList extends Component {
                     articleURI={a.uri}
                     annotations={this.props.annotations.filter(annotation => annotation.article === a._id)}
                     articleID={a._id}
-                    wordCount={a.word_count}
+                    // wordCount={a.word_count}
                     datePublished={a.date_published}
                     excerpt={a.excerpt}
                   /> :
