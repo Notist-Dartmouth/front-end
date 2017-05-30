@@ -167,12 +167,12 @@ export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
   }).then(res => handleResponse(res));        // '/api/group/:groupId/user'
 };
 
-export const editBio = (userId, editText) => { // Where do I add the body text to this? Is it a header or... ?
-  return fetch(`${config.apiHost}/api/annotation/${userId}/edit`, {
+export const editBio = (editText) => { // Where do I add the body text to this? Is it a header or... ?
+  return fetch(`${config.apiHost}/api/user`, {
     method: 'POST',
     credentials: 'include',
     headers,
-    body: JSON.stringify({ editText }),
+    body: JSON.stringify({ bio: editText }),
   }).then(res => handleResponse(res));
 };
 

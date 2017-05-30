@@ -88,7 +88,7 @@ class ArticleList extends Component {
                     title={a.name}
                     description={a.description}
                     createdDate={a.createDate}
-                    creatorName={a.creator.name}
+                    creatorName={a.creator ? a.creator.name : ''}
                     numMembers={a.members.length}
                     subscribed={a.members.includes(this.props.userId)}
                     dispatch={this.props.dispatch}
