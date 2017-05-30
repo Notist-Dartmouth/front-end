@@ -47,9 +47,9 @@ class ExploreFeed extends Component {
               imageURL={a.info && a.info.lead_image_url ? a.info.lead_image_url : ''}
               articleURI={a.uri}
               articleID={a._id}
-              wordCount={a.info.word_count}
-              datePublished={a.info.date_published}
-              excerpt={a.info && a.info.excerpt}
+              wordCount={a.info && a.info.word_count ? a.info.word_count : 0}
+              datePublished={a.info && a.info.date_published ? a.info.date_published : ''}
+              excerpt={a.info && a.info.excerpt ? a.info.excerpt : ''}
             />,
           )}
         </div>
