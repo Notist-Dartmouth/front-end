@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   subheader: {
     paddingTop: 20,
     color: white,
-    fontSize: 33,
+    fontSize: 28,
   },
   groupsSubheader: {
     fontSize: 28,
@@ -168,7 +168,7 @@ class LeftNav extends React.Component {
             </List>
             {/* <Divider */}
             <List>
-              <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Personal Groups &ensp; <GroupDialog /> </Subheader>
+              <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Personal Groups </Subheader>
               {this.groupsList(groups.filter(g => !g.isPublic))}
             </List>
             <List>

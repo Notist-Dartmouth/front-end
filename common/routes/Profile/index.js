@@ -46,9 +46,6 @@ class Profile extends Component {
       }
     }
 
-    console.log('Name: ');
-    console.log(name);
-
     return (
       <div>
         <ProfileCard userId={this.props.userId} isUsersProfile={isUsersProfile} profileId={profileId} info={this.props.info} />

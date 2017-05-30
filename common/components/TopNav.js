@@ -1,12 +1,12 @@
 /* eslint-disable */
+
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleSheet, css } from 'aphrodite';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { red700, white, yellow400, grey900, grey300 } from 'material-ui/styles/colors';
-// deepOrange600
-import PeopleIcon from 'material-ui/svg-icons/social/people';
 import RaisedButton from 'material-ui/RaisedButton';
+import { red700, white, yellow200, red400, grey900, grey300 } from 'material-ui/styles/colors';
+import PeopleIcon from 'material-ui/svg-icons/social/people';
 import { Toolbar } from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import TextField from 'material-ui/TextField';
@@ -20,6 +20,8 @@ import config from '../../server/config';
 import dfsTraversal from '../routes/Discussion/produceCommentGraph';
 import { fetchNotifications, fetchNumUnreadNotifications } from '../routes/PostList/actions';
 import ArrowDropDown from './ArrowDropDown';
+import { toggleGroupMembership } from '../routes/PostList/actions';
+
 /* eslint-enable */
 
 function getTotalAuthorNumber(annotations, groupId = '0') {
@@ -72,15 +74,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    // alignItems: 'center',
   },
   feedTopRow: {
     display: 'flex',
     alignItems: 'center',
-    // justifyContent: 'space-between',
   },
   notificationsAndSettings: {
-    display: 'flex',
+    // display: 'flex',
+    display: 'none',
     alignItems: 'center',
     flex: 1,
     '@media (max-width: 900px)': {
@@ -121,7 +122,6 @@ const styles = StyleSheet.create({
   trackSwitched: {
     backgroundColor: 'pink',
   },
-    // flex: 1,
   link: {
     maxWidth: 700,
     color: '#999',
@@ -169,7 +169,9 @@ function search(list, query, toggled) { // Will return the array in sorted order
     shouldSort: true,
     threshold: 0.5,
     location: 0,
-    distance: 100,
+    tokenize: true,
+    matchAllTokens: true,
+    distance: 1000,
     maxPatternLength: 32,
     minMatchCharLength: 1,
   };
@@ -177,7 +179,7 @@ function search(list, query, toggled) { // Will return the array in sorted order
   options.keys = keys;
 
   const fuse = new Fuse(list, options);
-  const result = fuse.search(query);
+  const result = fuse.search(query.trim());
 
   return result;
 }
@@ -187,14 +189,16 @@ class TopNav extends React.Component {
     super(props);
     this.state = {
       value: 2,
+      subscribed: this.props.subscribed,
     };
     this.getSearchData = this.getSearchData.bind(this);
     this.executeSearch = this.executeSearch.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleSubscribeClick = this.handleSubscribeClick.bind(this);
   }
 
-  componentWillMount = () => {
-    this.props.dispatch(fetchNumUnreadNotifications());
+  componentDidMount() {
+    this.props.dispatch({ type: 'EXECUTE_SEARCH', search: [], searchIsEmpty: true });
   }
 
   getSearchData = (isToggled) => {
@@ -205,10 +209,6 @@ class TopNav extends React.Component {
   }
 
   handleChange = (event, index, value) => this.setState({ value });
-
-  handleNotifications = () => {
-    this.props.dispatch(fetchNotifications);
-  }
 
   executeSearch = (props) => {
     const textfield = document.getElementById('Search');
@@ -221,14 +221,22 @@ class TopNav extends React.Component {
     this.props.dispatch({ type: 'TOGGLE_SHOW_GROUPS', toggled: !this.props.toggled, search: this.getSearchData(!this.props.toggled) });
   }
 
+  handleSubscribeClick = () => {
+    const groupId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    if (groupId.length > 1) {
+      this.props.dispatch(toggleGroupMembership(groupId));
+      this.setState({ subscribed: !this.state.subscribed });
+    }
+  }
+
   render() {
-    let subButton = null;
+    let subButton;
 
     if (window.location.href.includes('feed')) {
       if (this.state.subscribed) { // Check if subscribed to group
-        subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red700} />;
+        subButton = <RaisedButton label="unsubscribe" onClick={this.handleSubscribeClick} backgroundColor={red400} />;
       } else {
-        subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow400} labelColor={grey900} />;
+        subButton = <RaisedButton label="subscribe" onClick={this.handleSubscribeClick} backgroundColor={yellow200} labelColor={grey900} />;
       }
     }
 
@@ -297,7 +305,7 @@ class TopNav extends React.Component {
                 </a>
               </div>
             </div>
-            {isFeedView ?
+            {isFeedView || true ?
               <div className={css(styles.searchBarWrapper)}>
                 <div className={css(styles.toggle)}>
                   <Toggle id="Toggle" label={`Show Groups`}
@@ -314,6 +322,7 @@ class TopNav extends React.Component {
                 </div>
                 <div style={{clear: 'both'}} ></div>
               </div> : ''}
+
             <div>
               <NotificationsDialog />
             </div>
