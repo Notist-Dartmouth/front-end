@@ -94,3 +94,13 @@ export function editReply(commentId, text) {
     });
   };
 }
+
+export function editBio(userId, editText) {
+  return (dispatch, getState) => {
+    api.editAnnotation(userId, editText).then((json) => {
+      if (json.SUCCESS) {
+        dispatch(handleEditReplySuccess(userId, editText));
+      }
+    });
+  };
+}

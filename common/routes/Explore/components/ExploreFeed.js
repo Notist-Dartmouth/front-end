@@ -26,7 +26,7 @@ class ExploreFeed extends Component {
             <h1>Loading...</h1>
           </div>}
         {this.props.error &&
-          <div>
+          <div style={{ marginLeft: 30, marginTop: 30 }}>
             <h2>Unable to load articles at this time</h2>
             <br />
             <FlatButton

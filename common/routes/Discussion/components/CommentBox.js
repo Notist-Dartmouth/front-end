@@ -12,6 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import Dialog from 'material-ui/Dialog';
 import DeleteIcon from 'material-ui/svg-icons/action/delete';
 // import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Avatar from 'material-ui/Avatar';
 import { StyleSheet, css } from 'aphrodite';
 import CommentEditor from './CommentEditor';
 import { muiTheme } from '../styles/styles';
@@ -200,13 +201,14 @@ class CommentBox extends Component {
 
               <div className={css(styles.authorLine)}>
                 <div className={css(styles.authorAndTime)}>
+                  <Avatar src={this.props.photoSrc} size={35} />
                   <div className={css(styles.authorName)}>
-                    <b>{this.props.authorName}</b>
+                    <b><a href={this.props.profileHref}>{' ' + this.props.authorName}</a></b>
                   </div>
                   {this.props.timeSince}
                 </div>
                 <div>
-                  {madeThisComment ?
+                  {madeThisComment || this.props.isAdmin ?
                     <span>
                       <IconButton onClick={this.handleOpen}><DeleteIcon hoverColor={grey500} /></IconButton>
                       <Dialog
@@ -285,12 +287,14 @@ CommentBox.propTypes = {
 
 CommentBox.defaultProps = {
   isVisible: false,
+  isAdmin: false,
 }
 
 /* eslint-enable */
 
 const mapStateToProps = state => ({
   userId: state.user ? state.user._id : '0',
+  isAdmin: state.user ? state.user.isAdmin : false,
   editText: state.Discussion.editText,
   isEditing: state.Discussion.isEditing,
   editId : state.Discussion.editId,

@@ -56,7 +56,7 @@ class LeftNavContainer extends Component {
         exploreList={exploreList}
         followingList={followingList}
         profilePicture="https://i.imgur.com/9zgiD0u.jpg"
-        userName="ethan"
+        name="ethan"
         userPoints={994}
       />
     );
@@ -79,8 +79,8 @@ LeftNavContainer.defaultProps = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const { groups } = state.user;
-  return { groups };
+  const { groups, _id } = state.user;
+  return { groups, _id };
 }
 
 export default connect(mapStateToProps)(LeftNavContainer);

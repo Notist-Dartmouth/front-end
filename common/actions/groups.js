@@ -22,13 +22,15 @@ export function saveGroup(group) {
     });
 }
 
-export function updateUser(groups, username, _id, bio, usersFollowingMe, usersIFollow, exploreNumber, numExplorations, exploreStandardDev) {
+export function updateUser(groups, name, _id, bio, photoSrc, isAdmin, usersFollowingMe, usersIFollow, exploreNumber, numExplorations, exploreStandardDev) {
   return {
     type: types.UPDATE_USER,
     groups,
     name,
     _id,
     bio,
+    photoSrc,
+    isAdmin,
     usersFollowingMe,
     usersIFollow,
     exploreNumber,
@@ -37,10 +39,29 @@ export function updateUser(groups, username, _id, bio, usersFollowingMe, usersIF
   };
 }
 
+/* eslint-disable */
+
 export function fetchUser() {
   return (dispatch, getState) => {
     api.fetchUser().then((user) => {
-      dispatch(updateUser(user.groups, user.username, user._id, user.bio, user.usersFollowingMe, user.usersIFollow, user.exploreNumber, user.numExplorations, user.exploreStandardDev));
+      dispatch(updateUser(user.groups, user.name, user._id, user.bio, user.photoSrc, user.isAdmin, user.usersFollowingMe, user.usersIFollow, user.exploreNumber, user.numExplorations, user.exploreStandardDev));
+    });
+  };
+}
+
+/* eslint-disable */
+
+function handleRecentAnnotations(recentAnnotations) {
+  return {
+    type: 'GET_RECENT_ANNOTATIONS',
+    recentAnnotations,
+  };
+}
+
+export function getRecentUserAnnotations(userId) {
+  return (dispatch) => {
+    api.getRecentUserAnnotations(userId).then((recentAnnotations) => {
+      dispatch(handleRecentAnnotations(recentAnnotations));
     });
   };
 }

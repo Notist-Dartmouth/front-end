@@ -115,12 +115,12 @@ class ExploreSetup extends Component {
           <ol>
             <li className={css(styles.listItem)}>
               <span className={css(styles.helpText)}>
-                <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf"> Download the Notist chrome extension </a>
+                <a href="https://chrome.google.com/webstore/detail/notist/acpmllpdmdhomcokgcacekihcfihapcf" target="_blank" rel="noopener noreferrer"> Download the Notist chrome extension </a>
               </span>
             </li>
             <li className={css(styles.listItem)}>
               <span className={css(styles.helpText)}>
-                <a href="https://www.facebook.com/">Login</a> to Facebook on chrome
+                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Login</a> to Facebook on chrome
                 </span>
             </li>
             <li className={css(styles.listItem)}>

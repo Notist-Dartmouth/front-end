@@ -93,7 +93,7 @@ class ArticleCard extends React.Component {
       domain,
       numUsers,
       numReplies,
-      username,
+      name,
       points,
       currentVotes,
       image,
@@ -114,6 +114,7 @@ class ArticleCard extends React.Component {
     }
     const publishedAgo = moment(this.props.datePublished).fromNow();
     const readingTime = Math.floor(this.props.wordCount / 275);
+    const seeDiscussion = `See Discussion (${this.props.numAnnotations})`;
     return (
       <MuiThemeProvider>
         <Card style={cardStyle}>
@@ -136,7 +137,7 @@ class ArticleCard extends React.Component {
               </div>}
               {this.props.numAnnotations > 0 &&
               <div style={{ marginTop: 8 }}>
-                <span style={{ fontWeight: 900 }}>{username}</span>
+                <span style={{ fontWeight: 900 }}>{name}</span>
                 <span style={{ paddingLeft: 12 }}>{timeSince}</span>
                 <div className={css(styles.annotationTextStyle)} dangerouslySetInnerHTML={{ __html: marked(this.props.annotationContent || '') }} />
               </div>}
@@ -150,7 +151,7 @@ class ArticleCard extends React.Component {
             <div className={css(styles.rightFlex)}>
               <div className={css(styles.usersAndAnnotations)}>
                 {/* <span><MdGroup /> {numUsers} users</span> */}
-                <span><MdComment /> {this.props.numAnnotations} {this.props.numAnnotations > 1 ? 'annotations' : 'annotation'}</span>
+                {/* <span><MdComment /> {this.props.numAnnotations} {this.props.numAnnotations > 1 ? 'annotations' : 'annotation'}</span> */}
               </div>
               <img style={{ maxWidth: '80%', alignSelf: 'center' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
             </div> }
@@ -165,7 +166,7 @@ class ArticleCard extends React.Component {
                 },
               }}
             >
-              <RaisedButton backgroundColor={'#FFCC80'} className={css(styles.bottomButton)} label="See Discussion" />
+              <RaisedButton backgroundColor={'#FFCC80'} className={css(styles.bottomButton)} label={seeDiscussion} />
             </Link>
             <a href={domain} target="_blank" rel="noopener noreferrer"><RaisedButton backgroundColor={'#b6d3d9'} className={css(styles.bottomButton)} label="View Original Article" /></a>
           </CardActions>
@@ -183,7 +184,7 @@ ArticleCard.propTypes = {
   numUsers: React.PropTypes.number,
   numAnnotations: React.PropTypes.number.isRequired,
   numReplies: React.PropTypes.number,
-  username: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
   timeSince: React.PropTypes.string.isRequired,
   image: React.PropTypes.string.isRequired,
   currentVotes: React.PropTypes.number.isRequired,

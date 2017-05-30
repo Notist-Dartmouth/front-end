@@ -16,7 +16,7 @@ const initialState = {
   isFetchingUser: false,
   isAuthenticated: false,
   groups: [],
-  username: '',
+  name: '',
 };
 
 function user(state = initialState, action) {
@@ -25,10 +25,11 @@ function user(state = initialState, action) {
       return Object.assign({}, state, {
         isFetchingUser: false,
         groups: action.groups,
-        username: action.username,
         name: action.name,
         _id: action._id,
         bio: action.bio,
+        photoSrc: action.photoSrc,
+        isAdmin: action.isAdmin,
         usersFollowingMe: action.usersFollowingMe,
         usersIFollow: action.usersIFollow,
         exploreNumber: action.exploreNumber,
@@ -47,6 +48,11 @@ function user(state = initialState, action) {
       return Object.assign({}, state, {
         isFetchingUser: false,
         isAuthenticated: action.isAuthenticated,
+      });
+    case 'GET_RECENT_ANNOTATIONS':
+      return Object.assign({}, state, {
+        ...state,
+        recentAnnotations: action.recentAnnotations,
       });
     default:
       return state;

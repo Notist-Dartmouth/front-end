@@ -53,9 +53,6 @@ const App = ({ children, location }) => (
       <Helmet title="Notist" titleTemplate="%s - Annotate Everything" />
       <TopNav
         currentFeedName={location.state ? location.state.groupName : ''}
-        subscribed
-        numFeedMembers={6}
-        numNotifications={4}
         feedDescription={location.state ? location.state.groupDescription : ''}
       />
       <div className={css(styles.belowTopNav)}>

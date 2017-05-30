@@ -3,8 +3,16 @@ import * as types from '../../constants';
 const initialState = {
   data: [],
   lastFetched: null,
+  isEditing: false,
   isLoading: false,
   error: null,
+  info: {
+    name: '',
+    photoSrc: '',
+    bio: '',
+    usersFollowingMe: [],
+
+  },
 };
 
 export default function posts(state = initialState, action) {
@@ -21,6 +29,23 @@ export default function posts(state = initialState, action) {
     case types.LOAD_POSTS_FAILURE:
       return { ...state,
         error: action.payload };
+    case 'GET_RECENT_ANNOTATIONS':
+      return { ...state,
+        recentAnnotations: action.recentAnnotations,
+      };
+    case 'TOGGLE_EDIT':
+      return { ...state,
+        isEditing: !action.isEditing,
+      };
+    case 'EDIT_BIO':
+      return { ...state,
+        bio: action.editText,
+        isEditing: false,
+      };
+    case 'PROFILE_INFO_UPDATE':
+      return { ...state,
+        info: action.info,
+      };
     default:
       return state;
   }
