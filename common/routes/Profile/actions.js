@@ -8,30 +8,6 @@ function handleRecentAnnotations(recentAnnotations) {
   };
 }
 
-export function followUser(userId) {
-  return (dispatch) => {
-    api.followUser(userId).then(() => {
-      dispatch(fetchUser());
-    });
-  };
-}
-
-export function unfollowUser(userId) {
-  return (dispatch) => {
-    api.unfollowUser(userId).then(() => {
-      dispatch(fetchUser());
-    });
-  };
-}
-
-export function handleEditBioSuccess(userId, text) {
-  return {
-    type: 'EDIT_BIO',
-    editText: text,
-    isEditing: false,
-  };
-}
-
 function handleUserProfileInfo(info) {
   return {
     type: 'PROFILE_INFO_UPDATE',
@@ -44,6 +20,33 @@ export function fetchUserProfileInfo(userId) {
     api.fetchUserProfileInfo(userId).then((json) => {
       dispatch(handleUserProfileInfo(json));
     });
+  };
+}
+
+export function unfollowUser(userId) {
+  return (dispatch) => {
+    api.unfollowUser(userId).then(() => {
+      dispatch(fetchUser());
+      dispatch(fetchUserProfileInfo(userId));
+    });
+  };
+}
+
+export function followUser(userId) {
+  console.log(`Attempting to follow user with Id: ${userId}`);
+  return (dispatch) => {
+    api.followUser(userId).then(() => {
+      dispatch(fetchUser());
+      dispatch(fetchUserProfileInfo(userId));
+    });
+  };
+}
+
+export function handleEditBioSuccess(userId, text) {
+  return {
+    type: 'EDIT_BIO',
+    editText: text,
+    isEditing: false,
   };
 }
 

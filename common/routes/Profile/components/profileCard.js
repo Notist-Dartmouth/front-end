@@ -86,7 +86,7 @@ class ProfileCard extends Component {
       markdown: '',
     };
     this.handleFollowClick = this.handleFollowClick.bind(this);
-    this.handleFollowClick = this.handleUnfollowClick.bind(this);
+    this.handleUnfollowClick = this.handleUnfollowClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleEditPost = this.handleEditPost.bind(this);
     this.updateMarkdown = this.updateMarkdown.bind(this);
@@ -97,6 +97,7 @@ class ProfileCard extends Component {
   }
 
   handleFollowClick = () => {
+    console.log('HandleFollowClick!');
     this.props.dispatch(followUser(this.props.profileId)); // Will also fetch current user again and update groups
   }
 
