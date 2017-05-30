@@ -6,6 +6,13 @@ const initialState = {
   isEditing: false,
   isLoading: false,
   error: null,
+  info: {
+    name: '',
+    photoSrc: '',
+    bio: '',
+    usersFollowingMe: [],
+
+  },
 };
 
 export default function posts(state = initialState, action) {

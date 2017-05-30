@@ -86,6 +86,32 @@ class LeftNav extends React.Component {
     );
   }
 
+  /* eslint-disable */
+
+  // profileList(following) {
+  //   return following.map(f =>
+  //     <Link
+  //       key={f._id}
+  //       to={{
+  //         pathname: `/profile/${f._id}`,
+  //         state: {
+  //           groupId: f._id,
+  //           groupName: f.name,
+  //           groupDescription: f.description,
+  //         },
+  //       }}
+  //     >
+  //       <ListItem
+  //         key={f._id}
+  //         leftAvatar={<Avatar href={f.photoSrc} icon={<SocialGroup />} />}
+  //         primaryText={f.name}
+  //       />
+  //     </Link>,
+  //   );
+  // }
+
+  /* eslint-enable */
+
   render() {
     // const { profilePicture, groups, name, userPoints, personalList, exploreList, followingList } = this.props;
     const { groups } = this.props;
@@ -141,7 +167,13 @@ class LeftNav extends React.Component {
   }
 }
 
+// <List>
+//   <Subheader className={css(styles.subheader, styles.groupsSubheader)}>Following &ensp; </Subheader>
+//   {this.props.followingList}
+// </List>
+
 const mapStateToProps = state => ({
+  followingList: state.user ? state.user.isFollowing : '',
   toggled: state.articles ? state.articles.toggled : false,
 });
 

@@ -16,7 +16,7 @@ export function toggleFollowUser(userId) {
   };
 }
 
-export function handleEditBioSuccess(annotationId, text) {
+export function handleEditBioSuccess(userId, text) {
   return {
     type: 'EDIT_BIO',
     editText: text,
@@ -34,18 +34,20 @@ function handleUserProfileInfo(info) {
 export function fetchUserProfileInfo(userId) {
   return (dispatch) => {
     api.fetchUserProfileInfo(userId).then((json) => {
-      if (json.SUCCESS) {
-        dispatch(handleUserProfileInfo(userId));
-      }
+      dispatch(handleUserProfileInfo(json));
     });
   };
 }
 
 export function editBio(userId, editText) {
   return (dispatch) => {
-    api.editBio(userId, editText).then((json) => {
+    api.editBio(editText).then((json) => {
       if (json.SUCCESS) {
-        dispatch(handleEditBioSuccess(userId, editText));
+        Promise.resolve(dispatch(handleEditBioSuccess(editText))).then(() => {
+          dispatch(fetchUserProfileInfo(userId));
+        });
+
+        dispatch();
       }
     });
   };

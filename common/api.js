@@ -169,7 +169,7 @@ export const toggleGroupMembership = (groupId, userId) => { // ?userId=USERB.id
 
 export const editBio = (editText) => { // Where do I add the body text to this? Is it a header or... ?
   return fetch(`${config.apiHost}/api/user`, {
-    method: 'POST',
+    method: 'PUT',
     credentials: 'include',
     headers,
     body: JSON.stringify({ bio: editText }),

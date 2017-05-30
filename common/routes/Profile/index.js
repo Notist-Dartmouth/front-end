@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ProfileCard from './components/profileCard';
 import Annotation from './components/annotation';
-import getRecentUserAnnotations from './actions';
+import getRecentUserAnnotations, { fetchUserProfileInfo } from './actions';
 
-/* eslint-ensable */
+/* eslint-enable */
 
 // const hasBeenExecuted = false;
 const profileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
@@ -15,7 +15,7 @@ const profileId = window.location.href.substr(window.location.href.lastIndexOf('
 class Profile extends Component {
 
   componentDidMount() {
-    this.props.dispatch(getRecentUserAnnotations(profileId));
+    Promise.resolve(this.props.dispatch(fetchUserProfileInfo(profileId))).then(() => this.props.dispatch(getRecentUserAnnotations(profileId)));
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -34,8 +34,8 @@ class Profile extends Component {
     const isUsersProfile = profileId === this.props.userId;
 
     let name = 'Anonymous';
-    if (this.props.name) {
-      name = this.props.name;
+    if (this.props.info.name) {
+      name = this.props.info.name;
       const filteredName = name.split(' ');
 
       if (filteredName.length >= 2) {
@@ -50,7 +50,7 @@ class Profile extends Component {
 
     return (
       <div>
-        <ProfileCard name={name} blurb={this.props.blurb} userId={this.props.userId} isUsersProfile={isUsersProfile} profileId={profileId} photoSrc={this.props.photoSrc} />
+        <ProfileCard userId={this.props.userId} isUsersProfile={isUsersProfile} profileId={profileId} info={this.props.info} />
         {this.props.recentAnnotations !== [] || this.props.recentAnnotations !== null ? this.props.recentAnnotations.map((annotation, i) => {
           return <Annotation key={i} annotation={annotation} />;
         }) : ''}
@@ -67,11 +67,9 @@ Profile.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  name: state.user ? state.user.name : '',
-  blurb: 'Hello, this is the default text',
-  photoSrc: state.user ? state.user.photoSrc : '',
   userId: state.user ? state.user._id : '',
   recentAnnotations: state.Profile ? state.Profile.recentAnnotations : [],
+  info: state.Profile ? state.Profile.info : {},
 });
 
 

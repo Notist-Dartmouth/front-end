@@ -110,6 +110,8 @@ class ProfileCard extends Component {
   }
 
   render() {
+    console.log('Here is the info!');
+    console.log(this.props.info);
     let followButton = null;
 
     if (!this.props.isUsersProfile) {
@@ -120,18 +122,20 @@ class ProfileCard extends Component {
       }
     }
 
+    /* eslint-disable */
+
     return (
       <MuiThemeProvider>
         <Card className={css(styles.cardStyle)}>
           <div className={css(styles.flexContainer)}>
-            <Avatar src={this.props.photoSrc} />
+            <Avatar src={this.props.info.photoSrc} />
             <div className={css(styles.groupInfo)}>
               <div className={css(styles.groupTitle)}>
-                {this.props.name}
+                {this.props.info.name}
               </div>
               <div className={css(styles.memberInfo)}>
                 <div className={css(styles.memberIcon)}><PeopleIcon /></div>
-                <div className={css(styles.numMembers)}>{this.props.numMembers === 1 ? `${this.props.numMembers} follower` : `${this.props.numMembers} followers`}</div>
+                <div className={css(styles.numMembers)}>{this.props.info.usersFollowingMe.length === 1 ? `${this.props.info.usersFollowingMe.length} follower` : `${this.props.info.usersFollowingMe.length} followers`}</div>
               </div>
               <div className={css(styles.buttonContainer)}>
                 {this.props.isUsersProfile ? '' : followButton}
@@ -142,10 +146,10 @@ class ProfileCard extends Component {
             {this.props.isEditing ?
               <div>
                 <textarea onChange={this.updateMarkdown}>
-                  {this.props.blurb}
+                  {this.props.info.bio}
                 </textarea>
                 <RaisedButton onClick={this.handleEditPost} label="Post" />
-              </div> : this.props.blurb}
+              </div> : this.props.info.bio}
             <div>
               {this.props.isUsersProfile ? <IconButton tooltip="Edit" onClick={this.handleEditClick} ><EditIcon /></IconButton> : ''}
             </div>
@@ -165,6 +169,7 @@ ProfileCard.defaultProps = {
 
 const mapStateToProps = state => ({
   isEditing: state.Profile ? state.Profile.isEditing : false,
+  editText: state.Profile ? state.Profile.editText : '',
 });
 
 export default connect(mapStateToProps)(ProfileCard);
