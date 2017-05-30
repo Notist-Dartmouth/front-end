@@ -11,12 +11,13 @@ import getRecentUserAnnotations, { fetchUserProfileInfo } from './actions';
 // const hasBeenExecuted = false;
 const profileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
 
-
 class Profile extends Component {
 
   componentDidMount() {
-    Promise.resolve(this.props.dispatch(fetchUserProfileInfo(profileId))).then(() => this.props.dispatch(getRecentUserAnnotations(profileId)));
+    const profileId1 = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    Promise.resolve(this.props.dispatch(fetchUserProfileInfo(profileId1))).then(() => this.props.dispatch(getRecentUserAnnotations(profileId1)));
   }
+
 
   // componentWillReceiveProps(nextProps) {
   //   if (
