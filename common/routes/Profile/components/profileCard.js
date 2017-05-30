@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
-import { editBio, toggleFollowUser } from '../actions';
+import { editBio, unfollowUser, followUser } from '../actions';
 
 const styles = StyleSheet.create({
   flexContainer: {
@@ -78,8 +78,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const isFollowing = false;
-
 class ProfileCard extends Component {
 
   constructor(props) {
@@ -88,13 +86,18 @@ class ProfileCard extends Component {
       markdown: '',
     };
     this.handleFollowClick = this.handleFollowClick.bind(this);
+    this.handleFollowClick = this.handleUnfollowClick.bind(this);
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleEditPost = this.handleEditPost.bind(this);
     this.updateMarkdown = this.updateMarkdown.bind(this);
   }
 
+  handleUnfollowClick = () => {
+    this.props.dispatch(unfollowUser(this.props.profileId)); // Will also fetch current user again and update groups
+  }
+
   handleFollowClick = () => {
-    toggleFollowUser(this.props.profileId); // Will also fetch current user again and update groups
+    this.props.dispatch(followUser(this.props.profileId)); // Will also fetch current user again and update groups
   }
 
   handleEditClick = () => {
@@ -115,8 +118,9 @@ class ProfileCard extends Component {
     let followButton = null;
 
     if (!this.props.isUsersProfile) {
+      const isFollowing = this.props.usersIFollow ? this.props.usersIFollow.includes(this.props.profileId) : false;
       if (isFollowing) { // Check if subscribed to group
-        followButton = <RaisedButton className={css(styles.subButton)} label="Unfollow" onClick={this.handleFollowClick} backgroundColor={red400} labelColor={grey100} />;
+        followButton = <RaisedButton className={css(styles.subButton)} label="Unfollow" onClick={this.handleUnfollowClick} backgroundColor={red400} labelColor={grey100} />;
       } else {
         followButton = <RaisedButton className={css(styles.subButton)} label="Follow" onClick={this.handleFollowClick} backgroundColor={yellow200} labelColor={grey900} />;
       }
@@ -168,6 +172,7 @@ ProfileCard.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  usersIFollow: state.user ? state.user.usersIFollow : '',
   isEditing: state.Profile ? state.Profile.isEditing : false,
   editText: state.Profile ? state.Profile.editText : '',
 });

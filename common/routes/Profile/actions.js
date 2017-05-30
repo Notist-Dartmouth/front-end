@@ -8,10 +8,18 @@ function handleRecentAnnotations(recentAnnotations) {
   };
 }
 
-export function toggleFollowUser(userId) {
+export function followUser(userId) {
   return (dispatch) => {
     api.followUser(userId).then(() => {
-      dispatch(fetchUser()); // Update isFollowing accordingly
+      dispatch(fetchUser());
+    });
+  };
+}
+
+export function unfollowUser(userId) {
+  return (dispatch) => {
+    api.unfollowUser(userId).then(() => {
+      dispatch(fetchUser());
     });
   };
 }
