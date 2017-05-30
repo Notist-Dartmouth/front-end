@@ -53,7 +53,10 @@ export const fetchUser = () => {
 };
 
 export const fetchPublicArticles = () => {
-  return fetch(`${config.apiHost}/api/public/articles/paginated`, {
+  const endpointString = `${config.apiHost}/api/public/articles/paginated`;
+  const articlesEndpoint = new URL(endpointString);
+  articlesEndpoint.search = new URLSearchParams('?sort=info.date_published');
+  return fetch(articlesEndpoint, {
     method: 'GET',
     credentials: 'include',
     headers,
@@ -61,7 +64,10 @@ export const fetchPublicArticles = () => {
 };
 
 export const fetchGroupArticles = (groupId) => {
-  return fetch(`${config.apiHost}/api/group/${groupId}/articles`, {
+  const endpointString = `${config.apiHost}/api/group/${groupId}/articles`;
+  const groupEndpoint = new URL(endpointString);
+  groupEndpoint.search = new URLSearchParams('?sort=info.date_published');
+  return fetch(groupEndpoint, {
     method: 'GET',
     credentials: 'include',
     headers,
