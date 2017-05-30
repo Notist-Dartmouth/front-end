@@ -9,13 +9,13 @@ import getRecentUserAnnotations, { fetchUserProfileInfo } from './actions';
 /* eslint-enable */
 
 // const hasBeenExecuted = false;
-const profileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+let profileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
 
 class Profile extends Component {
 
   componentDidMount() {
-    const profileId1 = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
-    Promise.resolve(this.props.dispatch(fetchUserProfileInfo(profileId1))).then(() => this.props.dispatch(getRecentUserAnnotations(profileId1)));
+    profileId = window.location.href.substr(window.location.href.lastIndexOf('/') + 1);
+    Promise.resolve(this.props.dispatch(fetchUserProfileInfo(profileId))).then(() => this.props.dispatch(getRecentUserAnnotations(profileId)));
   }
 
 
