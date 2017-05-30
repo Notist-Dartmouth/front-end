@@ -114,6 +114,7 @@ class ArticleCard extends React.Component {
     }
     const publishedAgo = moment(this.props.datePublished).fromNow();
     const readingTime = Math.floor(this.props.wordCount / 275);
+    const seeDiscussion = `See Discussion (${this.props.numAnnotations})`;
     return (
       <MuiThemeProvider>
         <Card style={cardStyle}>
@@ -150,7 +151,7 @@ class ArticleCard extends React.Component {
             <div className={css(styles.rightFlex)}>
               <div className={css(styles.usersAndAnnotations)}>
                 {/* <span><MdGroup /> {numUsers} users</span> */}
-                <span><MdComment /> {this.props.numAnnotations} {this.props.numAnnotations > 1 ? 'annotations' : 'annotation'}</span>
+                {/* <span><MdComment /> {this.props.numAnnotations} {this.props.numAnnotations > 1 ? 'annotations' : 'annotation'}</span> */}
               </div>
               <img style={{ maxWidth: '80%', alignSelf: 'center' }} src={image || 'https://i.imgur.com/4h5V7Jp.jpg'} alt="article top" />
             </div> }
@@ -165,7 +166,7 @@ class ArticleCard extends React.Component {
                 },
               }}
             >
-              <RaisedButton backgroundColor={'#FFCC80'} className={css(styles.bottomButton)} label="See Discussion" />
+              <RaisedButton backgroundColor={'#FFCC80'} className={css(styles.bottomButton)} label={seeDiscussion} />
             </Link>
             <a href={domain} target="_blank" rel="noopener noreferrer"><RaisedButton backgroundColor={'#b6d3d9'} className={css(styles.bottomButton)} label="View Original Article" /></a>
           </CardActions>
