@@ -299,10 +299,6 @@ class TopNav extends React.Component {
                 </a>
               </div>
             </div>
-            <div>
-              {console.log(this.props.numNotifications)}
-              <NotificationsDialog />
-            </div>
             {isFeedView ?
               <div className={css(styles.searchBarWrapper)}>
                 <div className={css(styles.toggle)}>
@@ -320,6 +316,9 @@ class TopNav extends React.Component {
                 </div>
                 <div style={{clear: 'both'}} ></div>
               </div> : ''}
+            <div>
+              <NotificationsDialog />
+            </div>
             <div className={css(styles.arrowTextColor)}>
               <ArrowDropDown userId={this.props.userId} />
             </div>
